@@ -4,8 +4,9 @@
   "description": "Mortgage Playground website",
   "scripts": {
     "wp": "webpack",
-    "dev-server": "python3 src/wwwroot/app.py",
-    "pytest": "py.test src/api/test_mortgage.py"
+    "dev-server": "cross-env PYTHONPATH=./src/api FLASK_APP=./src/wwwroot/app.py FLASK_DEBUG=1 flask run",
+    "test": "npm run ptest",
+    "ptest": "cross-env PYTHONPATH=./src/api py.test tests/py/test_mortgage.py"
   },
   "repository": {
     "type": "git",
@@ -24,9 +25,11 @@
     "babel-preset-es2015": "^6.13.2",
     "babel-preset-react": "^6.11.1",
     "babel-preset-stage-0": "^6.5.0",
+    "cross-env": "^3.1.3",
     "eslint": "^3.3.1",
     "eslint-loader": "^1.5.0",
     "eslint-plugin-react": "^6.1.2",
+    "npm-run-all": "^3.1.1",
     "redux": "^3.6.0",
     "redux-logger": "^2.6.1",
     "webpack": "^1.13.2"
