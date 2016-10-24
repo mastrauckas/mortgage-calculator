@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, render_template
+from flask import Flask, jsonify, json, render_template, Response
 from mortgage import Mortgage
 
 
@@ -12,10 +12,19 @@ def index():
 
 @app.route("/api/v1.0/mortgage", methods=['GET'])
 def get_mortgage():
-    mortgage = Mortgage(360, 153705, 3.75)
-    installments = mortgage.get_All_Installments(711.83)
-    return jsonify({'installments': installments.toJSON()})
+    mortgage = Mortgage(10, 398483, 3.12)
+    installments = mortgage.get_All_Installments(40420.35)
+    r = json.dumps({ "Installments": [toJson(i) for i in installments] })
+    return Response(r, content_type='text/json; charset=utf-8')
 
+def toJson(installment):
+    return {
+            "number": installment.installment_Number(),
+            "principal_amount": installment.principal_Amount(),
+            "interest_amount": installment.interest_Amount(),
+            "total_payment": installment.total_Payment(),
+            "amortization_error_amount": installment.amortization_Error_Amount()
+            }
 
 if __name__ == "__main__":
     app.run()
