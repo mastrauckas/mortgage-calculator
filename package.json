@@ -6,7 +6,7 @@
     "wp": "webpack",
     "dev-server": "npm run lint && cross-env PYTHONPATH=./src/api FLASK_APP=./src/wwwroot/app.py FLASK_DEBUG=1 flask run",
     "test": "npm run test:python",
-    "test:python": "cross-env PYTHONPATH=./src/api py.test ./tests/py/test_mortgage.py",
+    "test:python": "cross-env PYTHONPATH=./src/api:./src/wwwroot py.test",
     "lint": "npm run lint:python && npm run lint:javascript",
     "lint:python": "flake8 ./src/api",
     "lint:javascript": "eslint src"

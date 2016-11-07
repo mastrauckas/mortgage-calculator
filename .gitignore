@@ -144,3 +144,13 @@ media
 
 # Don't check in transcompiled javascript.
 src/wwwroot/js/*
+
+
+# Created by https://www.gitignore.io/api/code
+
+### Code ###
+# Visual Studio Code - https://code.visualstudio.com/
+.settings/
+.vscode/
+tsconfig.json
+jsconfig.json
