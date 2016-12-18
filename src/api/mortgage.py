@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 from installment import Installment
+from mortgage_information import Mortgage_Information
 
 
 class Mortgage:
@@ -30,6 +31,23 @@ class Mortgage:
             installments.append(installment)
 
         return installments
+
+    def get_Mortgage_Information(self, payment):
+        installments = self.get_All_Installments(payment)
+
+        x = len(installments)
+        total_Interest = 0.0
+        error_Amount = 0
+        for installment in installments:
+            total_Interest += installment.interest_Amount()
+
+        if x > 0:
+            installment = installments[x-1]
+            total_Installments = installment.installment_Number()
+            error_Amount = installment.amortization_Error_Amount()
+
+        return Mortgage_Information(total_Installments, total_Interest,
+                                    payment, error_Amount)
 
     @staticmethod
     def get_Installment(installment_Number, principal, payment, rate):
