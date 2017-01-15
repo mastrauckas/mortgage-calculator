@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from flask import Flask, Response
+from flask import Response
 from app import app as mortgage_web_app
 import pytest
 
