@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, json, render_template, Response, request
+from flask import Flask, json, render_template, Response, request
 from mortgage import Mortgage
 
 
@@ -15,14 +15,16 @@ def get_mortgage():
     missing_Parameters = check_all_parameters_exist()
 
     if len(missing_Parameters) > 0:
-        r = json.dumps({ "validation_errors": [parameter_Missing_To_Json(p) for p in missing_Parameters]  })
+        r = json.dumps({"validation_errors": [
+            parameter_Missing_To_Json(p) for p in missing_Parameters]})
         return Response(r, status=422, content_type='application/json')
 
     parameters_Not_Valid = {}
     parameters_Valid = {}
     check_Not_Valid_Parameters(parameters_Valid, parameters_Not_Valid)
     if(len(parameters_Not_Valid) > 0):
-        r = json.dumps({ "validation_errors": [parameter_Not_Valid_To_Json(key, value) for key, value in parameters_Not_Valid.items()]  })
+        r = json.dumps({"validation_errors": [parameter_Not_Valid_To_Json(
+            key, value) for key, value in parameters_Not_Valid.items()]})
         return Response(r, status=422, content_type='application/json')
 
     total_Installments = parameters_Valid['installments']
@@ -32,32 +34,37 @@ def get_mortgage():
 
     mortgage = Mortgage(total_Installments, principal, rate)
     installments = mortgage.get_All_Installments(payment)
-    r = json.dumps({ "Installments": [installment_To_Json(i) for i in installments] })
+    r = json.dumps(
+        {"Installments": [installment_To_Json(i) for i in installments]})
     return Response(r, content_type='application/json')
+
 
 def installment_To_Json(installment):
     return {
-            "number": installment.installment_Number(),
-            "principal_amount": installment.principal_Amount(),
-            "interest_amount": installment.interest_Amount(),
-            "total_payment": installment.total_Payment(),
-            "amortization_error_amount": installment.amortization_Error_Amount()
-            }
+        "number": installment.installment_Number(),
+        "principal_amount": installment.principal_Amount(),
+        "interest_amount": installment.interest_Amount(),
+        "total_payment": installment.total_Payment(),
+        "amortization_error_amount": installment.amortization_Error_Amount()
+    }
+
 
 def parameter_Missing_To_Json(missing_Parameter_Name):
     return {
-            "parameter": missing_Parameter_Name,
-            "error_code": '001',
-            "error_message": 'Parameter \'' + missing_Parameter_Name + '\' missing from request.'
-            }
+        "parameter": missing_Parameter_Name,
+        "error_code": '001',
+        "error_message": 'Parameter \'' + missing_Parameter_Name + '\' missing from request.'
+    }
+
 
 def parameter_Not_Valid_To_Json(invalid_Parameter_Name, correct_Type):
     return {
-            "parameter": invalid_Parameter_Name,
-            "error_code": '002',
-            "error_message": 'Parameter \'' + invalid_Parameter_Name + '\' not the correct type.',
-            "correct_type": correct_Type
-            }
+        "parameter": invalid_Parameter_Name,
+        "error_code": '002',
+        "error_message": 'Parameter \'' + invalid_Parameter_Name + '\' not the correct type.',
+        "correct_type": correct_Type
+    }
+
 
 def check_all_parameters_exist():
     missing_parameters = []
@@ -72,9 +79,11 @@ def check_all_parameters_exist():
 
     return missing_parameters
 
+
 def check_Not_Valid_Parameters(parameters_Valid, parameters_Not_Valid):
     try:
-        parameters_Valid["installments"] = int(request.args.get('installments'))
+        parameters_Valid["installments"] = int(
+            request.args.get('installments'))
     except ValueError:
         parameters_Not_Valid["installments"] = "int"
 
