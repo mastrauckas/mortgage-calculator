@@ -52,16 +52,16 @@ def installment_To_Json(installment):
 def parameter_Missing_To_Json(missing_Parameter_Name):
     return {
         "parameter": missing_Parameter_Name,
-        "error_code": '001',
-        "error_message": 'Parameter \'' + missing_Parameter_Name + '\' missing from request.'
+        "error_code": "001",
+        "error_message": "Parameter '" + missing_Parameter_Name + "' missing from request."
     }
 
 
 def parameter_Not_Valid_To_Json(invalid_Parameter_Name, correct_Type):
     return {
         "parameter": invalid_Parameter_Name,
-        "error_code": '002',
-        "error_message": 'Parameter \'' + invalid_Parameter_Name + '\' not the correct type.',
+        "error_code": "002",
+        "error_message": "Parameter '" + invalid_Parameter_Name + "' not the correct type.",
         "correct_type": correct_Type
     }
 
