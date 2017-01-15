@@ -19,6 +19,7 @@ class TestEndpointMissingParameters:
             'installments=invalid_parameter&' +
             'principal=invalid_parameter&' +
             'payment=invalid_parameter')
+
         assert response.status_code == 422
         assert response.content_type == 'application/json'
         assert isinstance(response.json, dict)
@@ -57,6 +58,7 @@ class TestEndpointMissingParameters:
         response = client.get(
             '/api/v1.0/mortgage?rate=3.12&installments=invalid_parameter&' +
             'principal=398483&payment=4040.35')
+
         assert response.status_code == 422
         assert response.content_type == 'application/json'
         assert isinstance(response.json, dict)
@@ -74,6 +76,7 @@ class TestEndpointMissingParameters:
         response = client.get(
             '/api/v1.0/mortgage?rate=3.12&installments=10&' +
             'principal=invalid_parameter&payment=4040.35')
+
         assert response.status_code == 422
         assert response.content_type == 'application/json'
         assert isinstance(response.json, dict)
@@ -107,6 +110,7 @@ class TestEndpointMissingParameters:
         response = client.get(
             '/api/v1.0/mortgage?rate=3.12&installments=10&' +
             'principal=398483&payment=invalid_parameter')
+
         assert response.status_code == 422
         assert response.content_type == 'application/json'
         assert isinstance(response.json, dict)
