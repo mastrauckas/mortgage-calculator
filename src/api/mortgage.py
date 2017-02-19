@@ -25,7 +25,7 @@ class Mortgage:
                                                    self.__rate)
 
             loan_Amount = \
-                round(loan_Amount-installment.principal_Amount(), 2) - \
+                round(loan_Amount - installment.principal_Amount(), 2) - \
                 installment.amortization_Error_Amount()
             count += 1
             installments.append(installment)
@@ -42,7 +42,7 @@ class Mortgage:
             total_Interest += installment.interest_Amount()
 
         if x > 0:
-            installment = installments[x-1]
+            installment = installments[x - 1]
             total_Installments = installment.installment_Number()
             error_Amount = installment.amortization_Error_Amount()
 
@@ -64,23 +64,24 @@ class Mortgage:
     @staticmethod
     def principal_On_Payment(loan_Amount, payment, rate):
         return \
-            round(payment-(loan_Amount*Mortgage.monthly_Interest_Rate(rate)),
-                  2)
+            round(payment - (loan_Amount *
+                             Mortgage.monthly_Interest_Rate(rate)), 2)
 
     @staticmethod
     def interest_On_Payment(loan_Amount, rate):
-        return round(loan_Amount*Mortgage.monthly_Interest_Rate(rate), 2)
+        return round(loan_Amount * Mortgage.monthly_Interest_Rate(rate), 2)
 
     @staticmethod
     def monthly_Interest_Rate(rate):
-        return round(rate/100/12, 6)
+        return round(rate / 100 / 12, 6)
 
     @staticmethod
     def total_Installments(years):
-        return years*12
+        return years * 12
 
     @staticmethod
     def get_Payment_Amount(rate, installments, loan_Amount):
         monthly_Rate = Mortgage.monthly_Interest_Rate(rate)
-        return round((monthly_Rate+(monthly_Rate /
-                     (((1+monthly_Rate)**installments)-1)))*loan_Amount, 2)
+        return round((monthly_Rate + (monthly_Rate /
+                                      (((1 + monthly_Rate) **
+                                        installments) - 1))) * loan_Amount, 2)
