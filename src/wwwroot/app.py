@@ -5,7 +5,7 @@ from mortgage import Mortgage
 app = Flask(__name__)
 
 
-@app.route("/api/ping")
+@app.route("/")
 def index():
     return render_template('main.html')
 
