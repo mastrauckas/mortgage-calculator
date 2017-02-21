@@ -23,7 +23,7 @@ export default class AmortizationSchedule extends Component {
             <td>200</td>
             <td>300</td>
             <td>400</td>
-            <td>500</td>
+            <td>700</td>
           </tr>
         </tbody>
         <tfoot>

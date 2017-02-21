@@ -1,8 +1,8 @@
 import React from 'react';
 import { Component } from 'react';
-import MortgageAmount from './mortgageAmount';
-import MortgageTerm from './mortgageTerm';
-import MortgageInterestRate from './mortgageInterestRate';
+import MortgageAmount from '../mortgage//mortgageAmount';
+import MortgageTerm from '../mortgage/mortgageTerm';
+import MortgageInterestRate from '../mortgage/mortgageInterestRate';
 
 export default class AmortizationCalculator extends Component {
   render() {
@@ -12,7 +12,6 @@ export default class AmortizationCalculator extends Component {
         <MortgageTerm />
         <MortgageInterestRate />
       </section>
-
     );
   }
 }

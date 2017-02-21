@@ -32,3 +32,5 @@ rules:
     - always
   no-extra-semi:
     - error
+  no-console:
+    - 0
