@@ -4,7 +4,7 @@ import { Component } from 'react';
 export default class Header extends Component {
 
   static propTypes = {
-    title: React.PropTypes.string.isRequired
+    title: super.PropTypes.string.isRequired
   }
 
   render() {
