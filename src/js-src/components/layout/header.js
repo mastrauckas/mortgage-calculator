@@ -2,6 +2,11 @@ import React from 'react';
 import { Component } from 'react';
 
 export default class Header extends Component {
+
+  static propTypes = {
+    title: React.PropTypes.string.isRequired
+  }
+
   render() {
     return (
       <header className="mdl-layout__header">

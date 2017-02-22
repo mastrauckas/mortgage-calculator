@@ -11,17 +11,14 @@ module.exports = {
   watch: true,
   module: {
     preLoaders: [{
-      test:  /\.js?$/,
+      test: /\.js?$/,
       loader: 'eslint-loader'
     }],
     loaders: [
       {
         test: /.js?$/,
         exclude: /(node_modules)|(bower_components)/,
-        loader: 'babel-loader',
-        query: {
-          presets: ['react', 'es2015', 'stage-0']
-        }
+        loader: 'babel-loader'
       }
     ]
   },
