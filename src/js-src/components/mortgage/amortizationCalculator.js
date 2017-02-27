@@ -1,16 +1,30 @@
 import React from 'react';
 import { Component } from 'react';
-import MortgageAmount from '../mortgage//mortgageAmount';
-import MortgageTerm from '../mortgage/mortgageTerm';
-import MortgageInterestRate from '../mortgage/mortgageInterestRate';
+import MortgagePrincipalAmount from './mortgagePrincipalAmount';
+import MortgageTerm from './mortgageTerm';
+import MortgageInterestRate from './mortgageInterestRate';
+import MortgagePayment from './mortgagePayment';
+import AmortizationScheduleActions from '../../actions/amortizationScheduleActions';
 
 export default class AmortizationCalculator extends Component {
+  constructor() {
+    super();
+    const schedule = {
+      principalAmount: 136068.31,
+      installments: 360,
+      payment: 777.98,
+      interestRate: 3.75
+    };
+    this.state = schedule;
+    AmortizationScheduleActions.getAmortizationSchedule(schedule);
+  }
   render() {
     return (
       <section>
-        <MortgageAmount />
-        <MortgageTerm />
-        <MortgageInterestRate />
+        <MortgagePrincipalAmount principalAmount={this.state.principalAmount} />
+        <MortgageTerm installments={this.state.installments} />
+        <MortgagePayment payment={this.state.payment} />
+        <MortgageInterestRate interestRate={this.state.interestRate} />
       </section>
     );
   }
