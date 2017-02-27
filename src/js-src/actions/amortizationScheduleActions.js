@@ -10,13 +10,13 @@ class AmortizationScheduleActions {
     const url = this.createUrlFromSchedule(schedule);
     axios.get(url)
       .then(function (response) {
-        const amortizationSchedule = response.data.Installments.map(installment => {
+        const amortizationSchedule = response.data.installments.map(installment => {
           return {
             installmentNumber: installment.number,
             installmentDate: 'my date',
-            payment: installment.total_payment,
-            interestAmount: installment.interest_amount,
-            principalAmount: installment.principal_amount,
+            payment: installment.totalPayment,
+            interestAmount: installment.interestAmount,
+            principalAmount: installment.principalAmount,
             balance: 30000
           };
         });
