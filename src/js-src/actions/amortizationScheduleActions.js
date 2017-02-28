@@ -37,11 +37,12 @@ class AmortizationScheduleActions {
   }
 
   createUrlFromSchedule(schedule) {
-    var url = 'http://127.0.0.1:5000/api/v1.0/mortgage?';
-    url += 'rate=' + schedule.interestRate;
-    url += '&installments=' + schedule.installments;
-    url += '&principal=' + schedule.principalAmount;
-    url += '&payment=' + schedule.payment;
+    const url = `http://127.0.0.1:5000/api/v1.0/mortgage?\
+rate=${schedule.interestRate}\
+&installments=${schedule.installments}\
+&principal=${schedule.principalAmount}\
+&payment=${schedule.payment}`;
+
     return url;
   }
 
