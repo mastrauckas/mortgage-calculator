@@ -16,12 +16,18 @@ export default class AmortizationScheduleItem extends Component {
     return (
       <tr>
         <td>{this.props.installmentNumber}</td>
-        <td>{this.props.installmentDate}</td>
+        <td>{this.getDate(this.props.installmentDate)}</td>
         <td>{this.props.payment.toFixed(2)}</td>
         <td>{this.props.interestAmount.toFixed(2)}</td>
         <td>{this.props.principalAmount.toFixed(2)}</td>
         <td>{this.props.balance.toFixed(2)}</td>
       </tr>
     );
+  }
+
+  getDate(date) {
+    //use a different library
+    const d = new Date(date);
+    return `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
   }
 }

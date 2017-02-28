@@ -13,7 +13,7 @@ class AmortizationScheduleActions {
         const amortizationSchedule = response.data.installments.map(installment => {
           return {
             installmentNumber: installment.number,
-            installmentDate: 'my date',
+            installmentDate: installment.paymentDate,
             payment: installment.totalPayment,
             interestAmount: installment.interestAmount,
             principalAmount: installment.principalAmount,
@@ -38,7 +38,8 @@ class AmortizationScheduleActions {
 
   createUrlFromSchedule(schedule) {
     const url = `http://127.0.0.1:5000/api/v1.0/mortgage?\
-rate=${schedule.interestRate}\
+startDate=${schedule.startDate}\
+&rate=${schedule.interestRate}\
 &installments=${schedule.installments}\
 &principal=${schedule.principalAmount}\
 &payment=${schedule.payment}`;

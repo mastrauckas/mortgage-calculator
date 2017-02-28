@@ -1,5 +1,6 @@
 from flask import Flask, json, render_template, Response, request
 from mortgage import Mortgage
+from datetime import datetime
 
 
 app = Flask(__name__)
@@ -28,11 +29,12 @@ def get_mortgage():
         return Response(r, status=422, content_type='application/json')
 
     total_Installments = parameters_Valid['installments']
+    start_Date = parameters_Valid['startDate']
     principal = parameters_Valid['principal']
     rate = parameters_Valid['rate']
     payment = parameters_Valid['payment']
 
-    mortgage = Mortgage(total_Installments, principal, rate)
+    mortgage = Mortgage(total_Installments, start_Date, principal, rate)
     installments = mortgage.get_All_Installments(payment)
     r = json.dumps(
         {"installments": [installment_To_Json(i) for i in installments]})
@@ -42,6 +44,7 @@ def get_mortgage():
 def installment_To_Json(installment):
     return {
         "number": installment.installment_Number(),
+        "paymentDate": installment.payment_Date(),
         "principalAmount": installment.principal_Amount(),
         "interestAmount": installment.interest_Amount(),
         "totalPayment": installment.total_Payment(),
@@ -72,6 +75,8 @@ def check_all_parameters_exist():
     missing_parameters = []
     if request.args.get('installments') is None:
         missing_parameters.append('installments')
+    if request.args.get('startDate') is None:
+        missing_parameters.append('startDate')
     if request.args.get('principal') is None:
         missing_parameters.append('principal')
     if request.args.get('rate') is None:
@@ -103,6 +108,12 @@ def check_Not_Valid_Parameters(parameters_Valid, parameters_Not_Valid):
         parameters_Valid["payment"] = float(request.args.get('payment'))
     except ValueError:
         parameters_Not_Valid["payment"] = "float"
+
+    try:
+        parameters_Valid["startDate"] = datetime.strptime(
+            request.args.get('startDate'), '%m/%d/%Y')
+    except ValueError:
+        parameters_Not_Valid["startDate"] = "date"
 
 
 if __name__ == "__main__":

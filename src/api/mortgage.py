@@ -1,16 +1,19 @@
 #!/usr/bin/env python3
 from installment import Installment
 from mortgage_information import Mortgage_Information
+from dateutil import relativedelta
 
 
 class Mortgage:
     __installments = 0
+    __start_Date = None
     __loan_Amount = 0
     __current_Principal = 0
     __rate = 0.0
 
-    def __init__(self, installments, loan_Amount, rate):
+    def __init__(self, installments, start_Date, loan_Amount, rate):
         self.__installments = installments
+        self.__start_Date = start_Date
         self.__loan_Amount = loan_Amount
         self.__current_Principal = loan_Amount
         self.__rate = rate
@@ -18,16 +21,21 @@ class Mortgage:
     def get_All_Installments(self, payment):
         installments = []
         loan_Amount = self.__loan_Amount
+        payment_Date = self.__start_Date
 
         count = 1
         while loan_Amount != 0:
-            installment = Mortgage.get_Installment(count, loan_Amount, payment,
+            installment = Mortgage.get_Installment(count,
+                                                   payment_Date,
+                                                   loan_Amount,
+                                                   payment,
                                                    self.__rate)
 
             loan_Amount = \
                 round(loan_Amount - installment.principal_Amount(), 2) - \
                 installment.amortization_Error_Amount()
             count += 1
+            payment_Date = payment_Date + relativedelta.relativedelta(months=1)
             installments.append(installment)
 
         return installments
@@ -50,7 +58,8 @@ class Mortgage:
                                     payment, error_Amount)
 
     @staticmethod
-    def get_Installment(installment_Number, principal, payment, rate):
+    def get_Installment(installment_Number, payment_Date, principal, payment,
+                        rate):
         e = 0
         p = Mortgage.principal_On_Payment(principal, payment,
                                           rate)
@@ -58,7 +67,7 @@ class Mortgage:
         if((principal - p) < (payment - i)):
             e = principal - p
 
-        installment = Installment(installment_Number, i, p, e)
+        installment = Installment(installment_Number, payment_Date, i, p, e)
         return installment
 
     @staticmethod

@@ -11,6 +11,7 @@ export default class AmortizationCalculator extends Component {
     super();
     const schedule = {
       principalAmount: 136068.31,
+      startDate: '02/27/2017',
       installments: 360,
       payment: 777.98,
       interestRate: 3.75
