@@ -45,6 +45,7 @@ def installment_To_Json(installment):
     return {
         "number": installment.installment_Number(),
         "paymentDate": installment.payment_Date(),
+        "totalPrincipalAmount": installment.total_Principal_Amount(),
         "principalAmount": installment.principal_Amount(),
         "interestAmount": installment.interest_Amount(),
         "totalPayment": installment.total_Payment(),

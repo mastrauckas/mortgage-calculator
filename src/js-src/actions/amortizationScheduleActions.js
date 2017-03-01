@@ -13,11 +13,11 @@ class AmortizationScheduleActions {
         const amortizationSchedule = response.data.installments.map(installment => {
           return {
             installmentNumber: installment.number,
-            installmentDate: installment.paymentDate,
+            installmentDate: new Date(installment.paymentDate),
+            totalPrincipalAmount: installment.totalPrincipalAmount,
             payment: installment.totalPayment,
             interestAmount: installment.interestAmount,
             principalAmount: installment.principalAmount,
-            balance: 30000
           };
         });
 

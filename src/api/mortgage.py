@@ -31,14 +31,30 @@ class Mortgage:
                                                    payment,
                                                    self.__rate)
 
-            loan_Amount = \
-                round(loan_Amount - installment.principal_Amount(), 2) - \
-                installment.amortization_Error_Amount()
             count += 1
+            loan_Amount = installment.total_Principal_Amount()
             payment_Date = payment_Date + relativedelta.relativedelta(months=1)
             installments.append(installment)
 
         return installments
+
+    @staticmethod
+    def get_Installment(installment_Number, payment_Date, principal, payment,
+                        rate):
+        e = 0
+        p = Mortgage.principal_On_Payment(principal, payment,
+                                          rate)
+        i = Mortgage.interest_On_Payment(principal, rate)
+        if((principal - p) < (payment - i)):
+            e = principal - p
+
+        new_Principal = 0
+        new_Principal = round(round(principal, 2) -
+                              round(p, 2), 2) - round(e, 2)
+
+        installment = Installment(
+            installment_Number, payment_Date, new_Principal, i, p, e)
+        return installment
 
     def get_Mortgage_Information(self, payment):
         installments = self.get_All_Installments(payment)
@@ -56,19 +72,6 @@ class Mortgage:
 
         return Mortgage_Information(total_Installments, total_Interest,
                                     payment, error_Amount)
-
-    @staticmethod
-    def get_Installment(installment_Number, payment_Date, principal, payment,
-                        rate):
-        e = 0
-        p = Mortgage.principal_On_Payment(principal, payment,
-                                          rate)
-        i = Mortgage.interest_On_Payment(principal, rate)
-        if((principal - p) < (payment - i)):
-            e = principal - p
-
-        installment = Installment(installment_Number, payment_Date, i, p, e)
-        return installment
 
     @staticmethod
     def principal_On_Payment(loan_Amount, payment, rate):

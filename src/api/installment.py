@@ -7,11 +7,14 @@ class Installment:
     __principal_Amount = 0
     __error_Amount = 0
     __payment_Date = ''
+    __total_Principal_Amount = 0
 
-    def __init__(self, installment_Number, payment_Date, interest_Amount,
+    def __init__(self, installment_Number, payment_Date,
+                 total_Principal_Amount, interest_Amount,
                  principal_Amount, error_Amount):
         self.__installment_Number = installment_Number
         self.__payment_Date = payment_Date
+        self.__total_Principal_Amount = total_Principal_Amount
         self.__interest_Amount = interest_Amount
         self.__principal_Amount = principal_Amount
         self.__error_Amount = error_Amount
@@ -21,6 +24,9 @@ class Installment:
 
     def payment_Date(self):
         return self.__payment_Date
+
+    def total_Principal_Amount(self):
+        return self.__total_Principal_Amount
 
     def interest_Amount(self):
         return round(self.__interest_Amount, 2)
