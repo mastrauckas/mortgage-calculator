@@ -10,7 +10,7 @@ export default class AmortizationScheduleItem extends Component {
 
   static propTypes = {
     installmentNumber: React.PropTypes.number.isRequired,
-    installmentDate: React.PropTypes.instanceOf(Date).isRequired,
+    paymentDate: React.PropTypes.instanceOf(Date).isRequired,
     payment: React.PropTypes.number.isRequired,
     interestAmount: React.PropTypes.number.isRequired,
     principalAmount: React.PropTypes.number.isRequired,
@@ -21,18 +21,12 @@ export default class AmortizationScheduleItem extends Component {
     return (
       <tr>
         <td>{this.props.installmentNumber}</td>
-        <td>{this.props.installmentDate.format('%m/%d/%Y')}</td>
+        <td>{this.props.paymentDate.format('%m/%d/%Y')}</td>
         <td>${this.props.payment.format(2)}</td>
         <td>${this.props.interestAmount.format(2)}</td>
         <td>${this.props.principalAmount.format(2)}</td>
         <td>${this.props.totalPrincipalAmount.format(2)}</td>
       </tr>
     );
-  }
-
-  getDate(date) {
-    //use a different library
-    const d = new Date(date);
-    return `${d.getMonth() + 1}/${d.getDate()}/${d.getFullYear()}`;
   }
 }

@@ -32,7 +32,7 @@ export default class AmortizationSchedule extends Component {
         <thead>
           <tr>
             <th>Installment</th>
-            <th>Installment Date</th>
+            <th>Payment Date</th>
             <th>Payment</th>
             <th>Interest Amount</th>
             <th>Principal Amount</th>

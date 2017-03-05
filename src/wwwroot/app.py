@@ -44,7 +44,7 @@ def get_mortgage():
 def installment_To_Json(installment):
     return {
         "number": installment.installment_Number(),
-        "paymentDate": installment.payment_Date(),
+        "paymentDate": installment.payment_Date().strftime("%m/%d/%Y"),
         "totalPrincipalAmount": installment.total_Principal_Amount(),
         "principalAmount": installment.principal_Amount(),
         "interestAmount": installment.interest_Amount(),
