@@ -22,9 +22,9 @@ export default class AmortizationScheduleItem extends Component {
       <tr>
         <td>{this.props.installmentNumber}</td>
         <td>{this.props.installmentDate.format('%m/%d/%Y')}</td>
-        <td>${this.props.payment.toFixed(2)}</td>
-        <td>${this.props.interestAmount.toFixed(2)}</td>
-        <td>${this.props.principalAmount.toFixed(2)}</td>
+        <td>${this.props.payment.format(2)}</td>
+        <td>${this.props.interestAmount.format(2)}</td>
+        <td>${this.props.principalAmount.format(2)}</td>
         <td>${this.props.totalPrincipalAmount.format(2)}</td>
       </tr>
     );

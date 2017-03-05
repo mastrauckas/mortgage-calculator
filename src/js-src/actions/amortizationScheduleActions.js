@@ -2,7 +2,29 @@ import dispatcher from './dispatcher';
 import axios from 'axios';
 
 class AmortizationScheduleActions {
-  getAmortizationSchedule(schedule) {
+
+  setMortgagePrincipalAmountAction(principalAmount) {
+    dispatcher.dispatch({
+      type: 'SET_PRINCIPAL_AMOUNT_ACTION',
+      principalAmount
+    });
+  }
+
+  setInstallmentsActions(installments) {
+    dispatcher.dispatch({
+      type: 'SET_INSTALLMENTS_ACTION',
+      installments
+    });
+  }
+
+  setPaymentActions(payment) {
+    dispatcher.dispatch({
+      type: 'SET_PAYMENT_ACTION',
+      payment
+    });
+  }
+
+  getAmortizationScheduleAction(schedule) {
     dispatcher.dispatch({
       type: 'FETCH_GET_AMORTIZATION_SCHEDULE_ACTION'
     });

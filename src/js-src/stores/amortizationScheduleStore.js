@@ -4,6 +4,7 @@ import dispatcher from '../actions/dispatcher';
 class AmortizationScheduleStore extends EventEmitter {
 
   schedule = {}
+  futureSchedule = {}
 
   getAmortizationScheduleData() {
     return this.schedule;
@@ -18,6 +19,18 @@ class AmortizationScheduleStore extends EventEmitter {
     switch (action.type) {
       case 'COMPLETE_GET_AMORTIZATION_SCHEDULE_ACTION': {
         this.getAmortizationSchedule(action.schedule);
+        break;
+      }
+      case 'SET_PRINCIPAL_AMOUNT_ACTION': {
+        this.futureSchedule.principalAmount = action.principalAmount;
+        break;
+      }
+      case 'SET_INSTALLMENTS_ACTION': {
+        this.futureSchedule.installments = action.installments;
+        break;
+      }
+      case 'SET_PAYMENT_ACTION': {
+        this.futureSchedule.installments = action.installments;
         break;
       }
     }
