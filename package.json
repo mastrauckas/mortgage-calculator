@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Mortgage Playground website",
   "scripts": {
-    "wp": "webpack",
+    "build": "webpack",
+    "build:prod": "cross-env NODE_ENV=production npm run build",
     "dev-server": "npm run lint && cross-env PYTHONPATH=./src/api FLASK_APP=./src/wwwroot/app.py FLASK_DEBUG=1 flask run",
     "test": "npm run test:python",
     "test:python": "cross-env PYTHONPATH=./src/api:./src/wwwroot py.test",
