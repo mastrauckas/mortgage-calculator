@@ -6,7 +6,7 @@ var webpack = require('webpack');
 
 module.exports = {
   context: path.join(__dirname, '/src'),
-  devtool: debug ? 'source-map' : null,
+  devtool: debug ? 'inline-source-map' : false,
   entry: './js-src/scripts.js',
   watch: true,
   module: {
@@ -30,8 +30,7 @@ module.exports = {
     filename: 'scripts.min.js'
   },
   plugins: debug ? [] : [
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({ mangle: false, sourcemap: false }),
   ],
 };
