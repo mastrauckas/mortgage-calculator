@@ -5,10 +5,10 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const packages = require('./package.json');
 
-const PRODUCTION = process.env.NODE_ENV === 'production';
-const DEVELOPMENT = !PRODUCTION;
-
 const environment = process.env.NODE_ENV.toUpperCase();
+
+const PRODUCTION = environment === 'PRODUCTION';
+const DEVELOPMENT = environment === 'DEVELOPMENT';
 
 const colors = {
   reset: '\x1b[0m',
