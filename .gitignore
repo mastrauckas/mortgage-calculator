@@ -1,10 +1,9 @@
 # My own section
 
 src/wwwroot/templates/index.html
+src/wwwroot/static/js/*.js
 
 #
-
-
 
 # Created by https://www.gitignore.io/api/code,python,node
 
