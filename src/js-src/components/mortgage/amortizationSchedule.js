@@ -27,17 +27,17 @@ export default class AmortizationSchedule extends Component {
     });
 
     return (
-      <div className='mdl-cell mdl-cell--9-col-desktop'>
-        <table className='mdl-data-table mdl-js-data-table'>
-          <caption>Amortization Schedule</caption>
+      <div className='col l9'>
+        <table className='striped bordered centered'>
+          <caption><h4>Amortization Schedule</h4></caption>
           <thead>
             <tr>
-              <th className='mdl-data-table__cell--non-numeric'>Installment</th>
-              <th className='mdl-data-table__cell--non-numeric'>Payment Date</th>
-              <th className='mdl-data-table__cell--non-numeric'>Payment</th>
-              <th className='mdl-data-table__cell--non-numeric'>Interest Amount</th>
-              <th className='mdl-data-table__cell--non-numeric'>Principal Amount</th>
-              <th className='mdl-data-table__cell--non-numeric'>Balance</th>
+              <th>Installment</th>
+              <th>Payment Date</th>
+              <th>Payment</th>
+              <th>Interest Amount</th>
+              <th>Principal Amount</th>
+              <th>Balance</th>
             </tr>
           </thead>
           <tbody>

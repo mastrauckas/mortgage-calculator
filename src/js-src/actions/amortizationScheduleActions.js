@@ -35,10 +35,8 @@ class AmortizationScheduleActions {
     });
 
     const url = this.createUrlFromSchedule(schedule);
-    console.log(url);
     axios.get(url)
       .then(function (response) {
-        console.log(response.data);
         const amortizationSchedule = response.data.installments.map(installment => {
           return {
             installmentNumber: installment.number,

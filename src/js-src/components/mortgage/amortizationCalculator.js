@@ -35,65 +35,54 @@ export default class AmortizationCalculator extends Component {
 
   render() {
     return (
-      <div className='mdl-cell mdl-cell--3-col-desktop'>
-        <div className='mdl-textfield mdl-js-textfield'>
-          <label htmlFor='mortgagePrincipalAmount'
-            className='mdl-textfield__label'
-            title='Please Enter Mortgage Principal Amount'>
+      <div className='col l3'>
+        <div>
+          <label htmlFor='mortgagePrincipalAmount'>
             Mortgage Principal Amount
             </label>
           <input id='mortgagePrincipalAmount'
             defaultValue={`$${this.schedule.principalAmount.format(2)}`}
-            ref={(input) => { this.domElements.principalAmount = input; }}
-            className='mdl-textfield__input'>
+            ref={(input) => { this.domElements.principalAmount = input; }}>
           </input>
-        </div >
-        <div className='mdl-textfield mdl-js-textfield'>
-          <label htmlFor='mortgageTerm'
-            className='mdl-textfield__label'>
+        </div>
+        <div>
+          <label htmlFor='mortgageTerm'>
             Mortgage Term
           </label>
           <input id='mortgageTerm'
             defaultValue={this.schedule.installments}
-            ref={(input) => { this.domElements.installments = input; }}
-            className='mdl-textfield__input'>
+            ref={(input) => { this.domElements.installments = input; }}>
           </input>
         </div>
-        <div className='mdl-textfield mdl-js-textfield'>
-          <label htmlFor='mortgagePayment'
-            className='mdl-textfield__label'>>
+        <div>
+          <label htmlFor='mortgagePayment'>
             Mortgage Payment
-          </label>
+        </label>
           <input id='mortgagePayment'
             defaultValue={`$${this.schedule.payment.format(2)}`}
-            ref={(input) => { this.domElements.payment = input; }}
-            className='mdl-textfield__input'>
+            ref={(input) => { this.domElements.payment = input; }}>
           </input>
         </div>
-        <div className='mdl-textfield mdl-js-textfield'>
-          <label htmlFor='mortgageStartDate'
-            className='mdl-textfield__label'>
+        <div>
+          <label htmlFor='mortgageStartDate'>
             Mortgage Start Date
-          </label>
+        </label>
           <input id='mortgageStartDate'
             defaultValue={this.schedule.startDate}
-            ref={(input) => { this.domElements.startDate = input; }}
-            className='mdl-textfield__input'>
+            ref={(input) => { this.domElements.startDate = input; }}>
           </input>
         </div>
-        <div className='mdl-textfield mdl-js-textfield'>
-          <label htmlFor='mortgageInterestRate'
-            className='mdl-textfield__label'>
+        <div>
+          <label htmlFor='mortgageInterestRate'>
             Interest Rate
           </label>
           <input id='mortgageInterestRate' defaultValue={`${this.schedule.interestRate}%`}
-            ref={(input) => { this.domElements.interestRate = input; }}
-            className='mdl-textfield__input'>
+            ref={(input) => { this.domElements.interestRate = input; }}>
           </input>
         </div>
         <button onClick={this.onClick.bind(this)}
-          className='mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored'>
-          Calculate Your Mortgage
+          className='waves-effect waves-light btn-large'>
+          Calculate My Mortgage
         </button>
       </div>
     );
