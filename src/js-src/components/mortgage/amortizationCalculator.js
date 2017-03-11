@@ -36,47 +36,53 @@ export default class AmortizationCalculator extends Component {
   render() {
     return (
       <div className='col l3'>
-        <div>
+        <div className='input-field'>
           <label htmlFor='mortgagePrincipalAmount'>
             Mortgage Principal Amount
-            </label>
+          </label>
           <input id='mortgagePrincipalAmount'
+            type='text'
             defaultValue={`$${this.schedule.principalAmount.format(2)}`}
             ref={(input) => { this.domElements.principalAmount = input; }}>
           </input>
         </div>
-        <div>
+        <div className='input-field'>
           <label htmlFor='mortgageTerm'>
             Mortgage Term
           </label>
           <input id='mortgageTerm'
+            type='text'
             defaultValue={this.schedule.installments}
             ref={(input) => { this.domElements.installments = input; }}>
           </input>
         </div>
-        <div>
+        <div className='input-field'>
           <label htmlFor='mortgagePayment'>
             Mortgage Payment
         </label>
           <input id='mortgagePayment'
+            type='text'
             defaultValue={`$${this.schedule.payment.format(2)}`}
             ref={(input) => { this.domElements.payment = input; }}>
           </input>
         </div>
-        <div>
+        <div className='input-field'>
           <label htmlFor='mortgageStartDate'>
             Mortgage Start Date
-        </label>
+          </label>
           <input id='mortgageStartDate'
+            type='text'
             defaultValue={this.schedule.startDate}
             ref={(input) => { this.domElements.startDate = input; }}>
           </input>
         </div>
-        <div>
+        <div className='input-field'>
           <label htmlFor='mortgageInterestRate'>
             Interest Rate
           </label>
-          <input id='mortgageInterestRate' defaultValue={`${this.schedule.interestRate}%`}
+          <input id='mortgageInterestRate'
+            type='text'
+            defaultValue={`${this.schedule.interestRate}%`}
             ref={(input) => { this.domElements.interestRate = input; }}>
           </input>
         </div>
