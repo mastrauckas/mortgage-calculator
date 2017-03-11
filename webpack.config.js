@@ -30,16 +30,20 @@ const plugins = [
   new HtmlWebpackPlugin({
     template: './wwwroot/templates/index-before-scripts.html',
     chunksSortMode: 'dependency',
-    filename: './templates/index.html'
+    filename: './templates/index.html',
+
+    minify: {
+      removeComments: PRODUCTION,
+      collapseWhitespace: PRODUCTION
+    }
+  }),
+  new webpack.optimize.CommonsChunkPlugin({
+    names: ['vendor', 'manifest'],
+    minChunks: Infinity
   })
 ];
 
 if (PRODUCTION) {
-
-  plugins.push(new webpack.optimize.CommonsChunkPlugin({
-    names: ['vendor', 'manifest'],
-    minChunks: Infinity
-  }));
 
   plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
 
