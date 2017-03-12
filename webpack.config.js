@@ -57,7 +57,7 @@ const plugins = [
 if (PRODUCTION) {
 
   plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
-
+  plugins.push(new webpack.NamedModulesPlugin())
   plugins.push(new webpack.optimize.UglifyJsPlugin({
     sourceMap: false,
     minimize: true,
