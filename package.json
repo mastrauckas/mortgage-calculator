@@ -5,16 +5,17 @@
   "scripts": {
     "build": "npm run build:dev",
     "build:dev": "npm run build:dev:watch",
-    "build:dev:watch": "npm run clean && cross-env NODE_ENV=development webpack --progress --profile --color --watch",
-    "build:dev:nowatch": "npm run clean && cross-env NODE_ENV=development webpack --progress --profile --color",
-    "build:prod": "npm run clean && cross-env NODE_ENV=production webpack --progress --profile --color",
-    "dev-server": "npm run lint && cross-env PYTHONPATH=./src/api FLASK_APP=./src/wwwroot/app.py FLASK_DEBUG=1 flask run",
+    "build:dev:watch": "npm run clean && npm run mv-py && cross-env NODE_ENV=development webpack --progress --profile --color --watch",
+    "build:dev:nowatch": "npm run clean && npm run mv-py && cross-env NODE_ENV=development webpack --progress --profile --color",
+    "build:prod": "npm run clean c && cross-env NODE_ENV=production webpack --progress --profile --color",
+    "dev-server": "npm run lint && FLASK_APP=./build/app.py FLASK_DEBUG=1 flask run",
     "test": "npm run test:python",
     "test:python": "cross-env PYTHONPATH=./src/api:./src/wwwroot py.test",
     "lint": "npm run lint:python && npm run lint:javascript",
-    "lint:python": "flake8 ./src/api",
+    "lint:python": "flake8 ./src/py",
     "lint:javascript": "eslint src",
-    "clean": "rimraf ./src/wwwroot/static/js"
+    "clean": "rimraf ./build",
+    "mv-py": "cpx './src/py/*.py' ./build/ -C"
   },
   "repository": {
     "type": "git",
@@ -36,6 +37,7 @@
     "babel-preset-es2016": "^6.22.0",
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-2": "^6.22.0",
+    "cpx": "^1.5.0",
     "cross-env": "^3.1.3",
     "css-loader": "^0.27.1",
     "del-cli": "^0.2.1",

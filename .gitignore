@@ -1,7 +1,6 @@
 # My own section
 
-src/wwwroot/templates/index.html
-src/wwwroot/static/js/*.js
+./build
 
 #
 

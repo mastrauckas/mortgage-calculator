@@ -26,8 +26,8 @@ const outputFileName = DEVELOPMENT
   ? 'static/js/[name].bundle.js'
   : 'static/js/[name].bundle.[chunkhash:8].min.js';
 const outputChunkFilename = DEVELOPMENT
-  ? './src/wwwroot/static/js/[name].bundle.chunk.js'
-  : './src/wwwroot/static/js/[name].bundle.chunk.[chunkhash:8].min.js';
+  ? './build/static/js/[name].bundle.chunk.js'
+  : './build/static/js/[name].bundle.chunk.[chunkhash:8].min.js';
 
 const vendorPackages = Object.keys(packages.dependencies);
 
@@ -38,7 +38,7 @@ const extractCssPlugin = new ExtractTextPlugin({
 
 const plugins = [
   new HtmlWebpackPlugin({
-    template: './wwwroot/templates/index-before-scripts.html',
+    template: './html/index.html',
     chunksSortMode: 'dependency',
     filename: './templates/index.html',
 
@@ -84,9 +84,15 @@ module.exports = {
   context: path.join(__dirname, '/src'),
   devtool: DEVELOPMENT ? 'inline-source-map' : false,
   entry: {
-    'app': './js-src/scripts.js',
+    'app': './js/scripts.js',
     'vendor': vendorPackages,
-    'style': './css-src/style.css'
+    'css': './css/style.css',
+  },
+  output: {
+    path: './build',
+    publicPath: '/',
+    filename: outputFileName,
+    chunkFilename: outputChunkFilename,
   },
   module: {
     rules: [
@@ -113,12 +119,6 @@ module.exports = {
         })
       }
     ]
-  },
-  output: {
-    path: './src/wwwroot',
-    publicPath: '/',
-    filename: outputFileName,
-    chunkFilename: outputChunkFilename,
   },
   plugins
 };
