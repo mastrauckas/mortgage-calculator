@@ -10,7 +10,7 @@
     "build:prod": "npm run clean c && cross-env NODE_ENV=production webpack --progress --profile --color",
     "dev-server": "npm run lint && FLASK_APP=./build/app.py FLASK_DEBUG=1 flask run",
     "test": "npm run test:python",
-    "test:python": "cross-env PYTHONPATH=./src/api:./src/wwwroot py.test",
+    "test:python": "cross-env PYTHONPATH=./src/py:./src/py py.test",
     "lint": "npm run lint:python && npm run lint:javascript",
     "lint:python": "flake8 ./src/py",
     "lint:javascript": "eslint src",
