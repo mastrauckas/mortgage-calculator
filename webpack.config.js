@@ -3,6 +3,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const packages = require('./package.json');
 
 const environment = process.env.NODE_ENV.toUpperCase();
@@ -17,6 +18,10 @@ const colors = {
   }
 }
 
+const outputCssFileName = DEVELOPMENT
+  ? 'static/css/[name].bundle.css'
+  : 'static/css/[name].bundle.[chunkhash:8].css';
+
 const outputFileName = DEVELOPMENT
   ? 'static/js/[name].bundle.js'
   : 'static/js/[name].bundle.[chunkhash:8].min.js';
@@ -25,6 +30,11 @@ const outputChunkFilename = DEVELOPMENT
   : './src/wwwroot/static/js/[name].bundle.chunk.[chunkhash:8].min.js';
 
 const vendorPackages = Object.keys(packages.dependencies);
+
+const extractCssPlugin = new ExtractTextPlugin({
+  filename: outputCssFileName,
+  allChunks: true
+})
 
 const plugins = [
   new HtmlWebpackPlugin({
@@ -40,7 +50,8 @@ const plugins = [
   new webpack.optimize.CommonsChunkPlugin({
     names: ['vendor', 'manifest'],
     minChunks: Infinity
-  })
+  }),
+  extractCssPlugin
 ];
 
 if (PRODUCTION) {
@@ -74,7 +85,8 @@ module.exports = {
   devtool: DEVELOPMENT ? 'inline-source-map' : false,
   entry: {
     'app': './js-src/scripts.js',
-    'vendor': vendorPackages
+    'vendor': vendorPackages,
+    'style': './css-src/style.css'
   },
   module: {
     rules: [
@@ -88,6 +100,17 @@ module.exports = {
         test: /.js?$/,
         exclude: /(node_modules)|(bower_components)/,
         loader: 'babel-loader'
+      },
+      {
+        test: /\.css?$/,
+        exclude: /node_modules/,
+        loader: extractCssPlugin.extract({
+          loader: 'css-loader',
+          options: {
+            sourceMap: false,
+            minimize: PRODUCTION
+          }
+        })
       }
     ]
   },
