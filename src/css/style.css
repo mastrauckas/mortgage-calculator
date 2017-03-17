@@ -1,3 +1,36 @@
-.input-field label {
-     color: green;
-   }
+.container {
+  width: 90%
+}
+
+#introHeader {
+  padding: 0px 24px 20px 24px
+}
+
+#calculator {
+  margin-top: 50px;
+}
+
+h1 {
+font-size: 2.4rem;
+}
+
+h2 {
+  font-size: 21rem;
+}
+
+h3 {
+  font-size: 1.8rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.3rem;
+}
+
+h6 {
+  font-size: 1rem;
+
+}
