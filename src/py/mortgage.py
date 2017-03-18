@@ -2,6 +2,8 @@
 from installment import Installment
 from mortgage_information import Mortgage_Information
 from dateutil import relativedelta
+from mortgage_payment_too_small_exception \
+                                import MortgagePaymentTooSmallException
 
 
 class Mortgage:
@@ -32,6 +34,10 @@ class Mortgage:
                                                    self.__rate)
 
             count += 1
+            if count > 100:
+                raise MortgagePaymentTooSmallException(
+                    'Mortgage installments would be longer than a 100 years.')
+
             loan_Amount = installment.total_Principal_Amount()
             payment_Date = payment_Date + relativedelta.relativedelta(months=1)
             installments.append(installment)
