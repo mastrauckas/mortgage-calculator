@@ -1,7 +1,7 @@
 import React from 'react';
 import { Component } from 'react';
 import AmortizationCalculator from '../mortgage/amortizationCalculator';
-import AmortizationSchedule from '../mortgage/amortizationSchedule';
+import AmortizationTabs from '../mortgage/amortizationTabs';
 
 export default class Content extends Component {
   render() {
@@ -9,7 +9,7 @@ export default class Content extends Component {
       <main className="container">
         <div className='row'>
           <AmortizationCalculator />
-          <AmortizationSchedule />
+          <AmortizationTabs />
         </div>
       </main>
     );

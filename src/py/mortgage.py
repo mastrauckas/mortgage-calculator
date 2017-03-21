@@ -34,13 +34,13 @@ class Mortgage:
                                                    self.__rate)
 
             count += 1
-            if count > 100:
-                raise MortgagePaymentTooSmallException(
-                    'Mortgage installments would be longer than a 100 years.')
 
             loan_Amount = installment.total_Principal_Amount()
             payment_Date = payment_Date + relativedelta.relativedelta(months=1)
             installments.append(installment)
+            if len(installments) > 1200:
+                raise MortgagePaymentTooSmallException(
+                    'Mortgage installments would be longer than a 100 years.')
 
         return installments
 

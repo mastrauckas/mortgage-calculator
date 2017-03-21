@@ -19,12 +19,17 @@ const colors = {
 }
 
 const outputCssFileName = DEVELOPMENT
-  ? 'static/css/[name].bundle.css'
-  : 'static/css/[name].bundle.[chunkhash:8].css';
+  ? 'static/css/app.bundle.css'
+  : 'static/css/app.bundle.[chunkhash:8].css';
+
+const vendorOutputCssFileName = DEVELOPMENT
+  ? 'static/css/vendor.bundle.css'
+  : 'static/css/vendor.bundle.[chunkhash:8].css';
 
 const outputFileName = DEVELOPMENT
   ? 'static/js/[name].bundle.js'
   : 'static/js/[name].bundle.[chunkhash:8].min.js';
+
 const outputChunkFilename = DEVELOPMENT
   ? './build/static/js/[name].bundle.chunk.js'
   : './build/static/js/[name].bundle.chunk.[chunkhash:8].min.js';
@@ -33,6 +38,11 @@ const vendorPackages = Object.keys(packages.dependencies);
 
 const extractCssPlugin = new ExtractTextPlugin({
   filename: outputCssFileName,
+  allChunks: true
+})
+
+const vendorExtractCssPlugin = new ExtractTextPlugin({
+  filename: vendorOutputCssFileName,
   allChunks: true
 })
 
@@ -51,7 +61,8 @@ const plugins = [
     names: ['vendor', 'manifest'],
     minChunks: Infinity
   }),
-  extractCssPlugin
+  extractCssPlugin,
+  vendorExtractCssPlugin
 ];
 
 if (PRODUCTION) {
@@ -87,6 +98,7 @@ module.exports = {
     'app': './js/scripts.js',
     'vendor': vendorPackages,
     'css': './css/style.css',
+    'vendorCss': '../node_modules/materialize-css/dist/css/materialize.css'
   },
   output: {
     path: './build',
@@ -117,7 +129,22 @@ module.exports = {
             minimize: PRODUCTION
           }
         })
-      }
+      },
+      {
+        test: /\.css?$/,
+        include: /node_modules/,
+        loader: vendorExtractCssPlugin.extract({
+          loader: 'css-loader',
+          options: {
+            sourceMap: false,
+            minimize: PRODUCTION
+          }
+        })
+      },
+      {
+        test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
+        loader: 'file-loader?name=[name].[ext]&publicPath=/static/fonts/&outputPath=static/fonts/'
+      },
     ]
   },
   plugins
