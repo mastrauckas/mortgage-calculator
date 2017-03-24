@@ -34,6 +34,10 @@ const outputChunkFilename = DEVELOPMENT
   ? './build/static/js/[name].bundle.chunk.js'
   : './build/static/js/[name].bundle.chunk.[chunkhash:8].min.js';
 
+const flexboxgrid = DEVELOPMENT
+  ? '../node_modules/flexboxgrid/dist/flexboxgrid.css'
+  : '../node_modules/flexboxgrid/dist/flexboxgrid.min.css'
+
 const vendorPackages = Object.keys(packages.dependencies);
 
 const extractCssPlugin = new ExtractTextPlugin({
@@ -98,7 +102,7 @@ module.exports = {
     'app': './js/scripts.js',
     'vendor': vendorPackages,
     'css': './css/style.css',
-    'vendorCss': '../node_modules/materialize-css/dist/css/materialize.css'
+    'vendorCss': flexboxgrid
   },
   output: {
     path: './build',
@@ -140,10 +144,6 @@ module.exports = {
             minimize: PRODUCTION
           }
         })
-      },
-      {
-        test: /\.(ttf|eot|svg|woff(2)?)(\?[a-z0-9=&.]+)?$/,
-        loader: 'file-loader?name=[name].[ext]&publicPath=/static/fonts/&outputPath=static/fonts/'
       },
     ]
   },

@@ -2,6 +2,8 @@ import React from 'react';
 import { Component } from 'react';
 import AmortizationScheduleItem from './amortizationScheduleItem';
 import AmortizationScheduleStore from '../../stores/amortizationScheduleStore';
+import { Table, TableHeader, TableBody, TableRow, TableHeaderColumn } from 'material-ui/Table';
+import { Tabs, Tab } from 'material-ui/Tabs';
 
 export default class AmortizationSchedule extends Component {
   constructor() {
@@ -27,23 +29,59 @@ export default class AmortizationSchedule extends Component {
     });
 
     return (
-      <div className='col l9'>
-        <table className='striped bordered centered'>
-          <caption><h4>Amortization Schedule</h4></caption>
-          <thead>
-            <tr>
-              <th>Installment</th>
-              <th>Payment Date</th>
-              <th>Payment</th>
-              <th>Interest Amount</th>
-              <th>Principal Amount</th>
-              <th>Balance</th>
-            </tr>
-          </thead>
-          <tbody>
+      <div className='col-md-9'>
+        <Table selectable={false}>
+          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+            <TableRow>
+              <TableHeaderColumn colSpan='6'>
+                <Tabs>
+                  <Tab label='Summary'>
+                    <h1>Mortgage Summary</h1>
+                  </Tab>
+                  <Tab label='1-10 Years'>
+                    <h1>Hello 1-10 Years</h1>
+                  </Tab>
+                  <Tab label='11-20 Years'>
+                    <h1>Hello 11-21 Years</h1>
+                  </Tab>
+                  <Tab label='21-30 Years'>
+                    <h1>Hello 21-30 Years</h1>
+                  </Tab>
+                </Tabs>
+              </TableHeaderColumn>
+            </TableRow>
+            <TableRow>
+              <TableHeaderColumn tooltip="The installment number"
+                style={{ textAlign: 'center' }}>
+                Installment
+              </TableHeaderColumn>
+              <TableHeaderColumn tooltip="The date the payment will be due."
+                style={{ textAlign: 'center' }}>
+                Payment Date
+              </TableHeaderColumn>
+              <TableHeaderColumn tooltip="The payment amount."
+                style={{ textAlign: 'center' }}>
+                Payment
+              </TableHeaderColumn>
+              <TableHeaderColumn tooltip="How much went toward interest for the payment."
+                style={{ textAlign: 'center' }}>
+                Interest Amount
+              </TableHeaderColumn>
+              <TableHeaderColumn tooltip="How much went toward the principal for the payment."
+                style={{ textAlign: 'center' }}>
+                Principal Amount
+              </TableHeaderColumn>
+              <TableHeaderColumn tooltip="The balance still due."
+                style={{ textAlign: 'center' }}>
+                Balance
+              </TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody stripedRows={true}
+            displayRowCheckbox={false}>
             {AmortizationScheduleItemComponent}
-          </tbody>
-        </table>
+          </TableBody>
+        </Table>
       </div>
     );
   }

@@ -1,15 +1,15 @@
 import React from 'react';
 import { Component } from 'react';
 import AmortizationCalculator from '../mortgage/amortizationCalculator';
-import AmortizationTabs from '../mortgage/amortizationTabs';
+import AmortizationSchedule from '../mortgage/amortizationSchedule';
 
 export default class Content extends Component {
   render() {
     return (
-      <main className="container">
+      <main className='container-fluid'>
         <div className='row'>
           <AmortizationCalculator />
-          <AmortizationTabs />
+          <AmortizationSchedule />
         </div>
       </main>
     );

@@ -1,12 +1,24 @@
 import React from 'react';
 import { Component } from 'react';
 import Sugar from 'sugar';
+import { TableRow, TableRowColumn } from 'material-ui/Table';
 
 export default class AmortizationScheduleItem extends Component {
   constructor() {
     super();
     Sugar.extend();
   }
+
+  /*
+ <tr>
+        <td>{this.props.installmentNumber}</td>
+        <td>{this.props.paymentDate.format('%m/%d/%Y')}</td>
+        <td>${this.props.payment.format(2)}</td>
+        <td>${this.props.interestAmount.format(2)}</td>
+        <td>${this.props.principalAmount.format(2)}</td>
+        <td>${this.props.totalPrincipalAmount.format(2)}</td>
+      </tr>
+  */
 
   static propTypes = {
     installmentNumber: React.PropTypes.number.isRequired,
@@ -19,14 +31,14 @@ export default class AmortizationScheduleItem extends Component {
 
   render() {
     return (
-      <tr>
-        <td>{this.props.installmentNumber}</td>
-        <td>{this.props.paymentDate.format('%m/%d/%Y')}</td>
-        <td>${this.props.payment.format(2)}</td>
-        <td>${this.props.interestAmount.format(2)}</td>
-        <td>${this.props.principalAmount.format(2)}</td>
-        <td>${this.props.totalPrincipalAmount.format(2)}</td>
-      </tr>
+
+      <TableRow key={this.props.installmentNumber}>
+        <TableRowColumn >{this.props.paymentDate.format('%m/%d/%Y')}</TableRowColumn>
+        <TableRowColumn>${this.props.payment.format(2)}</TableRowColumn>
+        <TableRowColumn>${this.props.interestAmount.format(2)}</TableRowColumn>
+        <TableRowColumn>${this.props.principalAmount.format(2)}</TableRowColumn>
+        <TableRowColumn>${this.props.totalPrincipalAmount.format(2)}</TableRowColumn>
+      </TableRow>
     );
   }
 }
