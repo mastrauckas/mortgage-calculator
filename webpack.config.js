@@ -20,11 +20,11 @@ const colors = {
 
 const outputCssFileName = DEVELOPMENT
   ? 'static/css/app.bundle.css'
-  : 'static/css/app.bundle.[chunkhash:8].css';
+  : 'static/css/app.bundle.[chunkhash:8].min.css';
 
 const vendorOutputCssFileName = DEVELOPMENT
   ? 'static/css/vendor.bundle.css'
-  : 'static/css/vendor.bundle.[chunkhash:8].css';
+  : 'static/css/vendor.bundle.[chunkhash:8].min.css';
 
 const outputFileName = DEVELOPMENT
   ? 'static/js/[name].bundle.js'
@@ -105,7 +105,7 @@ module.exports = {
     'vendorCss': flexboxgrid
   },
   output: {
-    path: './build',
+    path: path.resolve(__dirname, 'build'),
     publicPath: '/',
     filename: outputFileName,
     chunkFilename: outputChunkFilename,
@@ -127,22 +127,14 @@ module.exports = {
         test: /\.css?$/,
         exclude: /node_modules/,
         loader: extractCssPlugin.extract({
-          loader: 'css-loader',
-          options: {
-            sourceMap: false,
-            minimize: PRODUCTION
-          }
+          use: `css-loader?{"sourceMap":false,"minimize":${PRODUCTION}}`
         })
       },
       {
         test: /\.css?$/,
         include: /node_modules/,
         loader: vendorExtractCssPlugin.extract({
-          loader: 'css-loader',
-          options: {
-            sourceMap: false,
-            minimize: PRODUCTION
-          }
+          use: `css-loader?{"sourceMap":false,"minimize":${PRODUCTION}}`
         })
       },
     ]
