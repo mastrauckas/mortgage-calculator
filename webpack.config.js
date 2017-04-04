@@ -16,7 +16,7 @@ const colors = {
   fg: {
     red: '\x1b[31m'
   }
-}
+};
 
 const outputCssFileName = DEVELOPMENT
   ? 'static/css/app.bundle.css'
@@ -36,19 +36,19 @@ const outputChunkFilename = DEVELOPMENT
 
 const flexboxgrid = DEVELOPMENT
   ? '../node_modules/flexboxgrid/dist/flexboxgrid.css'
-  : '../node_modules/flexboxgrid/dist/flexboxgrid.min.css'
+  : '../node_modules/flexboxgrid/dist/flexboxgrid.min.css';
 
 const vendorPackages = Object.keys(packages.dependencies);
 
 const extractCssPlugin = new ExtractTextPlugin({
   filename: outputCssFileName,
   allChunks: true
-})
+});
 
 const vendorExtractCssPlugin = new ExtractTextPlugin({
   filename: vendorOutputCssFileName,
   allChunks: true
-})
+});
 
 const plugins = [
   new HtmlWebpackPlugin({
@@ -72,7 +72,7 @@ const plugins = [
 if (PRODUCTION) {
 
   plugins.push(new webpack.optimize.OccurrenceOrderPlugin());
-  plugins.push(new webpack.NamedModulesPlugin())
+  plugins.push(new webpack.NamedModulesPlugin());
   plugins.push(new webpack.optimize.UglifyJsPlugin({
     sourceMap: false,
     minimize: true,

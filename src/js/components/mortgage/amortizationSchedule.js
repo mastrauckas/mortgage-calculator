@@ -6,6 +6,12 @@ import { Table, TableHeader, TableBody, TableRow, TableHeaderColumn } from 'mate
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 export default class AmortizationSchedule extends Component {
+  AmortizationScheduleDecadeSets = []
+  decades = []
+  decadeTab = undefined
+  YEAR = 12
+  DECADE = 10 * this.YEAR;
+
   constructor() {
     super();
     this.state = {
@@ -17,16 +23,74 @@ export default class AmortizationSchedule extends Component {
     AmortizationScheduleStore.on('change', this.amortizationScheduleChanged.bind(this));
   }
 
-  amortizationScheduleChanged() {
+  clickDecadeTabs(value) {
+    this.decades = this.AmortizationScheduleDecadeSets[value];
+    this.decadeTab.value = 0;
     this.setState({
-      amortizationSchedule: AmortizationScheduleStore.getAmortizationScheduleData()
+      amortizationSchedule: this.decades[0]
+    });
+  }
+
+  clickYearTab(value) {
+    this.setState({
+      amortizationSchedule: this.decades[value]
+    });
+  }
+
+  amortizationScheduleChanged() {
+    const amortizationSchedule = AmortizationScheduleStore.getAmortizationScheduleData();
+    this.AmortizationScheduleDecadeSets = this.getAmortizationScheduleDecadeSets(amortizationSchedule);
+    this.decades = this.AmortizationScheduleDecadeSets[0];
+    this.setState({
+      amortizationSchedule: this.decades[0]
+    });
+  }
+
+  getAmortizationScheduleDecadeSets(amortizationSchedule) {
+    var all = [];
+    for (let currentDecade = 0; currentDecade < amortizationSchedule.length / this.DECADE; currentDecade++) {
+      const decade = [];
+      for (let year = 0; year < 10; year++) {
+        const start = (currentDecade * this.DECADE) + (year * this.YEAR);
+        const end = start + this.YEAR;
+        decade.push(amortizationSchedule.slice(start, end));
+      }
+      all.push(decade);
+    }
+    return all;
+  }
+
+  getAllAmortizationScheduleItemComponents() {
+    return this.state.amortizationSchedule.map(installment => {
+      return <AmortizationScheduleItem key={installment.installmentNumber} {...installment} />;
+    });
+  }
+
+  getAmortizationScheduleDecadeTabComponents() {
+    return this.AmortizationScheduleDecadeSets.map(decade => {
+      const indexYears = this.AmortizationScheduleDecadeSets.indexOf(decade);
+      const from = indexYears * 10 + 1;
+      const to = decade.length * (indexYears + 1);
+      const label = `${from}-${to} Years`;
+      const tabYearsItemComponents = decade.map(y => {
+        const indexYear = decade.indexOf(y) + 1;
+        const year = indexYear + (indexYears * 10);
+        const label = `Year ${year}`;
+        return <Tab key={year - 1} value={indexYear - 1} label={label} />;
+      });
+      return (
+        <Tab key={indexYears} label={label} value={indexYears}>
+          <Tabs onChange={this.clickYearTab.bind(this)}>
+            {tabYearsItemComponents}
+          </Tabs>
+        </Tab>
+      );
     });
   }
 
   render() {
-    const AmortizationScheduleItemComponent = this.state.amortizationSchedule.map(installment => {
-      return <AmortizationScheduleItem key={installment.installmentNumber} {...installment} />;
-    });
+    const tabDecadeItemComponents = this.getAmortizationScheduleDecadeTabComponents();
+    const AmortizationScheduleItemComponents = this.getAllAmortizationScheduleItemComponents();
 
     return (
       <div className='col-md-9'>
@@ -34,19 +98,9 @@ export default class AmortizationSchedule extends Component {
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
               <TableHeaderColumn colSpan='6'>
-                <Tabs>
-                  <Tab label='Summary'>
-                    <h1>Mortgage Summary</h1>
-                  </Tab>
-                  <Tab label='1-10 Years'>
-                    <h1>Hello 1-10 Years</h1>
-                  </Tab>
-                  <Tab label='11-20 Years'>
-                    <h1>Hello 11-21 Years</h1>
-                  </Tab>
-                  <Tab label='21-30 Years'>
-                    <h1>Hello 21-30 Years</h1>
-                  </Tab>
+                <Tabs ref={(input) => { this.decadeTab = input; }}
+                  onChange={this.clickDecadeTabs.bind(this)}>
+                  {tabDecadeItemComponents}
                 </Tabs>
               </TableHeaderColumn>
             </TableRow>
@@ -79,10 +133,10 @@ export default class AmortizationSchedule extends Component {
           </TableHeader>
           <TableBody stripedRows={true}
             displayRowCheckbox={false}>
-            {AmortizationScheduleItemComponent}
+            {AmortizationScheduleItemComponents}
           </TableBody>
-        </Table>
-      </div>
+        </Table >
+      </div >
     );
   }
 }

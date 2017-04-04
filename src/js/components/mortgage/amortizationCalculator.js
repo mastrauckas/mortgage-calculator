@@ -39,9 +39,6 @@ export default class AmortizationCalculator extends Component {
   render() {
     return (
       <div className='col-md-3'>
-        <div>
-          <h4>Calulate My Mortgage</h4>
-        </div>
         <TextField
           floatingLabelText='Mortgage Principal Amount'
           type="text"
