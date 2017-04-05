@@ -4,7 +4,7 @@ import Sugar from 'sugar';
 import AmortizationScheduleActions from '../../actions/amortizationScheduleActions';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import { Col } from 'react-flexbox-grid';
 
 export default class AmortizationCalculator extends Component {
 
@@ -38,7 +38,7 @@ export default class AmortizationCalculator extends Component {
 
   render() {
     return (
-      <div className='col-md-3'>
+      <Col md={3}>
         <TextField
           floatingLabelText='Mortgage Principal Amount'
           type="text"
@@ -66,7 +66,7 @@ export default class AmortizationCalculator extends Component {
           onChange={(input, newValue) => { this.schedule.interestRate = this.formatNumber(newValue); }} />
         <RaisedButton label='Calulate my Mortgage'
           onClick={this.onClick.bind(this)} />
-      </div>
+      </Col>
     );
   }
 
