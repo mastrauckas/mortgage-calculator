@@ -4,6 +4,7 @@ import AmortizationScheduleItem from './amortizationScheduleItem';
 import AmortizationScheduleStore from '../../stores/amortizationScheduleStore';
 import { Table, TableHeader, TableBody, TableRow, TableHeaderColumn } from 'material-ui/Table';
 import { Tabs, Tab } from 'material-ui/Tabs';
+import { Col } from 'react-flexbox-grid';
 
 export default class AmortizationSchedule extends Component {
   AmortizationScheduleDecadeSets = []
@@ -93,7 +94,7 @@ export default class AmortizationSchedule extends Component {
     const AmortizationScheduleItemComponents = this.getAllAmortizationScheduleItemComponents();
 
     return (
-      <div className='col-md-9'>
+      <Col md={9}>
         <Table selectable={false}>
           <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
             <TableRow>
@@ -136,7 +137,7 @@ export default class AmortizationSchedule extends Component {
             {AmortizationScheduleItemComponents}
           </TableBody>
         </Table >
-      </div >
+      </Col>
     );
   }
 }
