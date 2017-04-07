@@ -74,9 +74,7 @@ export default class AmortizationSchedule extends Component {
     return this.AmortizationScheduleDecadeSets.map(decade => {
       const indexYears = this.AmortizationScheduleDecadeSets.indexOf(decade);
       const from = indexYears * this.DECADE + 1;
-      const to = decade.length >= this.DECADE
-        ? decade.length * (indexYears + 1)
-        : decade.length * this.DECADE + indexYears;
+      const to = from + this.AmortizationScheduleDecadeSets[indexYears].length - 1;
       const label = `${from}-${to} Years`;
       const tabYearsItemComponents = decade.map(y => {
         const indexYear = decade.indexOf(y) + 1;
