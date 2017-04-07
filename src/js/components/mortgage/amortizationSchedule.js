@@ -11,7 +11,8 @@ export default class AmortizationSchedule extends Component {
   decades = []
   decadeTab = undefined
   YEAR = 12
-  DECADE = 10 * this.YEAR;
+  DECADE = 10
+  YEARS_IN_DECADE = this.DECADE * this.YEAR;
 
   constructor() {
     super();
@@ -49,10 +50,12 @@ export default class AmortizationSchedule extends Component {
 
   getAmortizationScheduleDecadeSets(amortizationSchedule) {
     var all = [];
-    for (let currentDecade = 0; currentDecade < amortizationSchedule.length / this.DECADE; currentDecade++) {
+    for (let currentDecade = 0; currentDecade < amortizationSchedule.length / this.YEARS_IN_DECADE; currentDecade++) {
       const decade = [];
-      for (let year = 0; year < 10; year++) {
-        const start = (currentDecade * this.DECADE) + (year * this.YEAR);
+      let years = Math.ceil((amortizationSchedule.length - (all.length * this.YEARS_IN_DECADE)) / this.YEAR);
+      years = years > this.DECADE ? this.DECADE : years;
+      for (let year = 0; year < years; year++) {
+        const start = (currentDecade * this.YEARS_IN_DECADE) + (year * this.YEAR);
         const end = start + this.YEAR;
         decade.push(amortizationSchedule.slice(start, end));
       }
@@ -70,12 +73,14 @@ export default class AmortizationSchedule extends Component {
   getAmortizationScheduleDecadeTabComponents() {
     return this.AmortizationScheduleDecadeSets.map(decade => {
       const indexYears = this.AmortizationScheduleDecadeSets.indexOf(decade);
-      const from = indexYears * 10 + 1;
-      const to = decade.length * (indexYears + 1);
+      const from = indexYears * this.DECADE + 1;
+      const to = decade.length >= this.DECADE
+        ? decade.length * (indexYears + 1)
+        : decade.length * this.DECADE + indexYears;
       const label = `${from}-${to} Years`;
       const tabYearsItemComponents = decade.map(y => {
         const indexYear = decade.indexOf(y) + 1;
-        const year = indexYear + (indexYears * 10);
+        const year = indexYear + (indexYears * this.DECADE);
         const label = `Year ${year}`;
         return <Tab key={year - 1} value={indexYear - 1} label={label} />;
       });
