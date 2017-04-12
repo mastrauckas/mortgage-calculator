@@ -9,17 +9,6 @@ export default class AmortizationScheduleItem extends Component {
     Sugar.extend();
   }
 
-  /*
- <tr>
-        <td>{this.props.installmentNumber}</td>
-        <td>{this.props.paymentDate.format('%m/%d/%Y')}</td>
-        <td>${this.props.payment.format(2)}</td>
-        <td>${this.props.interestAmount.format(2)}</td>
-        <td>${this.props.principalAmount.format(2)}</td>
-        <td>${this.props.totalPrincipalAmount.format(2)}</td>
-      </tr>
-  */
-
   static propTypes = {
     installmentNumber: React.PropTypes.number.isRequired,
     paymentDate: React.PropTypes.instanceOf(Date).isRequired,
