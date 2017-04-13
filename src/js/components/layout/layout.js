@@ -16,6 +16,9 @@ export default class Layout extends Component {
       appBar: {
         margin: '0 auto',
         display: 'block'
+      },
+      tableHeaderColumn: {
+        spacing: '0'
       }
     });
     return (
