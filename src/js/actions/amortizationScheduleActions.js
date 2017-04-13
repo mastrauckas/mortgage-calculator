@@ -36,7 +36,7 @@ class AmortizationScheduleActions {
 
     const url = this.createUrlFromSchedule(schedule);
     axios.get(url)
-      .then(function (response) {
+      .then(response => {
         const amortizationSchedule = response.data.installments.map(installment => {
           return {
             installmentNumber: installment.number,
@@ -53,7 +53,7 @@ class AmortizationScheduleActions {
           schedule: amortizationSchedule
         });
       })
-      .catch(function (error) {
+      .catch(error => {
         console.log(error);
 
         dispatcher.dispatch({

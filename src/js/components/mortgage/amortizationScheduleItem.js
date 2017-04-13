@@ -9,17 +9,6 @@ export default class AmortizationScheduleItem extends Component {
     Sugar.extend();
   }
 
-  /*
- <tr>
-        <td>{this.props.installmentNumber}</td>
-        <td>{this.props.paymentDate.format('%m/%d/%Y')}</td>
-        <td>${this.props.payment.format(2)}</td>
-        <td>${this.props.interestAmount.format(2)}</td>
-        <td>${this.props.principalAmount.format(2)}</td>
-        <td>${this.props.totalPrincipalAmount.format(2)}</td>
-      </tr>
-  */
-
   static propTypes = {
     installmentNumber: React.PropTypes.number.isRequired,
     paymentDate: React.PropTypes.instanceOf(Date).isRequired,
@@ -33,11 +22,12 @@ export default class AmortizationScheduleItem extends Component {
     return (
 
       <TableRow key={this.props.installmentNumber}>
-        <TableRowColumn >{this.props.paymentDate.format('%m/%d/%Y')}</TableRowColumn>
-        <TableRowColumn>${this.props.payment.format(2)}</TableRowColumn>
-        <TableRowColumn>${this.props.interestAmount.format(2)}</TableRowColumn>
-        <TableRowColumn>${this.props.principalAmount.format(2)}</TableRowColumn>
-        <TableRowColumn>${this.props.totalPrincipalAmount.format(2)}</TableRowColumn>
+        <TableRowColumn style={{ textAlign: 'center' }}>{this.props.installmentNumber}</TableRowColumn>
+        <TableRowColumn style={{ textAlign: 'center' }}>{this.props.paymentDate.format('%m/%d/%Y')}</TableRowColumn>
+        <TableRowColumn style={{ textAlign: 'center' }}>${this.props.payment.format(2)}</TableRowColumn>
+        <TableRowColumn style={{ textAlign: 'center' }}>${this.props.interestAmount.format(2)}</TableRowColumn>
+        <TableRowColumn style={{ textAlign: 'center' }}>${this.props.principalAmount.format(2)}</TableRowColumn>
+        <TableRowColumn style={{ textAlign: 'center' }}>${this.props.totalPrincipalAmount.format(2)}</TableRowColumn>
       </TableRow>
     );
   }
