@@ -19,6 +19,9 @@ export default class Layout extends Component {
       },
       tableHeaderColumn: {
         spacing: '0'
+      },
+      textField: {
+        paddingLeft: '10rcem'
       }
     });
     return (

@@ -4,7 +4,7 @@ import AmortizationScheduleItem from './amortizationScheduleItem';
 import AmortizationScheduleStore from '../../stores/amortizationScheduleStore';
 import { Table, TableHeader, TableBody, TableRow, TableHeaderColumn } from 'material-ui/Table';
 import { Tabs, Tab } from 'material-ui/Tabs';
-import { Col } from 'react-flexbox-grid';
+import { Row, Col } from 'react-flexbox-grid';
 
 export default class AmortizationSchedule extends Component {
   AmortizationScheduleDecadeSets = []
@@ -97,50 +97,52 @@ export default class AmortizationSchedule extends Component {
     const AmortizationScheduleItemComponents = this.getAllAmortizationScheduleItemComponents();
 
     return (
-      <Col md={9}>
-        <Table selectable={false}>
-          <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-            <TableRow>
-              <TableHeaderColumn colSpan='6'>
-                <Tabs ref={(input) => { this.decadeTab = input; }}
-                  onChange={this.clickDecadeTabs.bind(this)}>
-                  {tabDecadeItemComponents}
-                </Tabs>
+      <Row>
+        <Col md={12}>
+          <Table selectable={false}>
+            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+              <TableRow>
+                <TableHeaderColumn colSpan='6'>
+                  <Tabs ref={(input) => { this.decadeTab = input; }}
+                    onChange={this.clickDecadeTabs.bind(this)}>
+                    {tabDecadeItemComponents}
+                  </Tabs>
+                </TableHeaderColumn>
+              </TableRow>
+              <TableRow>
+                <TableHeaderColumn tooltip="The installment number"
+                  style={{ textAlign: 'center' }}>
+                  Installment
               </TableHeaderColumn>
-            </TableRow>
-            <TableRow>
-              <TableHeaderColumn tooltip="The installment number"
-                style={{ textAlign: 'center' }}>
-                Installment
+                <TableHeaderColumn tooltip="The date the payment will be due."
+                  style={{ textAlign: 'center' }}>
+                  Payment Date
               </TableHeaderColumn>
-              <TableHeaderColumn tooltip="The date the payment will be due."
-                style={{ textAlign: 'center' }}>
-                Payment Date
+                <TableHeaderColumn tooltip="The payment amount."
+                  style={{ textAlign: 'center' }}>
+                  Payment
               </TableHeaderColumn>
-              <TableHeaderColumn tooltip="The payment amount."
-                style={{ textAlign: 'center' }}>
-                Payment
+                <TableHeaderColumn tooltip="How much went toward interest for the payment."
+                  style={{ textAlign: 'center' }}>
+                  Interest Amount
               </TableHeaderColumn>
-              <TableHeaderColumn tooltip="How much went toward interest for the payment."
-                style={{ textAlign: 'center' }}>
-                Interest Amount
+                <TableHeaderColumn tooltip="How much went toward the principal for the payment."
+                  style={{ textAlign: 'center' }}>
+                  Principal Amount
               </TableHeaderColumn>
-              <TableHeaderColumn tooltip="How much went toward the principal for the payment."
-                style={{ textAlign: 'center' }}>
-                Principal Amount
+                <TableHeaderColumn tooltip="The balance still due."
+                  style={{ textAlign: 'center' }}>
+                  Balance
               </TableHeaderColumn>
-              <TableHeaderColumn tooltip="The balance still due."
-                style={{ textAlign: 'center' }}>
-                Balance
-              </TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody stripedRows={true}
-            displayRowCheckbox={false}>
-            {AmortizationScheduleItemComponents}
-          </TableBody>
-        </Table >
-      </Col>
+              </TableRow>
+            </TableHeader>
+            <TableBody stripedRows={true}
+              displayRowCheckbox={false}>
+              {AmortizationScheduleItemComponents}
+            </TableBody>
+          </Table>
+        </Col>
+      </Row>
     );
   }
 }
