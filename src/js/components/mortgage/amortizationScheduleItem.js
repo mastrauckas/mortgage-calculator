@@ -22,11 +22,12 @@ export default class AmortizationScheduleItem extends Component {
     return (
 
       <TableRow key={this.props.installmentNumber}>
-        <TableRowColumn >{this.props.paymentDate.format('%m/%d/%Y')}</TableRowColumn>
-        <TableRowColumn>${this.props.payment.format(2)}</TableRowColumn>
-        <TableRowColumn>${this.props.interestAmount.format(2)}</TableRowColumn>
-        <TableRowColumn>${this.props.principalAmount.format(2)}</TableRowColumn>
-        <TableRowColumn>${this.props.totalPrincipalAmount.format(2)}</TableRowColumn>
+        <TableRowColumn style={{ textAlign: 'center' }}>{this.props.installmentNumber}</TableRowColumn>
+        <TableRowColumn style={{ textAlign: 'center' }}>{this.props.paymentDate.format('%m/%d/%Y')}</TableRowColumn>
+        <TableRowColumn style={{ textAlign: 'center' }}>${this.props.payment.format(2)}</TableRowColumn>
+        <TableRowColumn style={{ textAlign: 'center' }}>${this.props.interestAmount.format(2)}</TableRowColumn>
+        <TableRowColumn style={{ textAlign: 'center' }}>${this.props.principalAmount.format(2)}</TableRowColumn>
+        <TableRowColumn style={{ textAlign: 'center' }}>${this.props.totalPrincipalAmount.format(2)}</TableRowColumn>
       </TableRow>
     );
   }
