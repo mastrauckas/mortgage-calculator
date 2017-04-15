@@ -69,7 +69,7 @@ export default class AmortizationSchedule extends Component {
     const totalPaid = totalInterest + mortgageInformation.schedule.principalAmount;
     const percentInterest = totalInterest / totalPaid * 100;
 
-    const mortgageTotalPayments = mortgageInformation.amortizationSchedule.reverse().first().installmentNumber;
+    const mortgageTotalPayments = mortgageInformation.amortizationSchedule.slice(-1).pop().installmentNumber;
     const mortgageTotalYearsAndMonth =
       this.convertDecimalToYearsAndMonths(mortgageTotalPayments / this.YEAR);
 
