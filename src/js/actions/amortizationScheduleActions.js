@@ -50,7 +50,10 @@ class AmortizationScheduleActions {
 
         dispatcher.dispatch({
           type: 'COMPLETE_GET_AMORTIZATION_SCHEDULE_ACTION',
-          schedule: amortizationSchedule
+          mortgageInformation: {
+            schedule,
+            amortizationSchedule
+          }
         });
       })
       .catch(error => {
