@@ -69,9 +69,11 @@ export default class AmortizationSchedule extends Component {
     const totalPaid = totalInterest + mortgageInformation.schedule.principalAmount;
     const percentInterest = totalInterest / totalPaid * 100;
 
-    const mortgageTotalPayments = mortgageInformation.amortizationSchedule.slice(-1).pop().installmentNumber;
+    const lastInstallmentItem = mortgageInformation.amortizationSchedule.slice(-1).pop();
+    const mortgageTotalPayments = lastInstallmentItem.installmentNumber;
     const mortgageTotalYearsAndMonth =
       this.convertDecimalToYearsAndMonths(mortgageTotalPayments / this.YEAR);
+    const lastPaymentDate = lastInstallmentItem.paymentDate;
 
     return {
       ...mortgageInformation.schedule,
@@ -81,7 +83,8 @@ export default class AmortizationSchedule extends Component {
       turnOverDate,
       turnOverYearsAndMonths,
       mortgageTotalPayments,
-      mortgageTotalYearsAndMonth
+      mortgageTotalYearsAndMonth,
+      lastPaymentDate
     };
   }
 
@@ -208,6 +211,14 @@ export default class AmortizationSchedule extends Component {
                       </TableRowColumn>
                       <TableRowColumn style={{ textAlign: 'right' }}>
                         <h2>{(this.mortgageSmmary || {}).mortgageTotalYearsAndMonth || ''}</h2>
+                      </TableRowColumn>
+                    </TableRow>
+                    <TableRow>
+                      <TableRowColumn style={{ textAlign: 'left' }}>
+                        <h2>Last Payment Date</h2>
+                      </TableRowColumn>
+                      <TableRowColumn style={{ textAlign: 'right' }}>
+                        <h2>{((this.mortgageSmmary || {}).lastPaymentDate || 'n/a').format('%m/%d/%Y')}</h2>
                       </TableRowColumn>
                     </TableRow>
                   </TableBody>
