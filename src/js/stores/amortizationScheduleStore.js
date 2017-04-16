@@ -3,22 +3,21 @@ import dispatcher from '../actions/dispatcher';
 
 class AmortizationScheduleStore extends EventEmitter {
 
-  schedule = {}
-  futureSchedule = {}
+  mortgageInformation = {}
 
   getAmortizationScheduleData() {
-    return this.schedule;
+    return this.mortgageInformation;
   }
 
-  getAmortizationSchedule(schedule) {
-    this.schedule = schedule;
+  getAmortizationScheduleInformation(mortgageInformation) {
+    this.mortgageInformation = mortgageInformation;
     this.emit('change');
   }
 
   handleActions(action) {
     switch (action.type) {
       case 'COMPLETE_GET_AMORTIZATION_SCHEDULE_ACTION': {
-        this.getAmortizationSchedule(action.schedule);
+        this.getAmortizationScheduleInformation(action.mortgageInformation);
         break;
       }
       case 'SET_PRINCIPAL_AMOUNT_ACTION': {

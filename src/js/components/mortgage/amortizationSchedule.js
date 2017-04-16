@@ -2,12 +2,15 @@ import React from 'react';
 import { Component } from 'react';
 import AmortizationScheduleItem from './amortizationScheduleItem';
 import AmortizationScheduleStore from '../../stores/amortizationScheduleStore';
+import MortgageSmmary from './mortgageSummary';
 import { Table, TableHeader, TableBody, TableRow, TableHeaderColumn } from 'material-ui/Table';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { Row, Col } from 'react-flexbox-grid';
+import Sugar from 'sugar';
 
 export default class AmortizationSchedule extends Component {
   AmortizationScheduleDecadeSets = []
+
   decades = []
   decadeTab = undefined
   YEAR = 12
@@ -16,6 +19,7 @@ export default class AmortizationSchedule extends Component {
 
   constructor() {
     super();
+    Sugar.extend();
     this.state = {
       amortizationSchedule: [],
     };
@@ -40,12 +44,52 @@ export default class AmortizationSchedule extends Component {
   }
 
   amortizationScheduleChanged() {
-    const amortizationSchedule = AmortizationScheduleStore.getAmortizationScheduleData();
-    this.AmortizationScheduleDecadeSets = this.getAmortizationScheduleDecadeSets(amortizationSchedule);
+    const mortgageInformation = AmortizationScheduleStore.getAmortizationScheduleData();
+    this.mortgageSmmary = this.getMortgageSummary(mortgageInformation);
+    this.AmortizationScheduleDecadeSets =
+      this.getAmortizationScheduleDecadeSets(mortgageInformation.amortizationSchedule);
     this.decades = this.AmortizationScheduleDecadeSets[0];
     this.setState({
       amortizationSchedule: this.decades[0]
     });
+  }
+
+  getMortgageSummary(mortgageInformation) {
+    const totalInterest = mortgageInformation.amortizationSchedule
+      .reduce((total, item) => item.interestAmount + total, 0);
+
+    const turnOver = mortgageInformation.amortizationSchedule
+      .find(value => value.principalAmount > value.interestAmount);
+
+    const turnOverYearsAndMonths =
+      this.convertDecimalToYearsAndMonths(turnOver.installmentNumber / this.YEAR);
+
+    const turnOverDate = turnOver.paymentDate;
+
+    const totalPaid = totalInterest + mortgageInformation.schedule.principalAmount;
+    const percentInterest = totalInterest / totalPaid * 100;
+
+    const lastInstallmentItem = mortgageInformation.amortizationSchedule.slice(-1).pop();
+    const mortgageTotalPayments = lastInstallmentItem.installmentNumber;
+    const mortgageTotalYearsAndMonth =
+      this.convertDecimalToYearsAndMonths(mortgageTotalPayments / this.YEAR);
+    const lastPaymentDate = lastInstallmentItem.paymentDate;
+
+    return {
+      ...mortgageInformation.schedule,
+      totalInterest,
+      totalPaid,
+      percentInterest,
+      turnOverDate,
+      turnOverYearsAndMonths,
+      mortgageTotalPayments,
+      mortgageTotalYearsAndMonth,
+      lastPaymentDate
+    };
+  }
+
+  convertDecimalToYearsAndMonths(decimal) {
+    return `${Math.trunc(decimal)} Year(s) and ${Math.round((decimal * 12) % 12)} Month(s)`;
   }
 
   getAmortizationScheduleDecadeSets(amortizationSchedule) {
@@ -99,50 +143,57 @@ export default class AmortizationSchedule extends Component {
     return (
       <Row>
         <Col md={12}>
-          <Table selectable={false}>
-            <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-              <TableRow>
-                <TableHeaderColumn colSpan='6'>
-                  <Tabs ref={(input) => { this.decadeTab = input; }}
-                    onChange={this.clickDecadeTabs.bind(this)}>
-                    {tabDecadeItemComponents}
-                  </Tabs>
-                </TableHeaderColumn>
-              </TableRow>
-              <TableRow>
-                <TableHeaderColumn tooltip="The installment number"
-                  style={{ textAlign: 'center' }}>
-                  Installment
-              </TableHeaderColumn>
-                <TableHeaderColumn tooltip="The date the payment will be due."
-                  style={{ textAlign: 'center' }}>
-                  Payment Date
-              </TableHeaderColumn>
-                <TableHeaderColumn tooltip="The payment amount."
-                  style={{ textAlign: 'center' }}>
-                  Payment
-              </TableHeaderColumn>
-                <TableHeaderColumn tooltip="How much went toward interest for the payment."
-                  style={{ textAlign: 'center' }}>
-                  Interest Amount
-              </TableHeaderColumn>
-                <TableHeaderColumn tooltip="How much went toward the principal for the payment."
-                  style={{ textAlign: 'center' }}>
-                  Principal Amount
-              </TableHeaderColumn>
-                <TableHeaderColumn tooltip="The balance still due."
-                  style={{ textAlign: 'center' }}>
-                  Balance
-              </TableHeaderColumn>
-              </TableRow>
-            </TableHeader>
-            <TableBody stripedRows={true}
-              displayRowCheckbox={false}>
-              {AmortizationScheduleItemComponents}
-            </TableBody>
-          </Table>
+          <Tabs>
+            <Tab label='Mortgage Summary'>
+              {<MortgageSmmary {...this.mortgageSmmary} />}
+            </Tab>
+            <Tab label='Mortgage Amortization Schedule'>
+              <Table selectable={false}>
+                <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                  <TableRow>
+                    <TableHeaderColumn colSpan='6'>
+                      <Tabs ref={(input) => { this.decadeTab = input; }}
+                        onChange={this.clickDecadeTabs.bind(this)}>
+                        {tabDecadeItemComponents}
+                      </Tabs>
+                    </TableHeaderColumn>
+                  </TableRow>
+                  <TableRow>
+                    <TableHeaderColumn tooltip="The payment number"
+                      style={{ textAlign: 'center' }}>
+                      Payment Number
+                    </TableHeaderColumn>
+                    <TableHeaderColumn tooltip="The date the payment will be due."
+                      style={{ textAlign: 'center' }}>
+                      Payment Date
+                    </TableHeaderColumn>
+                    <TableHeaderColumn tooltip="The payment amount."
+                      style={{ textAlign: 'center' }}>
+                      Payment
+                    </TableHeaderColumn>
+                    <TableHeaderColumn tooltip="How much went toward interest for the payment."
+                      style={{ textAlign: 'center' }}>
+                      Interest Amount
+                    </TableHeaderColumn>
+                    <TableHeaderColumn tooltip="How much went toward the principal for the payment."
+                      style={{ textAlign: 'center' }}>
+                      Principal Amount
+                    </TableHeaderColumn>
+                    <TableHeaderColumn tooltip="The balance still due."
+                      style={{ textAlign: 'center' }}>
+                      Balance
+                    </TableHeaderColumn>
+                  </TableRow>
+                </TableHeader>
+                <TableBody stripedRows={true}
+                  displayRowCheckbox={false}>
+                  {AmortizationScheduleItemComponents}
+                </TableBody>
+              </Table>
+            </Tab>
+          </Tabs>
         </Col>
-      </Row>
+      </Row >
     );
   }
 }
