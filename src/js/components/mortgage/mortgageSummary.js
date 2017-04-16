@@ -22,6 +22,7 @@ export default class MortgageSummary extends Component {
     percentInterest: React.PropTypes.number,
     turnOverDate: React.PropTypes.instanceOf(Date),
     turnOverYearsAndMonths: React.PropTypes.string,
+    turnOverInstallmentNumber: React.PropTypes.number,
     mortgageTotalPayments: React.PropTypes.number,
     mortgageTotalYearsAndMonth: React.PropTypes.string,
     lastPaymentDate: React.PropTypes.instanceOf(Date),
@@ -132,6 +133,14 @@ export default class MortgageSummary extends Component {
                 <TableBody displayRowCheckbox={false}>
                   <TableRow>
                     <TableRowColumn style={{ textAlign: 'left' }}>
+                      <div style={{ fontSize: '1.5em' }}>Principal Turnover Timeframe</div>
+                    </TableRowColumn>
+                    <TableRowColumn style={{ textAlign: 'right' }}>
+                      <div style={{ fontSize: '1.5em' }}>{this.props.turnOverYearsAndMonths || ''}</div>
+                    </TableRowColumn>
+                  </TableRow>
+                  <TableRow>
+                    <TableRowColumn style={{ textAlign: 'left' }}>
                       <div style={{ fontSize: '1.5em' }}>Principal Turnover Date</div>
                     </TableRowColumn>
                     <TableRowColumn style={{ textAlign: 'right' }}>
@@ -140,10 +149,10 @@ export default class MortgageSummary extends Component {
                   </TableRow>
                   <TableRow>
                     <TableRowColumn style={{ textAlign: 'left' }}>
-                      <div style={{ fontSize: '1.5em' }}>Principal Turnover Timeframe</div>
+                      <div style={{ fontSize: '1.5em' }}>Principal Turnover Payment Number</div>
                     </TableRowColumn>
                     <TableRowColumn style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '1.5em' }}>{this.props.turnOverYearsAndMonths || ''}</div>
+                      <div style={{ fontSize: '1.5em' }}>{this.props.turnOverInstallmentNumber || ''}</div>
                     </TableRowColumn>
                   </TableRow>
                 </TableBody>
