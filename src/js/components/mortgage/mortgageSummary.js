@@ -1,6 +1,5 @@
 import React from 'react';
 import { Component } from 'react';
-import { Card } from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import { Table, TableBody, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table';
 import { Grid, Row, Col } from 'react-flexbox-grid';
