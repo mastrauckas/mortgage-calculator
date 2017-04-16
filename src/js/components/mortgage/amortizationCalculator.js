@@ -28,11 +28,11 @@ export default class AmortizationCalculator extends Component {
 
   onClick() {
     AmortizationScheduleActions.getAmortizationScheduleAction({
-      principalAmount: this.schedule.principalAmount,
+      principalAmount: parseFloat(this.schedule.principalAmount),
       startDate: this.schedule.startDate,
-      installments: this.schedule.installments,
-      payment: this.schedule.payment,
-      interestRate: this.schedule.interestRate
+      installments: parseInt(this.schedule.installments),
+      payment: parseFloat(this.schedule.payment),
+      interestRate: parseFloat(this.schedule.interestRate)
     });
   }
 
