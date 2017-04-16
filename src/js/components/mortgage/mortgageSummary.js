@@ -29,7 +29,7 @@ export default class MortgageSummary extends Component {
 
   render() {
     return (
-      <Paper zDepth={3}>
+      <Paper zDepth={1}>
         <Grid>
           <Row center='md'>
             <Col>

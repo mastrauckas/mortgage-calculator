@@ -2,6 +2,7 @@ import { Component } from 'react';
 import React from 'react';
 import Navbar from './navbar';
 import Content from './content';
+import Footer from './footer';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import { cyan500 } from 'material-ui/styles/colors';
@@ -29,6 +30,7 @@ export default class Layout extends Component {
         <div>
           <Navbar title="Mortgage Playground" />
           <Content />
+          <Footer />
         </div>
       </MuiThemeProvider>
     );
