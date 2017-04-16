@@ -2,10 +2,10 @@ import React from 'react';
 import { Component } from 'react';
 import AmortizationScheduleItem from './amortizationScheduleItem';
 import AmortizationScheduleStore from '../../stores/amortizationScheduleStore';
-import { Table, TableHeader, TableBody, TableRow, TableRowColumn, TableHeaderColumn } from 'material-ui/Table';
+import MortgageSmmary from './mortgageSummary';
+import { Table, TableHeader, TableBody, TableRow, TableHeaderColumn } from 'material-ui/Table';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { Row, Col } from 'react-flexbox-grid';
-import { Card, CardTitle } from 'material-ui/Card';
 import Sugar from 'sugar';
 
 export default class AmortizationSchedule extends Component {
@@ -145,85 +145,7 @@ export default class AmortizationSchedule extends Component {
         <Col md={12}>
           <Tabs>
             <Tab label='Mortgage Summary'>
-              <Card>
-                <CardTitle title="Your Mortgage Summary Information" />
-                <Table selectable={false}>
-                  <TableBody displayRowCheckbox={false}>
-                    <TableRow>
-                      <TableRowColumn style={{ textAlign: 'left' }}>
-                        <h2>Mortgage Principal</h2>
-                      </TableRowColumn>
-                      <TableRowColumn style={{ textAlign: 'right' }}>
-                        <h2>${((this.mortgageSmmary || {}).principalAmount || 0).format(2)}</h2>
-                      </TableRowColumn>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowColumn style={{ textAlign: 'left' }}>
-                        <h2>Total Interest</h2>
-                      </TableRowColumn>
-                      <TableRowColumn style={{ textAlign: 'right' }}>
-                        <h2>${((this.mortgageSmmary || {}).totalInterest || 0).format(2)}</h2>
-                      </TableRowColumn>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowColumn style={{ textAlign: 'left' }}>
-                        <h2>Total Paid</h2>
-                      </TableRowColumn>
-                      <TableRowColumn style={{ textAlign: 'right' }}>
-                        <h2>${((this.mortgageSmmary || {}).totalPaid || 0).format(2)}</h2>
-                      </TableRowColumn>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowColumn style={{ textAlign: 'left' }}>
-                        <h2>Percent Paid In Interest</h2>
-                      </TableRowColumn>
-                      <TableRowColumn style={{ textAlign: 'right' }}>
-                        <h2>{((this.mortgageSmmary || {}).percentInterest || 0).format(2)}%</h2>
-                      </TableRowColumn>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowColumn style={{ textAlign: 'left' }}>
-                        <h2>Principal Turnover Date</h2>
-                      </TableRowColumn>
-                      <TableRowColumn style={{ textAlign: 'right' }}>
-                        <h2>{((this.mortgageSmmary || {}).turnOverDate || 'n/a').format('%m/%d/%Y')}</h2>
-                      </TableRowColumn>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowColumn style={{ textAlign: 'left' }}>
-                        <h2>Principal Turnover Timeframe</h2>
-                      </TableRowColumn>
-                      <TableRowColumn style={{ textAlign: 'right' }}>
-                        <h2>{(this.mortgageSmmary || {}).turnOverYearsAndMonths || ''}</h2>
-                      </TableRowColumn>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowColumn style={{ textAlign: 'left' }}>
-                        <h2>Total Mortgage Payments</h2>
-                      </TableRowColumn>
-                      <TableRowColumn style={{ textAlign: 'right' }}>
-                        <h2>{(this.mortgageSmmary || {}).mortgageTotalPayments || ''}</h2>
-                      </TableRowColumn>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowColumn style={{ textAlign: 'left' }}>
-                        <h2>Total Mortgage Time Length</h2>
-                      </TableRowColumn>
-                      <TableRowColumn style={{ textAlign: 'right' }}>
-                        <h2>{(this.mortgageSmmary || {}).mortgageTotalYearsAndMonth || ''}</h2>
-                      </TableRowColumn>
-                    </TableRow>
-                    <TableRow>
-                      <TableRowColumn style={{ textAlign: 'left' }}>
-                        <h2>Last Payment Date</h2>
-                      </TableRowColumn>
-                      <TableRowColumn style={{ textAlign: 'right' }}>
-                        <h2>{((this.mortgageSmmary || {}).lastPaymentDate || 'n/a').format('%m/%d/%Y')}</h2>
-                      </TableRowColumn>
-                    </TableRow>
-                  </TableBody>
-                </Table>
-              </Card>
+              {<MortgageSmmary {...this.mortgageSmmary} />}
             </Tab>
             <Tab label='Mortgage Amortization Schedule'>
               <Table selectable={false}>
