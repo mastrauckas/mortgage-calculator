@@ -37,16 +37,22 @@ export default class AmortizationCalculator extends Component {
   }
 
   render() {
+    const style = {
+      width: '170px'
+    };
+
     return (
       <div>
-        <Row around='sm'>
+        <Row >
+
+          <Col sm={1} />
 
           <Col sm={2}>
 
             <TextField
-              fullWidth={false}
+              style={style}
               name='mortgagePrincipal'
-              floatingLabelText='Mortgage Principal Amount'
+              floatingLabelText='Principal Amount'
               hintText='Mortgage Principal Amount'
               type='text'
               defaultValue={`$${this.schedule.principalAmount.format(2)}`}
@@ -56,9 +62,10 @@ export default class AmortizationCalculator extends Component {
 
           <Col sm={2}>
             <TextField
+              style={style}
               name='mortgageTerm'
-              floatingLabelText='Mortgage Term'
-              hintText='Mortgage Term'
+              floatingLabelText='Term Lenght'
+              hintText='Mortgage Term Length'
               type="text"
               defaultValue={this.schedule.installments}
               onChange={(input, newValue) => { this.schedule.installments = Number(newValue); }} />
@@ -66,7 +73,9 @@ export default class AmortizationCalculator extends Component {
 
           <Col sm={2}>
             <TextField
-              floatingLabelText='Mortgage Payment'
+              style={style}
+              floatingLabelText='Payment Amount'
+              hintText='Mortgage Payment Amount'
               type="text"
               defaultValue={`$${this.schedule.payment.format(2)}`}
               onChange={(input, newValue) => { this.schedule.payment = this.formatNumber(newValue); }} />
@@ -74,7 +83,9 @@ export default class AmortizationCalculator extends Component {
 
           <Col sm={2}>
             <TextField
-              floatingLabelText='Mortgage Start Date'
+              style={style}
+              floatingLabelText='Start Date'
+              hintText='Mortgage Start Date'
               type="text"
               defaultValue={this.schedule.startDate}
               onChange={(input, newValue) => { this.schedule.startDate = new Date(newValue); }} />
@@ -82,13 +93,15 @@ export default class AmortizationCalculator extends Component {
 
           <Col sm={2}>
             <TextField
+              style={style}
               floatingLabelText='Interest Rate'
+              hintText='Mortgage Interest Rate'
               type="text"
               defaultValue={`${this.schedule.interestRate}%`}
               onChange={(input, newValue) => { this.schedule.interestRate = this.formatNumber(newValue); }} />
           </Col>
 
-
+          <Col sm={1} />
         </Row>
 
         <Row center='sm' style={{ marginBottom: '2em', marginTop: '0.5em' }}>
