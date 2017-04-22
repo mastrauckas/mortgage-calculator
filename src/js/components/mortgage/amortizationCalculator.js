@@ -39,10 +39,12 @@ export default class AmortizationCalculator extends Component {
   render() {
     return (
       <div>
-        <Row around='md'>
-          <Col md>
+        <Row around='sm'>
+
+          <Col sm={2}>
 
             <TextField
+              fullWidth={false}
               name='mortgagePrincipal'
               floatingLabelText='Mortgage Principal Amount'
               hintText='Mortgage Principal Amount'
@@ -51,7 +53,8 @@ export default class AmortizationCalculator extends Component {
               onChange={(input, newValue) => { this.schedule.principalAmount = this.formatNumber(newValue); }} />
           </Col>
 
-          <Col md>
+
+          <Col sm={2}>
             <TextField
               name='mortgageTerm'
               floatingLabelText='Mortgage Term'
@@ -61,7 +64,7 @@ export default class AmortizationCalculator extends Component {
               onChange={(input, newValue) => { this.schedule.installments = Number(newValue); }} />
           </Col>
 
-          <Col md>
+          <Col sm={2}>
             <TextField
               floatingLabelText='Mortgage Payment'
               type="text"
@@ -69,7 +72,7 @@ export default class AmortizationCalculator extends Component {
               onChange={(input, newValue) => { this.schedule.payment = this.formatNumber(newValue); }} />
           </Col>
 
-          <Col md>
+          <Col sm={2}>
             <TextField
               floatingLabelText='Mortgage Start Date'
               type="text"
@@ -77,7 +80,7 @@ export default class AmortizationCalculator extends Component {
               onChange={(input, newValue) => { this.schedule.startDate = new Date(newValue); }} />
           </Col>
 
-          <Col md>
+          <Col sm={2}>
             <TextField
               floatingLabelText='Interest Rate'
               type="text"
@@ -85,10 +88,11 @@ export default class AmortizationCalculator extends Component {
               onChange={(input, newValue) => { this.schedule.interestRate = this.formatNumber(newValue); }} />
           </Col>
 
+
         </Row>
 
-        <Row center='md' style={{ marginBottom: '2em', marginTop: '0.5em' }}>
-          <Col md>
+        <Row center='sm' style={{ marginBottom: '2em', marginTop: '0.5em' }}>
+          <Col sm>
             <RaisedButton label='Calulate my Mortgage'
               onClick={this.onClick.bind(this)} />
           </Col>

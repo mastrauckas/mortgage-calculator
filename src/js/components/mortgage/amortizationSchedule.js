@@ -144,7 +144,7 @@ export default class AmortizationSchedule extends Component {
 
     return (
       <Row>
-        <Col md={12}>
+        <Col sm>
           <Tabs>
             <Tab label='Mortgage Summary'>
               {<MortgageSmmary {...this.mortgageSmmary} />}

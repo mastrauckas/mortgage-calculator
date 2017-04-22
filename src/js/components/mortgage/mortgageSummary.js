@@ -31,8 +31,8 @@ export default class MortgageSummary extends Component {
   render() {
     return (
       <Paper zDepth={1}>
-        <Grid>
-          <Row center='md'>
+        <Grid fluid>
+          <Row center='sm'>
             <Col>
               <h2>Mortgage Investment Information</h2>
             </Col>
@@ -81,8 +81,8 @@ export default class MortgageSummary extends Component {
           </Row>
         </Grid>
 
-        <Grid>
-          <Row center='md'>
+        <Grid fluid>
+          <Row center='sm'>
             <Col>
               <h2>Mortgage End Information</h2>
             </Col>
@@ -121,8 +121,8 @@ export default class MortgageSummary extends Component {
           </Row>
         </Grid>
 
-        <Grid>
-          <Row center='md'>
+        <Grid fluid>
+          <Row center='sm'>
             <Col>
               <h2>More Principal Than Interest</h2>
             </Col>
