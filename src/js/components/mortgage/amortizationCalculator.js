@@ -4,6 +4,7 @@ import Sugar from 'sugar';
 import AmortizationScheduleActions from '../../actions/amortizationScheduleActions';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import DatePicker from 'material-ui/DatePicker';
 import { Row, Col } from 'react-flexbox-grid';
 
 export default class AmortizationCalculator extends Component {
@@ -17,7 +18,7 @@ export default class AmortizationCalculator extends Component {
 
     this.schedule = {
       principalAmount: 136068.31,
-      startDate: '02/27/2017',
+      startDate: new Date('02/27/2017'),
       installments: 360,
       payment: 777.98,
       interestRate: 3.75
@@ -29,7 +30,7 @@ export default class AmortizationCalculator extends Component {
   onClick() {
     AmortizationScheduleActions.getAmortizationScheduleAction({
       principalAmount: parseFloat(this.schedule.principalAmount),
-      startDate: this.schedule.startDate,
+      startDate: new Date(this.schedule.startDate),
       installments: parseInt(this.schedule.installments),
       payment: parseFloat(this.schedule.payment),
       interestRate: parseFloat(this.schedule.interestRate)
@@ -76,11 +77,10 @@ export default class AmortizationCalculator extends Component {
           </Col>
 
           <Col sm={2}>
-            <TextField
-              style={styleTextFields}
+            <DatePicker
               floatingLabelText='Start Date'
-              type="text"
-              defaultValue={this.schedule.startDate}
+              mode="landscape"
+              defaultDate={this.schedule.startDate}
               onChange={(input, newValue) => { this.schedule.startDate = new Date(newValue); }} />
           </Col>
 
