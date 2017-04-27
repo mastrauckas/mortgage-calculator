@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import Sugar from 'sugar';
 import { TableRow, TableRowColumn } from 'material-ui/Table';
@@ -10,12 +11,12 @@ export default class AmortizationScheduleItem extends Component {
   }
 
   static propTypes = {
-    installmentNumber: React.PropTypes.number.isRequired,
-    paymentDate: React.PropTypes.instanceOf(Date).isRequired,
-    payment: React.PropTypes.number.isRequired,
-    interestAmount: React.PropTypes.number.isRequired,
-    principalAmount: React.PropTypes.number.isRequired,
-    totalPrincipalAmount: React.PropTypes.number.isRequired
+    installmentNumber: PropTypes.PropTypes.number.isRequired,
+    paymentDate: PropTypes.PropTypes.instanceOf(Date).isRequired,
+    payment: PropTypes.PropTypes.number.isRequired,
+    interestAmount: PropTypes.PropTypes.number.isRequired,
+    principalAmount: PropTypes.PropTypes.number.isRequired,
+    totalPrincipalAmount: PropTypes.PropTypes.number.isRequired
   }
 
   render() {
