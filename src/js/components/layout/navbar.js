@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
 import injectTapEventPlugin from 'react-tap-event-plugin';
@@ -10,7 +11,7 @@ export default class Navbar extends Component {
   }
 
   static propTypes = {
-    title: React.PropTypes.string.isRequired
+    title: PropTypes.PropTypes.string.isRequired
   }
 
   titleStyle = {
