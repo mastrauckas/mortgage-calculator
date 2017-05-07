@@ -2,14 +2,14 @@ import React from 'react';
 import { Component } from 'react';
 import Sugar from 'sugar';
 import AmortizationScheduleActions from '../../actions/amortizationScheduleActions';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
+import DatePicker from 'material-ui/DatePicker';
 import { Row, Col } from 'react-flexbox-grid';
+import CurrencyTextField from '../controls/currencyTextField';
+import PercentTextField from '../controls/percentTextField';
+import NaturalNumberTextField from '../controls/naturalNumberTextField';
 
 export default class AmortizationCalculator extends Component {
-
-  schedule = {};
-  domElements = {}
 
   constructor() {
     super();
@@ -17,13 +17,17 @@ export default class AmortizationCalculator extends Component {
 
     this.schedule = {
       principalAmount: 136068.31,
-      startDate: '02/27/2017',
+      startDate: new Date('02/27/2017'),
       installments: 360,
       payment: 777.98,
       interestRate: 3.75
     };
 
     AmortizationScheduleActions.getAmortizationScheduleAction(this.schedule);
+    this.state = {
+      amount: '',
+      hasDecimal: true
+    };
   }
 
   onClick() {
@@ -37,67 +41,75 @@ export default class AmortizationCalculator extends Component {
   }
 
   render() {
+    const styleTextFields = {
+      width: '170px',
+    };
+
     return (
       <div>
-        <Row around='md'>
-          <Col md>
+        <Row center='sm'>
 
-            <TextField
+          <Col sm={2}>
+            <CurrencyTextField
+              style={styleTextFields}
               name='mortgagePrincipal'
-              floatingLabelText='Mortgage Principal Amount'
-              hintText='Mortgage Principal Amount'
+              floatingLabelText='Principal Amount'
               type='text'
-              defaultValue={`$${this.schedule.principalAmount.format(2)}`}
-              onChange={(input, newValue) => { this.schedule.principalAmount = this.formatNumber(newValue); }} />
+              value={this.schedule.principalAmount.toString()}
+              onNewValueChange={(value) => this.schedule.principalAmount = value} />
           </Col>
 
-          <Col md>
-            <TextField
+          <Col sm={2}>
+            <CurrencyTextField
+              style={styleTextFields}
+              name='paymentAmount'
+              floatingLabelText='Payment Amount'
+              type="text"
+              value={this.schedule.payment.toString()}
+              onNewValueChange={(value) => this.schedule.payment = value} />
+          </Col>
+
+          <Col sm={2}>
+            <DatePicker
+              textFieldStyle={styleTextFields}
+              floatingLabelText='Start Date'
+              formatDate={(date) => {
+                return `${('0' + (date.getMonth() + 1)).slice(-2)}/${('0' + date.getDate()).slice(-2)}/${date.getFullYear()}`;
+              }}
+              name='paymentDate'
+              mode="landscape"
+              defaultDate={this.schedule.startDate}
+              onChange={(input, newValue) => this.schedule.startDate = newValue} />
+          </Col>
+
+          <Col sm={2}>
+            <NaturalNumberTextField
+              style={styleTextFields}
               name='mortgageTerm'
-              floatingLabelText='Mortgage Term'
-              hintText='Mortgage Term'
+              floatingLabelText='Term Length'
               type="text"
-              defaultValue={this.schedule.installments}
-              onChange={(input, newValue) => { this.schedule.installments = Number(newValue); }} />
+              value={this.schedule.installments.toString()}
+              onNewValueChange={(value) => this.schedule.installments = value} />
           </Col>
 
-          <Col md>
-            <TextField
-              floatingLabelText='Mortgage Payment'
-              type="text"
-              defaultValue={`$${this.schedule.payment.format(2)}`}
-              onChange={(input, newValue) => { this.schedule.payment = this.formatNumber(newValue); }} />
-          </Col>
-
-          <Col md>
-            <TextField
-              floatingLabelText='Mortgage Start Date'
-              type="text"
-              defaultValue={this.schedule.startDate}
-              onChange={(input, newValue) => { this.schedule.startDate = new Date(newValue); }} />
-          </Col>
-
-          <Col md>
-            <TextField
+          <Col sm={2}>
+            <PercentTextField
+              style={styleTextFields}
               floatingLabelText='Interest Rate'
-              type="text"
-              defaultValue={`${this.schedule.interestRate}%`}
-              onChange={(input, newValue) => { this.schedule.interestRate = this.formatNumber(newValue); }} />
+              type='text'
+              value={this.schedule.interestRate.toString()}
+              onNewValueChange={(value) => this.schedule.interestRate = value} />
           </Col>
 
         </Row>
 
-        <Row center='md' style={{ marginBottom: '2em', marginTop: '0.5em' }}>
-          <Col md>
+        <Row center='sm' style={{ marginBottom: '2em', marginTop: '0.5em' }}>
+          <Col sm>
             <RaisedButton label='Calulate my Mortgage'
               onClick={this.onClick.bind(this)} />
           </Col>
         </Row>
       </div>
     );
-  }
-
-  formatNumber(number) {
-    return number.replace(new RegExp('(\\$|,|\\%)', 'g'), '');
   }
 }

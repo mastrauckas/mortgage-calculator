@@ -58,13 +58,14 @@ export default class AmortizationSchedule extends Component {
     const totalInterest = mortgageInformation.amortizationSchedule
       .reduce((total, item) => item.interestAmount + total, 0);
 
-    const turnOver = mortgageInformation.amortizationSchedule
+    const turnOverItem = mortgageInformation.amortizationSchedule
       .find(value => value.principalAmount > value.interestAmount);
 
     const turnOverYearsAndMonths =
-      this.convertDecimalToYearsAndMonths(turnOver.installmentNumber / this.YEAR);
+      this.convertDecimalToYearsAndMonths(turnOverItem.installmentNumber / this.YEAR);
 
-    const turnOverDate = turnOver.paymentDate;
+    const turnOverDate = turnOverItem.paymentDate;
+    const turnOverInstallmentNumber = turnOverItem.installmentNumber;
 
     const totalPaid = totalInterest + mortgageInformation.schedule.principalAmount;
     const percentInterest = totalInterest / totalPaid * 100;
@@ -82,6 +83,7 @@ export default class AmortizationSchedule extends Component {
       percentInterest,
       turnOverDate,
       turnOverYearsAndMonths,
+      turnOverInstallmentNumber,
       mortgageTotalPayments,
       mortgageTotalYearsAndMonth,
       lastPaymentDate
@@ -142,7 +144,7 @@ export default class AmortizationSchedule extends Component {
 
     return (
       <Row>
-        <Col md={12}>
+        <Col sm>
           <Tabs>
             <Tab label='Mortgage Summary'>
               {<MortgageSmmary {...this.mortgageSmmary} />}

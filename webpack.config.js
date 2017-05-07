@@ -132,6 +132,11 @@ module.exports = {
           use: `css-loader?{"sourceMap":false,"minimize":${PRODUCTION}}`
         })
       },
+      {
+        test: /\.png?$/,
+        exclude: /node_modules/,
+        use: 'file-loader?name=/static/images/[name][hash:8].[ext]&publicPath=../..'
+      },
     ]
   },
   plugins

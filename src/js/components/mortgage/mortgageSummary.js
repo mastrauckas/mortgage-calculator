@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Component } from 'react';
-import { Card } from 'material-ui/Card';
 import Paper from 'material-ui/Paper';
 import { Table, TableBody, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table';
 import { Grid, Row, Col } from 'react-flexbox-grid';
@@ -13,26 +13,27 @@ export default class MortgageSummary extends Component {
   }
 
   static propTypes = {
-    installmentNumber: React.PropTypes.number,
-    paymentDate: React.PropTypes.instanceOf(Date),
-    payment: React.PropTypes.number,
-    interestAmount: React.PropTypes.number,
-    principalAmount: React.PropTypes.number,
-    totalInterest: React.PropTypes.number,
-    totalPaid: React.PropTypes.number,
-    percentInterest: React.PropTypes.number,
-    turnOverDate: React.PropTypes.instanceOf(Date),
-    turnOverYearsAndMonths: React.PropTypes.string,
-    mortgageTotalPayments: React.PropTypes.number,
-    mortgageTotalYearsAndMonth: React.PropTypes.string,
-    lastPaymentDate: React.PropTypes.instanceOf(Date),
+    installmentNumber: PropTypes.PropTypes.number,
+    paymentDate: PropTypes.PropTypes.instanceOf(Date),
+    payment: PropTypes.PropTypes.number,
+    interestAmount: PropTypes.PropTypes.number,
+    principalAmount: PropTypes.PropTypes.number,
+    totalInterest: PropTypes.PropTypes.number,
+    totalPaid: PropTypes.PropTypes.number,
+    percentInterest: PropTypes.PropTypes.number,
+    turnOverDate: PropTypes.PropTypes.instanceOf(Date),
+    turnOverYearsAndMonths: PropTypes.PropTypes.string,
+    turnOverInstallmentNumber: PropTypes.PropTypes.number,
+    mortgageTotalPayments: PropTypes.PropTypes.number,
+    mortgageTotalYearsAndMonth: PropTypes.PropTypes.string,
+    lastPaymentDate: PropTypes.PropTypes.instanceOf(Date),
   }
 
   render() {
     return (
-      <Paper zDepth={3}>
-        <Grid>
-          <Row center='md'>
+      <Paper zDepth={1}>
+        <Grid fluid>
+          <Row center='sm'>
             <Col>
               <h2>Mortgage Investment Information</h2>
             </Col>
@@ -81,8 +82,8 @@ export default class MortgageSummary extends Component {
           </Row>
         </Grid>
 
-        <Grid>
-          <Row center='md'>
+        <Grid fluid>
+          <Row center='sm'>
             <Col>
               <h2>Mortgage End Information</h2>
             </Col>
@@ -121,8 +122,8 @@ export default class MortgageSummary extends Component {
           </Row>
         </Grid>
 
-        <Grid>
-          <Row center='md'>
+        <Grid fluid>
+          <Row center='sm'>
             <Col>
               <h2>More Principal Than Interest</h2>
             </Col>
@@ -133,6 +134,14 @@ export default class MortgageSummary extends Component {
                 <TableBody displayRowCheckbox={false}>
                   <TableRow>
                     <TableRowColumn style={{ textAlign: 'left' }}>
+                      <div style={{ fontSize: '1.5em' }}>Principal Turnover Timeframe</div>
+                    </TableRowColumn>
+                    <TableRowColumn style={{ textAlign: 'right' }}>
+                      <div style={{ fontSize: '1.5em' }}>{this.props.turnOverYearsAndMonths || ''}</div>
+                    </TableRowColumn>
+                  </TableRow>
+                  <TableRow>
+                    <TableRowColumn style={{ textAlign: 'left' }}>
                       <div style={{ fontSize: '1.5em' }}>Principal Turnover Date</div>
                     </TableRowColumn>
                     <TableRowColumn style={{ textAlign: 'right' }}>
@@ -141,10 +150,10 @@ export default class MortgageSummary extends Component {
                   </TableRow>
                   <TableRow>
                     <TableRowColumn style={{ textAlign: 'left' }}>
-                      <div style={{ fontSize: '1.5em' }}>Principal Turnover Timeframe</div>
+                      <div style={{ fontSize: '1.5em' }}>Principal Turnover Payment Number</div>
                     </TableRowColumn>
                     <TableRowColumn style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '1.5em' }}>{this.props.turnOverYearsAndMonths || ''}</div>
+                      <div style={{ fontSize: '1.5em' }}>{this.props.turnOverInstallmentNumber || ''}</div>
                     </TableRowColumn>
                   </TableRow>
                 </TableBody>
