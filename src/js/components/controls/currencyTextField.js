@@ -1,95 +1,86 @@
-// import React from 'react';
-// //import { Component } from 'react';
-// import TextField from 'material-ui/TextField';
+import React from 'react';
+import { Component } from 'react';
+import TextField from 'material-ui/TextField';
+import PropTypes from 'prop-types';
+import NumberFormatter from '../../common/numberFormatter';
 
-// export default class CurrencyTextField extends TextField {
+export default class CurrencyTextField extends Component {
 
-//   constructor() {
-//     super();
-//     this.state = { value: '' };
-//   }
+  constructor(props) {
+    super();
+    this.state = {
+      value: props.value ? NumberFormatter.formatCurrency(props.value.toString()) : ''
+    };
+  }
 
-//   isNumber(n) {
-//     return !isNaN(parseFloat(n)) && isFinite(n);
-//   }
+  static propTypes = {
+    onNewValueChange: PropTypes.func,
+    value: PropTypes.string
+  }
 
-//   removeCurrencySymbols(number) {
-//     return number.replace(new RegExp('\\$|,', 'g'), '');
-//     //return number.replace(new RegExp('(\\$|,|\\%)', 'g'), '');
-//   }
+  removeCurrencySymbols(string) {
+    return NumberFormatter.removeSymbols(string, '\\$', ',');
+  }
 
-//   howManyDecimalPlaces(number) {
-//     return (number.split('.')[1] || []).length;
-//   }
+  focus() {
+    const input = this.input;
+    input.setSelectionRange(0, input.value.length);
+  }
 
-//   removeExtraDecimalNumbers(number, decimalPaces) {
-//     const totalRemove = this.howManyDecimalPlaces(number) - decimalPaces;
-//     return totalRemove > 0 ? number.slice(0, -totalRemove) : number;
-//   }
+  change(input, newValue) {
+    let value = this.removeCurrencySymbols(newValue);
+    if (NumberFormatter.isNumber(value)) {
+      const currentAmount = this.removeCurrencySymbols(this.state.value);
+      value = NumberFormatter.removeExtraDecimalNumbers(value, 2);
+      if (currentAmount !== value) {
+        this.setState({
+          value: NumberFormatter.formatCurrency(value)
+        });
+      }
+      if (this.props.onNewValueChange) {
+        this.props.onNewValueChange(parseFloat(value));
+      }
+    } else if (value.length === 0) {
+      this.setState({
+        value: '$'
+      });
+    }
+  }
 
-//   formatCurrency(number) {
-//     const numbers = number.split('.');
-//     return `$${numbers[0].reverse().match(/\d{1,3}/g).join(',').reverse()}${numbers.length > 1 ? '.'.concat(numbers[1]) : ''}`;
-//   }
+  blur() {
+    const value = this.removeCurrencySymbols(this.state.value);
+    if (!NumberFormatter.isNumber(value) || value.length === 0) {
+      this.setState({
+        value: ''
+      });
+    } else if (NumberFormatter.howManyDecimalPlaces(value) !== 2) {
+      this.setState({
+        value: NumberFormatter.formatCurrency(NumberFormatter.trailZeros(value, 2))
+      });
+    }
+  }
 
-//   trailZeros(number, decimalPaces) {
-//     const totalZeros = decimalPaces - this.howManyDecimalPlaces(number) + 1;
-//     console.log(Array(+(totalZeros > 0 && totalZeros)).join('0'));
-//     return `${number}${number.indexOf('.') === -1 ? '.' : ''}${Array(+(totalZeros > 0 && totalZeros)).join('0')}`;
-//   }
+  render() {
+    const {
+      onNewValueChange, // eslint-disable-line no-unused-vars
+      value, // eslint-disable-line no-unused-vars
+      ...other
+    } = this.props;
 
-//   onBlur() {
-//     const value = this.removeCurrencySymbols(this.state.value);
-//     if (!this.isNumber(value) || value.length === 0) {
-//       this.setState({
-//         value: ''
-//       });
-//     } else if (this.howManyDecimalPlaces(value) !== 2) {
-//       this.setState({
-//         value: this.trailZeros(value, 2)
-//       });
-//     }
-//   }
+    return (
+      <TextField
+        ref={e => {
+          if (this.input === undefined) {
+            this.input = e.input;
+          }
+        }}
 
-//   onChange(newValue) {
-//     let value = this.removeCurrencySymbols(newValue);
-//     if (this.isNumber(value)) {
-//       const currentAmount = this.removeCurrencySymbols(this.state.value);
-//       value = this.removeExtraDecimalNumbers(value, 2);
-//       if (currentAmount !== value) {
-//         this.setState({
-//           value: this.formatCurrency(value)
-//         });
-//       }
-//     } else if (value.length === 0) {
-//       this.setState({
-//         amount: '$'
-//       });
-//     }
-//   }
-
-//   onclick() {
-//     console.log('test');
-//     const element = this.input;
-//     element.setSelectionRange(0, element.value.length);
-//   }
-
-//   /*render() {
-//     return (
-//       <TextField
-//         ref={e => {
-//           if (this.principalAmountElement === undefined) {
-//             this.principalAmountElement = e.input;
-//           }
-//         }}
-//         name='mortgagePrincipal'
-//         floatingLabelText='Principal Amount'
-//         type='text'
-//         value={this.state.amount}
-//         onBlur={this.onBlur.bind(this)}
-//         onChange={(input, newValue) => { this.onChange(newValue); }}
-//         onClick={this.onClickElement(this.principalAmountElement)}
-//       />
-//     );
-//   }*/
-// }
+        value={this.state.value}
+        onFocus={this.focus.bind(this)}
+        onChange={this.change.bind(this)}
+        onBlur={this.blur.bind(this)}
+        {...other } >
+      </TextField >
+    );
+  }
+}

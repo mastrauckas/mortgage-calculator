@@ -2,10 +2,12 @@ import React from 'react';
 import { Component } from 'react';
 import Sugar from 'sugar';
 import AmortizationScheduleActions from '../../actions/amortizationScheduleActions';
-import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
-//import DatePicker from 'material-ui/DatePicker';
+import DatePicker from 'material-ui/DatePicker';
 import { Row, Col } from 'react-flexbox-grid';
+import CurrencyTextField from '../controls/currencyTextField';
+import PercentTextField from '../controls/percentTextField';
+import NaturalNumberTextField from '../controls/naturalNumberTextField';
 
 export default class AmortizationCalculator extends Component {
 
@@ -28,57 +30,14 @@ export default class AmortizationCalculator extends Component {
     };
   }
 
-  convertMortgage(schedule) {
-    return {
-      principalAmount: `$${schedule.principalAmount.format(2)}`,
-      startDate: this.schedule.startDate,
-      installments: this.schedule.installments.toString(),
-      payment: `$${this.schedule.payment.format(2)}`,
-      interestRate: `${this.schedule.interestRate}%`
-    };
-  }
-
   onClick() {
     AmortizationScheduleActions.getAmortizationScheduleAction({
-      principalAmount: parseFloat(this.schedule.principalAmount),
-      startDate: new Date(this.schedule.startDate),
-      installments: parseInt(this.schedule.installments),
-      payment: parseFloat(this.schedule.payment),
-      interestRate: parseFloat(this.schedule.interestRate)
+      principalAmount: this.schedule.principalAmount,
+      startDate: this.schedule.startDate,
+      installments: this.schedule.installments,
+      payment: this.schedule.payment,
+      interestRate: this.schedule.interestRate
     });
-  }
-
-  onClickElement(element) {
-    element.setSelectionRange(0, element.value.length);
-  }
-
-  isNumber(n) {
-    return !isNaN(parseFloat(n)) && isFinite(n);
-  }
-
-  removeCurrencySymbols(number) {
-    return number.replace(new RegExp('\\$|,', 'g'), '');
-    //return number.replace(new RegExp('(\\$|,|\\%)', 'g'), '');
-  }
-
-  howManyDecimalPlaces(number) {
-    return (number.split('.')[1] || []).length;
-  }
-
-  removeExtraDecimalNumbers(number, decimalPaces) {
-    const totalRemove = this.howManyDecimalPlaces(number) - decimalPaces;
-    return totalRemove > 0 ? number.slice(0, -totalRemove) : number;
-  }
-
-  formatCurrency(number) {
-    const numbers = number.split('.');
-    return `$${numbers[0].reverse().match(/\d{1,3}/g).join(',').reverse()}${numbers.length > 1 ? '.'.concat(numbers[1]) : ''}`;
-  }
-
-  trailZeros(number, decimalPaces) {
-    const totalZeros = decimalPaces - this.howManyDecimalPlaces(number) + 1;
-    console.log(Array(+(totalZeros > 0 && totalZeros)).join('0'));
-    return `${number}${number.indexOf('.') === -1 ? '.' : ''}${Array(+(totalZeros > 0 && totalZeros)).join('0')}`;
   }
 
   render() {
@@ -91,85 +50,56 @@ export default class AmortizationCalculator extends Component {
         <Row center='sm'>
 
           <Col sm={2}>
-            <TextField
-              ref={e => {
-                if (this.principalAmountElement === undefined) {
-                  this.principalAmountElement = e.input;
-                }
-              }}
+            <CurrencyTextField
               style={styleTextFields}
               name='mortgagePrincipal'
               floatingLabelText='Principal Amount'
               type='text'
-              value={this.state.amount}
-              onBlur={() => {
-                const amount = this.removeCurrencySymbols(this.state.amount);
-                if (!this.isNumber(amount) || amount.length === 0) {
-                  this.setState({
-                    amount: ''
-                  });
-                } else if (this.howManyDecimalPlaces(amount) !== 2) {
-                  this.setState({
-                    amount: this.trailZeros(amount, 2)
-                  });
-                }
-              }}
-              onChange={(input, newValue) => {
-                let value = this.removeCurrencySymbols(newValue);
-                if (this.isNumber(value)) {
-                  const currentAmount = this.removeCurrencySymbols(this.state.amount);
-                  value = this.removeExtraDecimalNumbers(value, 2);
-                  if (currentAmount !== value) {
-                    this.setState({
-                      amount: this.formatCurrency(value)
-                    });
-                  }
-                } else if (value.length === 0) {
-                  this.setState({
-                    amount: '$'
-                  });
-                }
-              }}
-              onClick={() => this.onClickElement(this.principalAmountElement)}
-            />
-          </Col>
-
-
-          {/*<Col sm={2}>
-            <TextField
-              style={styleTextFields}
-              name='mortgageTerm'
-              floatingLabelText='Term Lenght'
-              type="text"
-              value={this.state.installments}
-              onChange={(input, newValue) => { this.schedule.installments = Number(newValue); }} />
+              value={this.schedule.principalAmount.toString()}
+              onNewValueChange={(value) => this.schedule.principalAmount = value} />
           </Col>
 
           <Col sm={2}>
-            <TextField
+            <CurrencyTextField
               style={styleTextFields}
+              name='paymentAmount'
               floatingLabelText='Payment Amount'
               type="text"
-              value={this.state.payment}
-              onChange={(input, newValue) => { this.schedule.payment = this.removeCurrencySymbols(newValue); }} />
+              value={this.schedule.payment.toString()}
+              onNewValueChange={(value) => this.schedule.payment = value} />
           </Col>
 
           <Col sm={2}>
             <DatePicker
+              textFieldStyle={styleTextFields}
               floatingLabelText='Start Date'
+              formatDate={(date) => {
+                return `${('0' + (date.getMonth() + 1)).slice(-2)}/${('0' + date.getDate()).slice(-2)}/${date.getFullYear()}`;
+              }}
+              name='paymentDate'
               mode="landscape"
-              value={this.state.startDate}
-              onChange={(input, newValue) => { this.schedule.startDate = new Date(newValue); }} />
+              defaultDate={this.schedule.startDate}
+              onChange={(input, newValue) => this.schedule.startDate = newValue} />
           </Col>
 
           <Col sm={2}>
-            <TextField
+            <NaturalNumberTextField
+              style={styleTextFields}
+              name='mortgageTerm'
+              floatingLabelText='Term Length'
+              type="text"
+              value={this.schedule.installments.toString()}
+              onNewValueChange={(value) => this.schedule.installments = value} />
+          </Col>
+
+          <Col sm={2}>
+            <PercentTextField
               style={styleTextFields}
               floatingLabelText='Interest Rate'
-              type="text"
-              value={this.state.interestRate}
-              onChange={(input, newValue) => { this.schedule.interestRate = this.removeCurrencySymbols(newValue); }} />
-          </Col>*/}
+              type='text'
+              value={this.schedule.interestRate.toString()}
+              onNewValueChange={(value) => this.schedule.interestRate = value} />
+          </Col>
 
         </Row>
 
