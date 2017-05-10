@@ -57,11 +57,12 @@ class AmortizationScheduleActions {
         });
       })
       .catch(error => {
-        console.log(error);
-
         dispatcher.dispatch({
           type: 'ERROR_GET_AMORTIZATION_SCHEDULE_ACTION',
-          error
+          errorInformation: {
+            status: error.response.status,
+            payload: error.response.data
+          }
         });
       });
   }

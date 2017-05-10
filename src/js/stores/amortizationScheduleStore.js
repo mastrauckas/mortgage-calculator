@@ -20,6 +20,10 @@ class AmortizationScheduleStore extends EventEmitter {
         this.getAmortizationScheduleInformation(action.mortgageInformation);
         break;
       }
+      case 'ERROR_GET_AMORTIZATION_SCHEDULE_ACTION': {
+        this.emit('error', action.errorInformation);
+        break;
+      }
       case 'SET_PRINCIPAL_AMOUNT_ACTION': {
         this.futureSchedule.principalAmount = action.principalAmount;
         break;
