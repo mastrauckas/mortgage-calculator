@@ -6,6 +6,8 @@ import MortgageSmmary from './mortgageSummary';
 import { Table, TableHeader, TableBody, TableRow, TableHeaderColumn } from 'material-ui/Table';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { Row, Col } from 'react-flexbox-grid';
+import Dialog from 'material-ui/Dialog';
+import FlatButton from 'material-ui/FlatButton';
 import Sugar from 'sugar';
 
 export default class AmortizationSchedule extends Component {
@@ -22,11 +24,14 @@ export default class AmortizationSchedule extends Component {
     Sugar.extend();
     this.state = {
       amortizationSchedule: [],
+      open: false
     };
+    this.error = '';
   }
 
   componentWillMount() {
     AmortizationScheduleStore.on('change', this.amortizationScheduleChanged.bind(this));
+    AmortizationScheduleStore.on('error', this.amortizationScheduleError.bind(this));
   }
 
   clickDecadeTabs(value) {
@@ -53,6 +58,23 @@ export default class AmortizationSchedule extends Component {
       amortizationSchedule: this.decades[0]
     });
   }
+
+  amortizationScheduleError(error) {
+    this.error = error.payload;
+
+    this.setState({
+      open: true,
+    });
+  }
+
+  close() {
+    this.error = '';
+
+    this.setState({
+      open: false,
+    });
+  }
+
 
   getMortgageSummary(mortgageInformation) {
     const totalInterest = mortgageInformation.amortizationSchedule
@@ -142,60 +164,80 @@ export default class AmortizationSchedule extends Component {
     const tabDecadeItemComponents = this.getAmortizationScheduleDecadeTabComponents();
     const AmortizationScheduleItemComponents = this.getAllAmortizationScheduleItemComponents();
 
+    const actions = [
+      <FlatButton
+        label="Ok"
+        primary={true}
+        onTouchTap={this.close.bind(this)}
+      />,
+    ];
+
     return (
-      <Row>
-        <Col sm>
-          <Tabs>
-            <Tab label='Mortgage Summary'>
-              {<MortgageSmmary {...this.mortgageSmmary} />}
-            </Tab>
-            <Tab label='Mortgage Amortization Schedule'>
-              <Table selectable={false}>
-                <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
-                  <TableRow>
-                    <TableHeaderColumn colSpan='6'>
-                      <Tabs ref={(input) => { this.decadeTab = input; }}
-                        onChange={this.clickDecadeTabs.bind(this)}>
-                        {tabDecadeItemComponents}
-                      </Tabs>
+      <div>
+        <Row>
+          <Dialog
+            modal={false}
+            title="An Error Has Occurred"
+            open={this.state.open}
+            actions={actions}>
+            <h5>Error Code: {this.error.errorCode}</h5>
+            <h4>Error Message: {this.error.errorMessage}</h4>
+          </Dialog>
+        </Row>
+        <Row>
+          <Col sm>
+            <Tabs>
+              <Tab label='Mortgage Summary'>
+                {<MortgageSmmary {...this.mortgageSmmary} />}
+              </Tab>
+              <Tab label='Mortgage Amortization Schedule'>
+                <Table selectable={false}>
+                  <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+                    <TableRow>
+                      <TableHeaderColumn colSpan='6'>
+                        <Tabs ref={(input) => { this.decadeTab = input; }}
+                          onChange={this.clickDecadeTabs.bind(this)}>
+                          {tabDecadeItemComponents}
+                        </Tabs>
+                      </TableHeaderColumn>
+                    </TableRow>
+                    <TableRow>
+                      <TableHeaderColumn tooltip="The payment number"
+                        style={{ textAlign: 'center' }}>
+                        Payment Number
                     </TableHeaderColumn>
-                  </TableRow>
-                  <TableRow>
-                    <TableHeaderColumn tooltip="The payment number"
-                      style={{ textAlign: 'center' }}>
-                      Payment Number
+                      <TableHeaderColumn tooltip="The date the payment will be due."
+                        style={{ textAlign: 'center' }}>
+                        Payment Date
                     </TableHeaderColumn>
-                    <TableHeaderColumn tooltip="The date the payment will be due."
-                      style={{ textAlign: 'center' }}>
-                      Payment Date
+                      <TableHeaderColumn tooltip="The payment amount."
+                        style={{ textAlign: 'center' }}>
+                        Payment
                     </TableHeaderColumn>
-                    <TableHeaderColumn tooltip="The payment amount."
-                      style={{ textAlign: 'center' }}>
-                      Payment
+                      <TableHeaderColumn tooltip="How much went toward interest for the payment."
+                        style={{ textAlign: 'center' }}>
+                        Interest Amount
                     </TableHeaderColumn>
-                    <TableHeaderColumn tooltip="How much went toward interest for the payment."
-                      style={{ textAlign: 'center' }}>
-                      Interest Amount
+                      <TableHeaderColumn tooltip="How much went toward the principal for the payment."
+                        style={{ textAlign: 'center' }}>
+                        Principal Amount
                     </TableHeaderColumn>
-                    <TableHeaderColumn tooltip="How much went toward the principal for the payment."
-                      style={{ textAlign: 'center' }}>
-                      Principal Amount
+                      <TableHeaderColumn tooltip="The balance still due."
+                        style={{ textAlign: 'center' }}>
+                        Balance
                     </TableHeaderColumn>
-                    <TableHeaderColumn tooltip="The balance still due."
-                      style={{ textAlign: 'center' }}>
-                      Balance
-                    </TableHeaderColumn>
-                  </TableRow>
-                </TableHeader>
-                <TableBody stripedRows={true}
-                  displayRowCheckbox={false}>
-                  {AmortizationScheduleItemComponents}
-                </TableBody>
-              </Table>
-            </Tab>
-          </Tabs>
-        </Col>
-      </Row >
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody stripedRows={true}
+                    displayRowCheckbox={false}>
+                    {AmortizationScheduleItemComponents}
+                  </TableBody>
+                </Table>
+              </Tab>
+            </Tabs>
+          </Col>
+        </Row>
+      </div>
     );
   }
 }
