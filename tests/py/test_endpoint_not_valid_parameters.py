@@ -15,7 +15,7 @@ class TestEndpointMissingParameters:
 
     def test_not_valid_all_parameters(self, client):
         response = client.get(
-            '/api/v1.0/mortgage?rate=invalid_parameter&' +
+            '/api/v1.0/mortgageNoPayment?rate=invalid_parameter&' +
             'installments=invalid_parameter&' +
             'principal=invalid_parameter&' +
             'payment=invalid_parameter&' +
@@ -24,7 +24,7 @@ class TestEndpointMissingParameters:
         assert response.status_code == 422
         assert response.content_type == 'application/json'
         assert isinstance(response.json, dict)
-        assert len(response.json['validationErrors']) == 5
+        assert len(response.json['validationErrors']) == 4
 
         validation_error = response.json['validationErrors'][0]
         assert validation_error.get('errorCode') == '002'
@@ -51,13 +51,6 @@ class TestEndpointMissingParameters:
         validation_error = response.json['validationErrors'][3]
         assert validation_error.get('errorCode') == '002'
         correct_type = validation_error.get('correctType')
-        assert correct_type == 'float'
-        assert validation_error.get(
-            'errorMessage') == 'Parameter \'payment\' not the correct type.'
-
-        validation_error = response.json['validationErrors'][4]
-        assert validation_error.get('errorCode') == '002'
-        correct_type = validation_error.get('correctType')
         assert correct_type == 'date'
         assert validation_error.get(
             'errorMessage') == \
@@ -65,8 +58,9 @@ class TestEndpointMissingParameters:
 
     def test_not_valid_installments_parameter(self, client):
         response = client.get(
-            '/api/v1.0/mortgage?rate=3.12&installments=invalid_parameter&' +
-            'principal=398483&payment=4040.35&startDate=02/27/2017')
+            '/api/v1.0/mortgageNoPayment?rate=3.12&' +
+            'installments=invalid_parameter&' +
+            'principal=398483&startDate=02/27/2017')
 
         assert response.status_code == 422
         assert response.content_type == 'application/json'
@@ -83,8 +77,8 @@ class TestEndpointMissingParameters:
 
     def test_not_valid_principal_parameter(self, client):
         response = client.get(
-            '/api/v1.0/mortgage?rate=3.12&installments=10&' +
-            'principal=invalid_parameter&payment=4040.35&startDate=02/27/2017')
+            '/api/v1.0/mortgageNoPayment?rate=3.12&installments=10&' +
+            'principal=invalid_parameter&startDate=02/27/2017')
 
         assert response.status_code == 422
         assert response.content_type == 'application/json'
@@ -100,8 +94,8 @@ class TestEndpointMissingParameters:
 
     def test_not_valid_rate_parameter(self, client):
         response = client.get(
-            '/api/v1.0/mortgage?rate=invalid_parameter&installments=10&' +
-            'principal=398483&payment=4040.35&startDate=02/27/2017')
+            '/api/v1.0/mortgageNoPayment?rate=invalid_parameter&' +
+            'installments=10&principal=398483&startDate=02/27/2017')
 
         assert response.status_code == 422
         assert response.content_type == 'application/json'
@@ -115,27 +109,10 @@ class TestEndpointMissingParameters:
         assert validation_error.get(
             'errorMessage') == 'Parameter \'rate\' not the correct type.'
 
-    def test_not_valid_payment_parameter(self, client):
-        response = client.get(
-            '/api/v1.0/mortgage?rate=3.12&installments=10&' +
-            'principal=398483&payment=invalid_parameter&startDate=02/27/2017')
-
-        assert response.status_code == 422
-        assert response.content_type == 'application/json'
-        assert isinstance(response.json, dict)
-        assert len(response.json['validationErrors']) == 1
-
-        validation_error = response.json['validationErrors'][0]
-        assert validation_error.get('errorCode') == '002'
-        correct_type = validation_error.get('correctType')
-        assert correct_type == 'float'
-        assert validation_error.get(
-            'errorMessage') == 'Parameter \'payment\' not the correct type.'
-
     def test_not_valid_start_date_parameter(self, client):
         response = client.get(
-            '/api/v1.0/mortgage?rate=3.12&installments=10&' +
-            'principal=398483&payment=4040.35&startDate=invalid_parameter')
+            '/api/v1.0/mortgageNoPayment?rate=3.12&installments=10&' +
+            'principal=398483&startDate=invalid_parameter')
 
         assert response.status_code == 422
         assert response.content_type == 'application/json'

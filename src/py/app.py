@@ -13,10 +13,15 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/api/v1.0/mortgage", methods=['GET'])
-def get_mortgage():
+# @app.route("/api/v1.0/mortgageWithPayment", methods=['GET'])
+# def get_Mortgage_With_Payment():
+#     return 0
+
+
+@app.route("/api/v1.0/mortgageNoPayment", methods=['GET'])
+def get_Mortgage_No_Payment():
     try:
-        missing_Parameters = check_all_parameters_exist()
+        missing_Parameters = check_all_parameters_exist('payment')
 
         if len(missing_Parameters) > 0:
             r = json.dumps({"validationErrors": [
@@ -25,7 +30,9 @@ def get_mortgage():
 
         parameters_Not_Valid = {}
         parameters_Valid = {}
-        check_Not_Valid_Parameters(parameters_Valid, parameters_Not_Valid)
+        check_Not_Valid_Parameters(parameters_Valid, parameters_Not_Valid,
+                                   'payment')
+
         if(len(parameters_Not_Valid) > 0):
             r = json.dumps({"validationErrors": [parameter_Not_Valid_To_Json(
                 key, value) for key, value in parameters_Not_Valid.items()]})
@@ -35,7 +42,8 @@ def get_mortgage():
         start_Date = parameters_Valid['startDate']
         principal = parameters_Valid['principal']
         rate = parameters_Valid['rate']
-        payment = parameters_Valid['payment']
+        payment = Mortgage.get_Payment_Amount(rate, total_Installments,
+                                              principal)
 
         mortgage = Mortgage(total_Installments, start_Date, principal, rate)
         installments = mortgage.get_All_Installments(payment)
@@ -96,47 +104,52 @@ def mortgage_Payment_Too_Small_To_Json(message):
     }
 
 
-def check_all_parameters_exist():
+def check_all_parameters_exist(ignore):
     missing_parameters = []
-    if request.args.get('installments') is None:
+    if ignore != 'installments' and request.args.get('installments') is None:
         missing_parameters.append('installments')
-    if request.args.get('startDate') is None:
+    if ignore != 'startDate' and request.args.get('startDate') is None:
         missing_parameters.append('startDate')
-    if request.args.get('principal') is None:
+    if ignore != 'principal' and request.args.get('principal') is None:
         missing_parameters.append('principal')
-    if request.args.get('rate') is None:
+    if ignore != 'rate' and request.args.get('rate') is None:
         missing_parameters.append('rate')
-    if request.args.get('payment') is None:
+    if ignore != 'payment' and request.args.get('payment') is None:
         missing_parameters.append('payment')
 
     return missing_parameters
 
 
-def check_Not_Valid_Parameters(parameters_Valid, parameters_Not_Valid):
+def check_Not_Valid_Parameters(parameters_Valid, parameters_Not_Valid, ignore):
     try:
-        parameters_Valid["installments"] = int(
-            request.args.get('installments'))
+        if(ignore != 'installments'):
+            parameters_Valid["installments"] = int(
+                request.args.get('installments'))
     except ValueError:
         parameters_Not_Valid["installments"] = "int"
 
     try:
-        parameters_Valid["principal"] = float(request.args.get('principal'))
+        if(ignore != 'principal'):
+            parameters_Valid["principal"] = float(request.args.get('principal'))
     except ValueError:
         parameters_Not_Valid["principal"] = "float"
 
     try:
-        parameters_Valid["rate"] = float(request.args.get('rate'))
+        if(ignore != 'rate'):
+            parameters_Valid["rate"] = float(request.args.get('rate'))
     except ValueError:
         parameters_Not_Valid["rate"] = "float"
 
     try:
-        parameters_Valid["payment"] = float(request.args.get('payment'))
+        if(ignore != 'payment'):
+            parameters_Valid["payment"] = float(request.args.get('payment'))
     except ValueError:
         parameters_Not_Valid["payment"] = "float"
 
     try:
-        parameters_Valid["startDate"] = datetime.strptime(
-            request.args.get('startDate'), '%m/%d/%Y')
+        if(ignore != 'startDate'):
+            parameters_Valid["startDate"] = datetime.strptime(
+                request.args.get('startDate'), '%m/%d/%Y')
     except ValueError:
         parameters_Not_Valid["startDate"] = "date"
 
