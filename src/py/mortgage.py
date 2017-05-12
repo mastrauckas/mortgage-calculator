@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from math import log10
 from installment import Installment
 from mortgage_information import Mortgage_Information
 from dateutil import relativedelta
@@ -24,6 +25,14 @@ class Mortgage:
         installments = []
         loan_Amount = self.__loan_Amount
         payment_Date = self.__start_Date
+        total_Payments = 0.0
+
+        total_Payments = Mortgage.get_How_Many_Payments(self.__rate, payment,
+                                                        self.__loan_Amount)
+
+        if total_Payments > 1200 or total_Payments == -1:
+            raise MortgagePaymentTooSmallException(
+                'Mortgage installments would be longer than a 100 years.')
 
         count = 1
         while loan_Amount != 0:
@@ -38,9 +47,6 @@ class Mortgage:
             loan_Amount = installment.total_Principal_Amount()
             payment_Date = payment_Date + relativedelta.relativedelta(months=1)
             installments.append(installment)
-            if len(installments) > 1200:
-                raise MortgagePaymentTooSmallException(
-                    'Mortgage installments would be longer than a 100 years.')
 
         return installments
 
@@ -91,7 +97,7 @@ class Mortgage:
 
     @staticmethod
     def monthly_Interest_Rate(rate):
-        return round(rate / 100 / 12, 6)
+        return rate / 100 / 12
 
     @staticmethod
     def total_Installments(years):
@@ -103,3 +109,11 @@ class Mortgage:
         return round((monthly_Rate + (monthly_Rate /
                                       (((1 + monthly_Rate) **
                                         installments) - 1))) * loan_Amount, 2)
+
+    @staticmethod
+    def get_How_Many_Payments(rate, payment, loan_Amount):
+        monthly_Rate = Mortgage.monthly_Interest_Rate(rate)
+        dividend = monthly_Rate / (payment / loan_Amount - monthly_Rate) + 1
+        divisor = 1 + monthly_Rate
+        return (int)(log10(dividend) / log10(divisor))  \
+            if dividend > 0 and divisor > 0 else -1
