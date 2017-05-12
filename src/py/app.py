@@ -13,9 +13,44 @@ def index():
     return render_template('index.html')
 
 
-# @app.route("/api/v1.0/mortgageWithPayment", methods=['GET'])
-# def get_Mortgage_With_Payment():
-#     return 0
+@app.route("/api/v1.0/mortgageWithPayment", methods=['GET'])
+def get_Mortgage_With_Payment():
+    try:
+        missing_Parameters = check_all_parameters_exist('installments')
+
+        if len(missing_Parameters) > 0:
+            r = json.dumps({"validationErrors": [
+                parameter_Missing_To_Json(p) for p in missing_Parameters]})
+            return Response(r, status=422, content_type='application/json')
+
+        parameters_Not_Valid = {}
+        parameters_Valid = {}
+        check_Not_Valid_Parameters(parameters_Valid, parameters_Not_Valid,
+                                   'installments')
+
+        if(len(parameters_Not_Valid) > 0):
+            r = json.dumps({"validationErrors": [parameter_Not_Valid_To_Json(
+                key, value) for key, value in parameters_Not_Valid.items()]})
+            return Response(r, status=422, content_type='application/json')
+
+        start_Date = parameters_Valid['startDate']
+        principal = parameters_Valid['principal']
+        rate = parameters_Valid['rate']
+        payment = parameters_Valid['payment']
+
+        mortgage = Mortgage(start_Date, principal, rate)
+        installments = mortgage.get_All_Installments(payment)
+        r = json.dumps(
+            {"installments": [installment_To_Json(i) for i in installments]})
+        return Response(r, content_type='application/json')
+
+    except MortgagePaymentTooSmallException as e:
+        r = json.dumps(mortgage_Payment_Too_Small_To_Json(e.message))
+        return Response(r, status=422, content_type='application/json')
+    except MortgagePaymentTooSmallException as e:
+        r = json.dumps(unhandled_Exception_To_Json('An unhandled ' +
+                                                   'exception occurred.'))
+        return Response(r, status=422, content_type='application/json')
 
 
 @app.route("/api/v1.0/mortgageNoPayment", methods=['GET'])
@@ -45,7 +80,7 @@ def get_Mortgage_No_Payment():
         payment = Mortgage.get_Payment_Amount(rate, total_Installments,
                                               principal)
 
-        mortgage = Mortgage(total_Installments, start_Date, principal, rate)
+        mortgage = Mortgage(start_Date, principal, rate)
         installments = mortgage.get_All_Installments(payment)
         r = json.dumps(
             {"installments": [installment_To_Json(i) for i in installments]})

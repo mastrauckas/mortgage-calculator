@@ -14,8 +14,7 @@ class Mortgage:
     __current_Principal = 0
     __rate = 0.0
 
-    def __init__(self, installments, start_Date, loan_Amount, rate):
-        self.__installments = installments
+    def __init__(self, start_Date, loan_Amount, rate):
         self.__start_Date = start_Date
         self.__loan_Amount = loan_Amount
         self.__current_Principal = loan_Amount

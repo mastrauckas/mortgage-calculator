@@ -6,13 +6,12 @@ from datetime import datetime
 
 class TestMortgageOnInstanceMethods:
     __rate = 3.12
-    __total_Installments = 10
     __startDate = datetime.strptime('1/1/2010', '%m/%d/%Y')
     __loan_Amount = 398483
     __payment = 40420.35
 
     def test_Installments(self):
-        mortgage = Mortgage(self.__total_Installments, self.__startDate,
+        mortgage = Mortgage(self.__startDate,
                             self.__loan_Amount, self.__rate)
         installments = mortgage.get_All_Installments(self.__payment)
 

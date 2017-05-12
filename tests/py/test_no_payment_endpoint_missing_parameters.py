@@ -5,7 +5,7 @@ import pytest
 
 
 @pytest.mark.usefixtures('client_class')
-class TestEndpointMissingParameters:
+class TestNoPaymentEndpointMissingParameters:
 
     @pytest.fixture
     def app(self):
