@@ -13,8 +13,8 @@ def index():
     return render_template('index.html')
 
 
-@app.route("/api/v1.0/mortgageWithPayment", methods=['GET'])
-def get_Mortgage_With_Payment():
+@app.route("/api/v1.0/AmortizationScheduleWithPaymentAmount", methods=['GET'])
+def get_Amortization_Schedule_With_Payment_Amount():
     try:
         missing_Parameters = check_all_parameters_exist('installments')
 
@@ -53,8 +53,8 @@ def get_Mortgage_With_Payment():
         return Response(r, status=422, content_type='application/json')
 
 
-@app.route("/api/v1.0/mortgageNoPayment", methods=['GET'])
-def get_Mortgage_No_Payment():
+@app.route("/api/v1.0/AmortizationScheduleWithTermLength", methods=['GET'])
+def get_Amortization_Schedule_No_Payment():
     try:
         missing_Parameters = check_all_parameters_exist('payment')
 
@@ -165,7 +165,8 @@ def check_Not_Valid_Parameters(parameters_Valid, parameters_Not_Valid, ignore):
 
     try:
         if(ignore != 'principal'):
-            parameters_Valid["principal"] = float(request.args.get('principal'))
+            parameters_Valid["principal"] = \
+                float(request.args.get('principal'))
     except ValueError:
         parameters_Not_Valid["principal"] = "float"
 
