@@ -13,10 +13,7 @@ export default class MortgageSummary extends Component {
   }
 
   static propTypes = {
-    installmentNumber: PropTypes.PropTypes.number,
-    paymentDate: PropTypes.PropTypes.instanceOf(Date),
     payment: PropTypes.PropTypes.number,
-    interestAmount: PropTypes.PropTypes.number,
     principalAmount: PropTypes.PropTypes.number,
     totalInterest: PropTypes.PropTypes.number,
     totalPaid: PropTypes.PropTypes.number,
@@ -32,6 +29,31 @@ export default class MortgageSummary extends Component {
   render() {
     return (
       <Paper zDepth={1}>
+
+        <Grid fluid>
+          <Row center='sm'>
+            <Col>
+              <h2>Mortgage Payment Information</h2>
+            </Col>
+          </Row>
+          <Row>
+            <Col>
+              <Table selectable={false}>
+                <TableBody displayRowCheckbox={false}>
+                  <TableRow>
+                    <TableRowColumn style={{ textAlign: 'left' }}>
+                      <div style={{ fontSize: '1.5em' }}>Mortgage Payment</div>
+                    </TableRowColumn>
+                    <TableRowColumn style={{ textAlign: 'right' }}>
+                      <div style={{ fontSize: '1.5em' }}>${(this.props.payment || 0).format(2)}</div>
+                    </TableRowColumn>
+                  </TableRow>
+                </TableBody>
+              </Table>
+            </Col>
+          </Row>
+        </Grid>
+
         <Grid fluid>
           <Row center='sm'>
             <Col>

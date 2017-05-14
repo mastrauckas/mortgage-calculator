@@ -20,19 +20,24 @@ export default class AmortizationCalculator extends Component {
       principalAmount: 200000.00,
       startDate: new Date('02/27/2017'),
       installments: 360,
-      payment: 777.98,
+      payment: 1000,
       interestRate: 3.75
     };
 
     AmortizationScheduleActions.getAmortizationScheduleActionWithTermLength(this.schedule);
     this.state = {
-      paymentDisabled: true,
-      termDisabled: false
+      calculatePayment: true,
+      paymentVisable: {
+        display: 'none'
+      },
+      termVisable: {
+        display: 'inherit'
+      }
     };
   }
 
   onClick() {
-    if (this.state.paymentDisabled) {
+    if (this.state.calculatePayment) {
       AmortizationScheduleActions.getAmortizationScheduleActionWithTermLength({
         principalAmount: this.schedule.principalAmount,
         startDate: this.schedule.startDate,
@@ -52,13 +57,23 @@ export default class AmortizationCalculator extends Component {
   onChange(event, value) {
     if (value === 'caculatePayment') {
       this.setState({
-        paymentDisabled: true,
-        termDisabled: false
+        calculatePayment: true,
+        paymentVisable: {
+          display: 'none'
+        },
+        termVisable: {
+          display: 'inherit'
+        }
       });
     } else {
       this.setState({
-        paymentDisabled: false,
-        termDisabled: true
+        calculatePayment: false,
+        paymentVisable: {
+          display: 'inherit'
+        },
+        termVisable: {
+          display: 'none'
+        }
       });
     }
   }
@@ -111,25 +126,23 @@ export default class AmortizationCalculator extends Component {
               onNewValueChange={(value) => this.schedule.principalAmount = value} />
           </Col>
 
-          <Col sm={2}>
+          <Col sm={2} style={this.state.paymentVisable}>
             <CurrencyTextField
               style={styleTextFields}
               name='paymentAmount'
               floatingLabelText='Payment Amount'
               type="text"
               value={this.schedule.payment.toString()}
-              disabled={this.state.paymentDisabled}
               onNewValueChange={(value) => this.schedule.payment = value} />
           </Col>
 
-          <Col sm={2}>
+          <Col sm={2} style={this.state.termVisable}>
             <NaturalNumberTextField
               style={styleTextFields}
               name='mortgageTerm'
               floatingLabelText='Term Length'
               type="text"
               value={this.schedule.installments.toString()}
-              disabled={this.state.termDisabled}
               onNewValueChange={(value) => this.schedule.installments = value} />
           </Col>
 
