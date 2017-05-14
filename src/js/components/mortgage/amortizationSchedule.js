@@ -99,7 +99,8 @@ export default class AmortizationSchedule extends Component {
     const lastPaymentDate = lastInstallmentItem.paymentDate;
 
     return {
-      ...mortgageInformation.schedule,
+      principalAmount: mortgageInformation.schedule.principalAmount,
+      payment: mortgageInformation.amortizationSchedule[0].payment,
       totalInterest,
       totalPaid,
       percentInterest,

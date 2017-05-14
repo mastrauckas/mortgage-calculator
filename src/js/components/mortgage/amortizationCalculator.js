@@ -4,6 +4,7 @@ import Sugar from 'sugar';
 import AmortizationScheduleActions from '../../actions/amortizationScheduleActions';
 import RaisedButton from 'material-ui/RaisedButton';
 import DatePicker from 'material-ui/DatePicker';
+import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import { Row, Col } from 'react-flexbox-grid';
 import CurrencyTextField from '../controls/currencyTextField';
 import PercentTextField from '../controls/percentTextField';
@@ -16,28 +17,65 @@ export default class AmortizationCalculator extends Component {
     Sugar.extend();
 
     this.schedule = {
-      principalAmount: 136068.31,
+      principalAmount: 200000.00,
       startDate: new Date('02/27/2017'),
       installments: 360,
-      payment: 777.98,
+      payment: 1000,
       interestRate: 3.75
     };
 
-    AmortizationScheduleActions.getAmortizationScheduleAction(this.schedule);
+    AmortizationScheduleActions.getAmortizationScheduleActionWithTermLength(this.schedule);
     this.state = {
-      amount: '',
-      hasDecimal: true
+      calculatePayment: true,
+      paymentVisable: {
+        display: 'none'
+      },
+      termVisable: {
+        display: 'inherit'
+      }
     };
   }
 
   onClick() {
-    AmortizationScheduleActions.getAmortizationScheduleAction({
-      principalAmount: this.schedule.principalAmount,
-      startDate: this.schedule.startDate,
-      installments: this.schedule.installments,
-      payment: this.schedule.payment,
-      interestRate: this.schedule.interestRate
-    });
+    if (this.state.calculatePayment) {
+      AmortizationScheduleActions.getAmortizationScheduleActionWithTermLength({
+        principalAmount: this.schedule.principalAmount,
+        startDate: this.schedule.startDate,
+        installments: this.schedule.installments,
+        interestRate: this.schedule.interestRate
+      });
+    } else {
+      AmortizationScheduleActions.getAmortizationScheduleActionWithPaymentAmount({
+        principalAmount: this.schedule.principalAmount,
+        startDate: this.schedule.startDate,
+        payment: this.schedule.payment,
+        interestRate: this.schedule.interestRate
+      });
+    }
+  }
+
+  onChange(event, value) {
+    if (value === 'caculatePayment') {
+      this.setState({
+        calculatePayment: true,
+        paymentVisable: {
+          display: 'none'
+        },
+        termVisable: {
+          display: 'inherit'
+        }
+      });
+    } else {
+      this.setState({
+        calculatePayment: false,
+        paymentVisable: {
+          display: 'inherit'
+        },
+        termVisable: {
+          display: 'none'
+        }
+      });
+    }
   }
 
   render() {
@@ -45,8 +83,37 @@ export default class AmortizationCalculator extends Component {
       width: '170px',
     };
 
+    const styleRadioBoxs = {
+      display: 'auto',
+      marginTop: '20px',
+      marginBottom: '10px'
+    };
+
+    const styRadioBoxesLabel = {
+      width: 'none'
+    };
+
     return (
       <div>
+        <RadioButtonGroup
+          defaultSelected='caculatePayment'
+          style={{ display: 'flex' }}
+          className='row center-sm'
+          name='mortgageType'
+          onChange={this.onChange.bind(this)}>
+          <RadioButton
+            value='caculatePayment'
+            label='Caculate Payment'
+            style={styleRadioBoxs}
+            labelStyle={styRadioBoxesLabel}
+            className='col-sm-2' />
+          <RadioButton
+            value='caculateTerm'
+            label='Set Your Own Payment'
+            style={styleRadioBoxs}
+            labelStyle={styRadioBoxesLabel}
+            className='col-sm-2' />
+        </RadioButtonGroup>
         <Row center='sm'>
 
           <Col sm={2}>
@@ -59,7 +126,7 @@ export default class AmortizationCalculator extends Component {
               onNewValueChange={(value) => this.schedule.principalAmount = value} />
           </Col>
 
-          <Col sm={2}>
+          <Col sm={2} style={this.state.paymentVisable}>
             <CurrencyTextField
               style={styleTextFields}
               name='paymentAmount'
@@ -69,20 +136,7 @@ export default class AmortizationCalculator extends Component {
               onNewValueChange={(value) => this.schedule.payment = value} />
           </Col>
 
-          <Col sm={2}>
-            <DatePicker
-              textFieldStyle={styleTextFields}
-              floatingLabelText='Start Date'
-              formatDate={(date) => {
-                return `${('0' + (date.getMonth() + 1)).slice(-2)}/${('0' + date.getDate()).slice(-2)}/${date.getFullYear()}`;
-              }}
-              name='paymentDate'
-              mode="landscape"
-              defaultDate={this.schedule.startDate}
-              onChange={(input, newValue) => this.schedule.startDate = newValue} />
-          </Col>
-
-          <Col sm={2}>
+          <Col sm={2} style={this.state.termVisable}>
             <NaturalNumberTextField
               style={styleTextFields}
               name='mortgageTerm'
@@ -101,6 +155,19 @@ export default class AmortizationCalculator extends Component {
               onNewValueChange={(value) => this.schedule.interestRate = value} />
           </Col>
 
+          <Col sm={2}>
+            <DatePicker
+              textFieldStyle={styleTextFields}
+              floatingLabelText='Start Date'
+              formatDate={(date) => {
+                return `${('0' + (date.getMonth() + 1)).slice(-2)}/${('0' + date.getDate()).slice(-2)}/${date.getFullYear()}`;
+              }}
+              name='paymentDate'
+              mode="landscape"
+              defaultDate={this.schedule.startDate}
+              onChange={(input, newValue) => this.schedule.startDate = newValue} />
+          </Col>
+
         </Row>
 
         <Row center='sm' style={{ marginBottom: '2em', marginTop: '0.5em' }}>
@@ -109,7 +176,7 @@ export default class AmortizationCalculator extends Component {
               onClick={this.onClick.bind(this)} />
           </Col>
         </Row>
-      </div>
+      </div >
     );
   }
 }

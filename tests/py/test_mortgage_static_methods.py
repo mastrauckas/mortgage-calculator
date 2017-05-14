@@ -16,7 +16,14 @@ class TestMortgageOnStaticMethods:
             == self.__payment
 
     def test_monthly_Interest_Rate(self):
-        assert Mortgage.monthly_Interest_Rate(self.__rate) == 0.003125
+        assert round(Mortgage.monthly_Interest_Rate(self.__rate), 6) \
+            == 0.003125
+
+    def test_get_How_Many_Payments_Payment_Too_Small(self):
+        assert Mortgage.get_How_Many_Payments(3.74, 1, 1000000) == -1
+
+    def test_get_How_Many_Payments_Correct_Payments(self):
+        assert Mortgage.get_How_Many_Payments(4, 50, 1000) == 20
 
     def test_total_Installments(self):
         assert Mortgage.total_Installments(30) == self.__total_Installments

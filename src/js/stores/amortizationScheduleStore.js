@@ -16,11 +16,25 @@ class AmortizationScheduleStore extends EventEmitter {
 
   handleActions(action) {
     switch (action.type) {
-      case 'COMPLETE_GET_AMORTIZATION_SCHEDULE_ACTION': {
+      case 'FETCH_GET_AMORTIZATION_SCHEDULE_WITH_TERM_LENGTH_ACTION': {
+        break;
+      }
+      case 'FETCH_GET_AMORTIZATION_SCHEDULE_WITH_PAYMENT_AMOUNT_ACTION': {
+        break;
+      }
+      case 'COMPLETE_GET_AMORTIZATION_SCHEDULE_WITH_TERM_LENGTH_ACTION': {
         this.getAmortizationScheduleInformation(action.mortgageInformation);
         break;
       }
-      case 'ERROR_GET_AMORTIZATION_SCHEDULE_ACTION': {
+      case 'COMPLETE_GET_AMORTIZATION_SCHEDULE_WITH_PAYMENT_AMOUNT_ACTION': {
+        this.getAmortizationScheduleInformation(action.mortgageInformation);
+        break;
+      }
+      case 'ERROR_GET_AMORTIZATION_SCHEDULE_WITH_TERM_LENGTH_ACTION': {
+        this.emit('error', action.errorInformation);
+        break;
+      }
+      case 'ERROR_GET_AMORTIZATION_SCHEDULE_WITH_PAYMENT_AMOUNT_ACTION': {
         this.emit('error', action.errorInformation);
         break;
       }
