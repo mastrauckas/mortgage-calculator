@@ -6,23 +6,23 @@ namespace Maa.MortgageCalculator.Models
     {
         private short _installmentNumber;
         private DateTime _paymentDate;
-        private double _totalPrincipalAmount;
-        private double _interestAmount;
-        private double _principalAmount;
+        private double _currentPrincipalAmount;
+        private double _interestAmountPaid;
+        private double _principalAmountPaid;
         private double _amortizationErrorAmount;
 
         public Installment(short installmentNumber,
                         DateTime paymentDate,
-                        double totalPrincipalAmount,
-                        double interestAmount,
-                        double principalAmount,
+                        double currentPrincipalAmount,
+                        double interestAmountPaid,
+                        double principalAmountPaid,
                         double amortizationErrorAmount)
         {
             _installmentNumber = installmentNumber;
             _paymentDate = paymentDate;
-            _totalPrincipalAmount = totalPrincipalAmount;
-            _interestAmount = interestAmount;
-            _principalAmount = principalAmount;
+            _currentPrincipalAmount = currentPrincipalAmount;
+            _interestAmountPaid = interestAmountPaid;
+            _principalAmountPaid = principalAmountPaid;
             _amortizationErrorAmount = amortizationErrorAmount;
         }
 
@@ -36,24 +36,24 @@ namespace Maa.MortgageCalculator.Models
             get { return _paymentDate; }
         }
 
-        public double TotalPrincipalAmount
+        public double CurrentPrincipalAmount
         {
-            get { return _totalPrincipalAmount; }
+            get { return _currentPrincipalAmount; }
         }
 
-        public double InterestAmount
+        public double InterestAmountPaid
         {
-            get { return Math.Round(_interestAmount, 2, MidpointRounding.AwayFromZero); }
+            get { return Math.Round(_interestAmountPaid, 2, MidpointRounding.AwayFromZero); }
         }
 
-        public double PrincipalAmount
+        public double PrincipalAmountPaid
         {
-            get { return Math.Round(_principalAmount, 2, MidpointRounding.AwayFromZero); }
+            get { return Math.Round(_principalAmountPaid, 2, MidpointRounding.AwayFromZero); }
         }
 
         public double Payment
         {
-            get { return Math.Round(InterestAmount + PrincipalAmount, 2, MidpointRounding.AwayFromZero); }
+            get { return Math.Round(InterestAmountPaid + PrincipalAmountPaid, 2, MidpointRounding.AwayFromZero); }
         }
 
         public double AmortizationErrorAmount

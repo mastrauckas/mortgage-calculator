@@ -5,7 +5,7 @@ namespace Maa.MortgageCalculator.Models
 {
     public static class MortgageCalculator
     {
-        private static short OneHundredYarsInpayments { get { return 1200; } }
+        private static short OneHundredYearsOfPayments { get { return 1200; } }
 
         public static IEnumerable<Installment> GetAllInstallments(MortgageLoan mortageLoan)
         {
@@ -16,8 +16,8 @@ namespace Maa.MortgageCalculator.Models
 
             totalPayments = GetHowManyPayments(mortageLoan.Rate, mortageLoan.Payment, principal);
 
-            if (totalPayments > OneHundredYarsInpayments || totalPayments == -1)
-                throw new Exception("Mortgage installments would be longer than a 100 years.");
+            if (totalPayments > OneHundredYearsOfPayments || totalPayments == -1)
+                throw new InstallmentsTooLongException("Mortgage installments would be longer than a 100 years.");
 
             short installmentNumber = 1;
             while (principal != 0)
@@ -27,7 +27,7 @@ namespace Maa.MortgageCalculator.Models
                                                     principal,
                                                     mortageLoan.Payment,
                                                     mortageLoan.Rate);
-                principal = installment.TotalPrincipalAmount;
+                principal = installment.CurrentPrincipalAmount;
                 paymentDate = paymentDate.AddMonths(1);
                 installmentNumber += 1;
                 installments.Add(installment);
@@ -43,21 +43,17 @@ namespace Maa.MortgageCalculator.Models
                                             double rate)
         {
             var e = 0.0;
-            var p = GetPrincipalOnPayment(principal, payment, rate);
-            var i = GetInterestOnPayment(principal, rate);
-            if ((principal - p) < (payment - i))
-                e = principal - p;
+            var principalAmountPaid = GetPrincipalOnPayment(principal, payment, rate);
+            var interestAmountPaid = GetInterestOnPayment(principal, rate);
+            if ((principal - principalAmountPaid) < (payment - interestAmountPaid))
+                e = principal - principalAmountPaid;
 
-            // var pRounded = Math.Round(p, 2, MidpointRounding.AwayFromZero);
-            // var principalRound = Math.Round(principal, 2, MidpointRounding.AwayFromZero);
-            // var roundOne = Math.Round(principalRound - pRounded, 2, MidpointRounding.AwayFromZero);
-            // var newPrincipal = roundOne - Math.Round(e, 2, MidpointRounding.AwayFromZero);
+            var currentPrincipal = Math.Round(Math.Round(principal, 2, MidpointRounding.AwayFromZero)
+                                    - Math.Round(principalAmountPaid, 2, MidpointRounding.AwayFromZero), 2, MidpointRounding.AwayFromZero)
+                                        - Math.Round(e, 2, MidpointRounding.AwayFromZero);
 
-            var newPrincipal = Math.Round(
-                                Math.Round(principal, 2, MidpointRounding.AwayFromZero) - Math.Round(p, 2, MidpointRounding.AwayFromZero), 2, MidpointRounding.AwayFromZero) -
-                                    Math.Round(e, 2, MidpointRounding.AwayFromZero);
-
-            return new Installment(installmentNumber, paymentDate, newPrincipal, i, p, e);
+            return new Installment(installmentNumber, paymentDate, currentPrincipal,
+                                    interestAmountPaid, principalAmountPaid, e);
         }
 
         public static double GetPrincipalOnPayment(double principal, double payment, double rate)
@@ -79,16 +75,16 @@ namespace Maa.MortgageCalculator.Models
 
         public static double GetPaymentAmount(double rate, short installments, double principal)
         {
-            var monlyInterstRate = GetMonthlyInterestRate(rate);
-            return Math.Round((monlyInterstRate + (monlyInterstRate / (Math.Pow((1 + monlyInterstRate), installments) - 1))) * principal,
+            var montlylyInterstRate = GetMonthlyInterestRate(rate);
+            return Math.Round((montlylyInterstRate + (montlylyInterstRate / (Math.Pow((1 + montlylyInterstRate), installments) - 1))) * principal,
                 2, MidpointRounding.AwayFromZero);
         }
 
         public static int GetHowManyPayments(double rate, double payment, double principal)
         {
-            var montlyRate = GetMonthlyInterestRate(rate);
-            var dividend = montlyRate / (payment / principal - montlyRate) + 1;
-            var divisor = 1 + montlyRate;
+            var monthlyRate = GetMonthlyInterestRate(rate);
+            var dividend = monthlyRate / (payment / principal - monthlyRate) + 1;
+            var divisor = 1 + monthlyRate;
             return dividend > 0 && divisor > 0
                 ? (int)(Math.Log10(dividend) / Math.Log10(divisor))
                 : -1;

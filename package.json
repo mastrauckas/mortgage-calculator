@@ -14,6 +14,8 @@
     "dev-server:public": "npm run lint && FLASK_APP=./build/app.py FLASK_DEBUG=1 flask run --host=0.0.0.0",
     "test": "npm run test:python",
     "test:python": "cross-env PYTHONPATH=./src/py:./src/py py.test",
+    "test:cs:endpoints": "cd ./tests/cs/Maa.MortgageCalculator.Endpoints.Tests &&  dotnet test",
+    "test:cs:models": "cd ./tests/cs/Maa.MortgageCalculator.Models.Tests/ && dotnet test",
     "lint": "npm run lint:python && npm run lint:javascript",
     "lint:python": "flake8 ./src/py",
     "lint:javascript": "eslint src",
