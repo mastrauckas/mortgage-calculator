@@ -74,19 +74,21 @@ module.exports = class WebpackHelper {
         use: 'file-loader?name=assets/[name].[hash].[ext]'
       },
       {
-        test: /\.css?$/,
-        exclude: /node_modules/,
-        use: 'css-loader?{"sourceMap":false,"minimize":false}'
-      },
-      {
         test: /\.css$/,
         use: [
           'style-loader',
           'css-loader?modules'
         ],
         include: /flexboxgrid/
-      }
-
+      },
+      {
+        test: /\.css?$/,
+        exclude: /node_modules/,
+        use: [
+          'style-loader',
+          'css-loader?{"sourceMap":false,"minimize":false}'
+        ]
+      },
     ];
   }
 
