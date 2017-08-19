@@ -69,7 +69,7 @@ module.exports = class WebpackDevHelper extends WebpackHelper {
                           || module.resource.startsWith(realNodeModules));
         },
         'chunks': [
-          'main'
+          'app'
         ]
       })
 
