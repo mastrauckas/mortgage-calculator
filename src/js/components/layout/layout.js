@@ -22,7 +22,7 @@ export default class Layout extends Component {
         spacing: '0'
       },
       textField: {
-        paddingLeft: '10rcem'
+        paddingLeft: '10rem'
       }
     });
     return (

@@ -27,10 +27,10 @@ export default class AmortizationCalculator extends Component {
     AmortizationScheduleActions.getAmortizationScheduleActionWithTermLength(this.schedule);
     this.state = {
       calculatePayment: true,
-      paymentVisable: {
+      paymentVisible: {
         display: 'none'
       },
-      termVisable: {
+      termVisible: {
         display: 'inherit'
       }
     };
@@ -55,23 +55,23 @@ export default class AmortizationCalculator extends Component {
   }
 
   onChange(event, value) {
-    if (value === 'caculatePayment') {
+    if (value === 'calculatePayment') {
       this.setState({
         calculatePayment: true,
-        paymentVisable: {
+        paymentVisible: {
           display: 'none'
         },
-        termVisable: {
+        termVisible: {
           display: 'inherit'
         }
       });
     } else {
       this.setState({
         calculatePayment: false,
-        paymentVisable: {
+        paymentVisible: {
           display: 'inherit'
         },
-        termVisable: {
+        termVisible: {
           display: 'none'
         }
       });
@@ -83,37 +83,42 @@ export default class AmortizationCalculator extends Component {
       width: '170px',
     };
 
-    const styleRadioBoxs = {
-      display: 'auto',
-      marginTop: '20px',
-      marginBottom: '10px'
-    };
-
     const styRadioBoxesLabel = {
       width: 'none'
     };
 
     return (
       <div>
-        <RadioButtonGroup
-          defaultSelected='caculatePayment'
-          style={{ display: 'flex' }}
-          className='row center-sm'
-          name='mortgageType'
-          onChange={this.onChange.bind(this)}>
-          <RadioButton
-            value='caculatePayment'
-            label='Caculate Payment'
-            style={styleRadioBoxs}
-            labelStyle={styRadioBoxesLabel}
-            className='col-sm-2' />
-          <RadioButton
-            value='caculateTerm'
-            label='Set Your Own Payment'
-            style={styleRadioBoxs}
-            labelStyle={styRadioBoxesLabel}
-            className='col-sm-2' />
-        </RadioButtonGroup>
+        <Row center='sm'>
+
+          <RadioButtonGroup
+            defaultSelected='calculatePayment'
+            style={{ display: 'flex' }}
+            name='mortgageTypes'
+            onChange={this.onChange.bind(this)}>
+            <RadioButton
+              value='calculatePayment'
+              label='Calculate'
+              style={{
+                display: 'block',
+                marginTop: '20px',
+                marginBottom: '10px'
+              }}
+              labelStyle={styRadioBoxesLabel}
+              className='col-sm-2' />
+            <RadioButton
+              value='calculateTerm'
+              label='Set Your Own Payment'
+              style={{
+                marginTop: '20px',
+                marginBottom: '10px'
+              }}
+              labelStyle={styRadioBoxesLabel}
+              className='col-sm-2' />
+          </RadioButtonGroup>
+
+        </Row>
+
         <Row center='sm'>
 
           <Col sm={2}>
@@ -126,7 +131,7 @@ export default class AmortizationCalculator extends Component {
               onNewValueChange={(value) => this.schedule.principalAmount = value} />
           </Col>
 
-          <Col sm={2} style={this.state.paymentVisable}>
+          <Col sm={2} style={this.state.paymentVisible}>
             <CurrencyTextField
               style={styleTextFields}
               name='paymentAmount'
@@ -136,7 +141,7 @@ export default class AmortizationCalculator extends Component {
               onNewValueChange={(value) => this.schedule.payment = value} />
           </Col>
 
-          <Col sm={2} style={this.state.termVisable}>
+          <Col sm={2} style={this.state.termVisible}>
             <NaturalNumberTextField
               style={styleTextFields}
               name='mortgageTerm'
@@ -172,7 +177,7 @@ export default class AmortizationCalculator extends Component {
 
         <Row center='sm' style={{ marginBottom: '2em', marginTop: '0.5em' }}>
           <Col sm>
-            <RaisedButton label='Calulate my Mortgage'
+            <RaisedButton label='Calculate'
               onClick={this.onClick.bind(this)} />
           </Col>
         </Row>

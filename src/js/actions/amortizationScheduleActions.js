@@ -31,7 +31,7 @@ class AmortizationScheduleActions {
 
   getAmortizationScheduleActionWithPaymentAmount(schedule) {
     dispatcher.dispatch({
-      type: 'FETCH_GET_AMORTIZATION_SCHEDULE_WTIH_PAYMENT_AMOUNT_ACTION'
+      type: 'FETCH_GET_AMORTIZATION_SCHEDULE_WITH_PAYMENT_AMOUNT_ACTION'
     });
 
     const url = this.createUrlFromScheduleWithPaymentAmount(schedule);
@@ -69,7 +69,7 @@ class AmortizationScheduleActions {
 
   getAmortizationScheduleActionWithTermLength(schedule) {
     dispatcher.dispatch({
-      type: 'FETCH_GET_AMORTIZATION_SCHEDULE_WTIH_TERM_LENGTH_ACTION'
+      type: 'FETCH_GET_AMORTIZATION_SCHEDULE_WITH_TERM_LENGTH_ACTION'
     });
 
     const url = this.createUrlFromScheduleWithTermLength(schedule);
