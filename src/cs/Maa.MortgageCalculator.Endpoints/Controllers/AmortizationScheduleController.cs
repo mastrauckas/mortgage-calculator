@@ -9,7 +9,7 @@ using System.Net.Http;
 namespace Maa.MortgageCalculator.Endpoints.Controllers
 {
     [Route("api/v1.0/[controller]")]
-    public class AmortizationScheduleWithPaymentAmountController : Controller
+    public class AmortizationScheduleController : Controller
     {
         [HttpGet]
         public IActionResult GetAmortizationScheduleWithTermLength(string startDate,

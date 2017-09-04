@@ -59,7 +59,7 @@ namespace Maa.MortgageCalculator.Endpoints.Tests
 
         private static IActionResult GetResult(DateTime startDate, double principal, double interest, double payment)
         {
-            var endpoint = new AmortizationScheduleWithPaymentAmountController();
+            var endpoint = new AmortizationScheduleController();
             return endpoint.GetAmortizationScheduleWithTermLength(startDate.ToString(),
                                                                     principal.ToString(),
                                                                     interest.ToString(),
