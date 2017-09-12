@@ -5,10 +5,10 @@ namespace Maa.MortgageCalculator.Models
 {
     public class MortgageLoanValidation : IMortgageLoanValidation
     {
-        public IEnumerable<MortgageValidationError> GetValidationErrors(string startDate,
-                                                                            string principal,
-                                                                            string rate,
-                                                                            string payment)
+        public IEnumerable<MortgageValidationError> GetValidationErrorsForPayment(string startDate,
+                                                                                    string principal,
+                                                                                    string rate,
+                                                                                    string payment)
         {
             DateTime dt;
             double db;
@@ -32,6 +32,38 @@ namespace Maa.MortgageCalculator.Models
                 validationErrors.Add(CreateMissingParameterError("payment"));
             else if (!double.TryParse(payment, out db))
                 validationErrors.Add(CreateIncorrectTypeError("payment", "decimal"));
+
+            return validationErrors;
+        }
+
+        public IEnumerable<MortgageValidationError> GetValidationErrorsForInstallments(string startDate,
+                                                                                    string principal,
+                                                                                    string rate,
+                                                                                    string installments)
+        {
+            DateTime dt;
+            double db;
+            int i;
+            var validationErrors = new List<MortgageValidationError>();
+            if (string.IsNullOrWhiteSpace(startDate))
+                validationErrors.Add(CreateMissingParameterError("startDate"));
+            else if (!DateTime.TryParse(startDate, out dt))
+                validationErrors.Add(CreateIncorrectTypeError("startDate", "date"));
+
+            if (string.IsNullOrWhiteSpace(principal))
+                validationErrors.Add(CreateMissingParameterError("principal"));
+            else if (!double.TryParse(principal, out db))
+                validationErrors.Add(CreateIncorrectTypeError("principal", "decimal"));
+
+            if (string.IsNullOrWhiteSpace(rate))
+                validationErrors.Add(CreateMissingParameterError("rate"));
+            else if (!double.TryParse(rate, out db))
+                validationErrors.Add(CreateIncorrectTypeError("rate", "decimal"));
+
+            if (string.IsNullOrWhiteSpace(installments))
+                validationErrors.Add(CreateMissingParameterError("installments"));
+            else if (!int.TryParse(installments, out i))
+                validationErrors.Add(CreateIncorrectTypeError("installments", "integer"));
 
             return validationErrors;
         }

@@ -11,20 +11,64 @@ namespace Maa.MortgageCalculator.Endpoints.Controllers
     [Route("api/v1.0/[controller]")]
     public class AmortizationScheduleController : Controller
     {
-        [HttpGet]
-        public IActionResult GetAmortizationScheduleWithTermLength(string startDate,
-                                        string principal,
-                                        string rate,
-                                        string payment)
+        [HttpGet("AmortizationScheduleWithTermLength")]
+        public IActionResult GetAmortizationScheduleWithInstallments(string startDate,
+                                                                    string principal,
+                                                                    string rate,
+                                                                    string installments)
         {
             IActionResult error = null;
             var mortgageLoanValidation = new MortgageLoanValidation();
             try
             {
-                var validationErrors = mortgageLoanValidation.GetValidationErrors(startDate,
+                var r = Convert.ToDouble(rate);
+                var  p = Convert.ToDouble(principal);
+
+                var validationErrors = mortgageLoanValidation.GetValidationErrorsForInstallments(startDate,
                                                                                     principal,
                                                                                     rate,
-                                                                                    payment);
+                                                                                    installments);
+                if (validationErrors.Any())
+                    return StatusCode(422, validationErrors);
+
+                var mortgageLoan = new MortgageLoan()
+                {
+                    StartDate = Convert.ToDateTime(startDate),
+                    Principal = p,
+                    Rate = r,
+                    Payment = Models.MortgageCalculator.GetPaymentAmount(r, Convert.ToInt16(installments), p)
+                };
+
+                var totalInstallments = Models.MortgageCalculator.GetAllInstallments(mortgageLoan);
+                return Ok(totalInstallments);
+            }
+            catch (InstallmentsTooLongException e)
+            {
+                error = StatusCode(422, mortgageLoanValidation.CreateInstallmentsTooLongError(e.Message));
+            }
+            catch
+            {
+                var message = "An unknown error has occurred with your request.";
+                error = StatusCode(422, mortgageLoanValidation.CreateUnknownError(message));
+            }
+
+            return error;
+        }
+
+        [HttpGet("AmortizationScheduleWithPaymentAmount")]
+        public IActionResult GetAmortizationScheduleWithPaymentAmount(string startDate,
+                                                                    string principal,
+                                                                    string rate,
+                                                                    string payment)
+        {
+            IActionResult error = null;
+            var mortgageLoanValidation = new MortgageLoanValidation();
+            try
+            {
+                var validationErrors = mortgageLoanValidation.GetValidationErrorsForPayment(startDate,
+                                                                                                principal,
+                                                                                                rate,
+                                                                                                payment);
                 if (validationErrors.Any())
                     return StatusCode(422, validationErrors);
 
@@ -36,8 +80,8 @@ namespace Maa.MortgageCalculator.Endpoints.Controllers
                     Payment = Convert.ToDouble(payment)
                 };
 
-                var installments = Models.MortgageCalculator.GetAllInstallments(mortgageLoan);
-                return Ok(installments);
+                var totalInstallments = Models.MortgageCalculator.GetAllInstallments(mortgageLoan);
+                return Ok(totalInstallments);
             }
             catch (InstallmentsTooLongException e)
             {

@@ -8,17 +8,18 @@ using Maa.MortgageCalculator.Models.Tests;
 
 namespace Maa.MortgageCalculator.Endpoints.Tests
 {
-    public class AmortizationScheduleWithPaymentAmountControllerTest
+    public class AmortizationScheduleWithInstallmentsControllerTest
     {
         IActionResult _okActionResult;
         private DateTime _okStartDate = DateTime.Parse("1/1/2010");
         private double _okPrincipal = 398483;
         private double _okInterest = 3.12;
         private double _okPayment = 40420.35;
+        private short installments = 10;
 
-        public AmortizationScheduleWithPaymentAmountControllerTest()
+        public AmortizationScheduleWithInstallmentsControllerTest()
         {
-            _okActionResult = GetResult(_okStartDate, _okPrincipal, _okInterest, _okPayment);
+            _okActionResult = GetResult(_okStartDate, _okPrincipal, _okInterest, installments);
         }
 
         [Fact]
@@ -57,13 +58,13 @@ namespace Maa.MortgageCalculator.Endpoints.Tests
             InstallmentsTest.CorrectInstallments(installments, _okStartDate, _okPayment);
         }
 
-        private static IActionResult GetResult(DateTime startDate, double principal, double interest, double payment)
+        private static IActionResult GetResult(DateTime startDate, double principal, double interest, short installments)
         {
             var endpoint = new AmortizationScheduleController();
-            return endpoint.GetAmortizationScheduleWithPaymentAmount(startDate.ToString(),
+            return endpoint.GetAmortizationScheduleWithInstallments(startDate.ToString(),
                                                                     principal.ToString(),
                                                                     interest.ToString(),
-                                                                    payment.ToString());
+                                                                    installments.ToString());
         }
 
     }
