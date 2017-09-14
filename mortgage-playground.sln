@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maa.MortgageCalculator.Mode
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{43771E25-2658-474E-87B8-56BD839A354D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maa.MortgageCalculator.Endpoints", "src\cs\Maa.MortgageCalculator.Endpoint\Maa.MortgageCalculator.Endpoints.csproj", "{673CE4CB-8C66-4E82-82B8-270066D8D31A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maa.MortgageCalculator.Endpoints", "src\cs\Maa.MortgageCalculator.Endpoints\Maa.MortgageCalculator.Endpoints.csproj", "{673CE4CB-8C66-4E82-82B8-270066D8D31A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

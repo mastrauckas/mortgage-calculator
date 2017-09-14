@@ -11,7 +11,7 @@ namespace Maa.MortgageCalculator.Endpoints.Controllers
     [Route("api/v1.0/[controller]")]
     public class AmortizationScheduleController : Controller
     {
-        [HttpGet("AmortizationScheduleWithTermLength")]
+        [HttpGet("AmortizationScheduleWithInstallments")]
         public IActionResult GetAmortizationScheduleWithInstallments(string startDate,
                                                                     string principal,
                                                                     string rate,

@@ -37,14 +37,14 @@ class AmortizationScheduleActions {
     const url = this.createUrlFromScheduleWithPaymentAmount(schedule);
     axios.get(url)
       .then(response => {
-        const amortizationSchedule = response.data.installments.map(installment => {
+        const amortizationSchedule = response.data.map(installment => {
           return {
-            installmentNumber: installment.number,
+            installmentNumber: installment.installmentNumber,
             paymentDate: new Date(installment.paymentDate),
-            totalPrincipalAmount: installment.totalPrincipalAmount,
-            payment: installment.totalPayment,
-            interestAmount: installment.interestAmount,
-            principalAmount: installment.principalAmount,
+            totalPrincipalAmount: installment.currentPrincipalAmount,
+            payment: installment.payment,
+            interestAmount: installment.interestAmountPaid,
+            principalAmount: installment.principalAmountPaid,
           };
         });
 
@@ -75,14 +75,14 @@ class AmortizationScheduleActions {
     const url = this.createUrlFromScheduleWithTermLength(schedule);
     axios.get(url)
       .then(response => {
-        const amortizationSchedule = response.data.installments.map(installment => {
+        const amortizationSchedule = response.data.map(installment => {
           return {
-            installmentNumber: installment.number,
+            installmentNumber: installment.installmentNumber,
             paymentDate: new Date(installment.paymentDate),
-            totalPrincipalAmount: installment.totalPrincipalAmount,
-            payment: installment.totalPayment,
-            interestAmount: installment.interestAmount,
-            principalAmount: installment.principalAmount,
+            totalPrincipalAmount: installment.currentPrincipalAmount,
+            payment: installment.payment,
+            interestAmount: installment.interestAmountPaid,
+            principalAmount: installment.principalAmountPaid,
           };
         });
 
@@ -106,7 +106,7 @@ class AmortizationScheduleActions {
   }
 
   createUrlFromScheduleWithTermLength(schedule) {
-    const url = `http://127.0.0.1:5000/api/v1.0/AmortizationScheduleWithTermLength?\
+    const url = `http://localhost:5000/api/v1.0/AmortizationSchedule/AmortizationScheduleWithInstallments?\
 startDate=${schedule.startDate.format('%m/%d/%Y')}\
 &rate=${schedule.interestRate}\
 &installments=${schedule.installments}\
@@ -116,7 +116,7 @@ startDate=${schedule.startDate.format('%m/%d/%Y')}\
   }
 
   createUrlFromScheduleWithPaymentAmount(schedule) {
-    const url = `http://127.0.0.1:5000/api/v1.0/AmortizationScheduleWithPaymentAmount?\
+    const url = `http://localhost:5000/api/v1.0/AmortizationSchedule/AmortizationScheduleWithPaymentAmount?\
 startDate=${schedule.startDate.format('%m/%d/%Y')}\
 &rate=${schedule.interestRate}\
 &payment=${schedule.payment}\

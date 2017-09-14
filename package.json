@@ -4,6 +4,7 @@
   "description": "Mortgage Playground website",
   "scripts": {
     "restore": "cd ./src/cs/Maa.MortgageCalculator.Endpoints && dotnet restore",
+    "dotnet-build": "cd ./src/cs/Maa.MortgageCalculator.Endpoints && dotnet build",
     "build": "npm run build:dev",
     "build:dev": "npm run build:dev:watch",
     "build:dev:watch": "npm run clean && cross-env NODE_ENV=development webpack --progress --profile --color --watch",
