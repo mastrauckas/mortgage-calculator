@@ -14,12 +14,13 @@ export default class Footer extends Component {
     };
 
     return (
-      <footer style={style} target='_black' title='Github Repoistory'>
+      <footer style={style} target='_black' title='Github Repository'>
         <h5 style={{ color: 'rgba(255, 255, 255, 0.8)', paddingLeft: '24px' }}>
           <span>Developed by Michael Astrauckas under MIT License</span>
           <a className='github_icon'
             target='_blank'
-            title='Github Repoistory'
+            rel="noopener noreferrer"
+            title='Github Repository'
             href='https://github.com/mastrauckas/mortgage-playground'></a>
         </h5>
       </footer >

@@ -2,7 +2,7 @@ import React from 'react';
 import { Component } from 'react';
 import AmortizationScheduleItem from './amortizationScheduleItem';
 import AmortizationScheduleStore from '../../stores/amortizationScheduleStore';
-import MortgageSmmary from './mortgageSummary';
+import MortgageSummary from './mortgageSummary';
 import { Table, TableHeader, TableBody, TableRow, TableHeaderColumn } from 'material-ui/Table';
 import { Tabs, Tab } from 'material-ui/Tabs';
 import { Row, Col } from 'react-flexbox-grid';
@@ -50,7 +50,7 @@ export default class AmortizationSchedule extends Component {
 
   amortizationScheduleChanged() {
     const mortgageInformation = AmortizationScheduleStore.getAmortizationScheduleData();
-    this.mortgageSmmary = this.getMortgageSummary(mortgageInformation);
+    this.mortgageSummary = this.getMortgageSummary(mortgageInformation);
     this.AmortizationScheduleDecadeSets =
       this.getAmortizationScheduleDecadeSets(mortgageInformation.amortizationSchedule);
     this.decades = this.AmortizationScheduleDecadeSets[0];
@@ -167,6 +167,7 @@ export default class AmortizationSchedule extends Component {
 
     const actions = [
       <FlatButton
+        key="test"
         label="Ok"
         primary={true}
         onTouchTap={this.close.bind(this)}
@@ -189,7 +190,7 @@ export default class AmortizationSchedule extends Component {
           <Col sm>
             <Tabs>
               <Tab label='Mortgage Summary'>
-                {<MortgageSmmary {...this.mortgageSmmary} />}
+                {<MortgageSummary {...this.mortgageSummary} />}
               </Tab>
               <Tab label='Mortgage Amortization Schedule'>
                 <Table selectable={false}>
@@ -206,27 +207,27 @@ export default class AmortizationSchedule extends Component {
                       <TableHeaderColumn tooltip="The payment number"
                         style={{ textAlign: 'center' }}>
                         Payment Number
-                    </TableHeaderColumn>
+                      </TableHeaderColumn>
                       <TableHeaderColumn tooltip="The date the payment will be due."
                         style={{ textAlign: 'center' }}>
                         Payment Date
-                    </TableHeaderColumn>
+                      </TableHeaderColumn>
                       <TableHeaderColumn tooltip="The payment amount."
                         style={{ textAlign: 'center' }}>
                         Payment
-                    </TableHeaderColumn>
+                      </TableHeaderColumn>
                       <TableHeaderColumn tooltip="How much went toward interest for the payment."
                         style={{ textAlign: 'center' }}>
                         Interest Amount
-                    </TableHeaderColumn>
+                      </TableHeaderColumn>
                       <TableHeaderColumn tooltip="How much went toward the principal for the payment."
                         style={{ textAlign: 'center' }}>
                         Principal Amount
-                    </TableHeaderColumn>
+                      </TableHeaderColumn>
                       <TableHeaderColumn tooltip="The balance still due."
                         style={{ textAlign: 'center' }}>
                         Balance
-                    </TableHeaderColumn>
+                      </TableHeaderColumn>
                     </TableRow>
                   </TableHeader>
                   <TableBody stripedRows={true}

@@ -19,7 +19,7 @@ export default class NaturalNumberTextField extends Component {
 
   change(input, newValue) {
     const value = NumberFormatter.removeSymbols(newValue, '%');
-    if (NumberFormatter.isNaturalNumer(value) || value.length === 0) {
+    if (NumberFormatter.isNaturalNumber(value) || value.length === 0) {
       this.setState({
         value: newValue
       });
@@ -39,7 +39,7 @@ export default class NaturalNumberTextField extends Component {
       value, // eslint-disable-line no-unused-vars
       onNewValueChange, // eslint-disable-line no-unused-vars
       ...other
-  } = this.props;
+    } = this.props;
 
 
     return (

@@ -8,7 +8,7 @@ export default class numberFormatter {
     return !isNaN(parseFloat(n)) && isFinite(n);
   }
 
-  static isNaturalNumer(n) {
+  static isNaturalNumber(n) {
     return n >= 0 && Math.floor(n) === +n && n.indexOf('.') === -1;
   }
 

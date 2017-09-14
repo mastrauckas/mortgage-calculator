@@ -53,7 +53,7 @@ export default class PercentTextField extends Component {
       value, // eslint-disable-line no-unused-vars
       onNewValueChange, // eslint-disable-line no-unused-vars
       ...other
-  } = this.props;
+    } = this.props;
 
 
     return (

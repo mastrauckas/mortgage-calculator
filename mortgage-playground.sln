@@ -1,0 +1,48 @@
+
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maa.MortgageCalculator.Models", "src\cs\Maa.MortgageCalculator.Models\Maa.MortgageCalculator.Models.csproj", "{FB883DB2-505F-4DAF-8B80-52E1B4B3F53A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maa.MortgageCalculator.Common.Tests", "tests\cs\Maa.MortgageCalculator.Common.Tests\Maa.MortgageCalculator.Common.Tests.csproj", "{E0B62857-B085-4E89-87EB-39E9AF5890C7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maa.MortgageCalculator.Tests.Endpoints", "tests\cs\Maa.MortgageCalculator.Endpoints.Tests\Maa.MortgageCalculator.Tests.Endpoints.csproj", "{31481C0B-1790-4FAB-9A26-C910F08D40E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maa.MortgageCalculator.Models.Tests", "tests\cs\Maa.MortgageCalculator.Models.Tests\Maa.MortgageCalculator.Models.Tests.csproj", "{394E1A5C-B124-4835-BC43-F17C2A479BE4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Testing", "Testing", "{43771E25-2658-474E-87B8-56BD839A354D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maa.MortgageCalculator.Endpoints", "src\cs\Maa.MortgageCalculator.Endpoints\Maa.MortgageCalculator.Endpoints.csproj", "{673CE4CB-8C66-4E82-82B8-270066D8D31A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FB883DB2-505F-4DAF-8B80-52E1B4B3F53A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB883DB2-505F-4DAF-8B80-52E1B4B3F53A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB883DB2-505F-4DAF-8B80-52E1B4B3F53A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB883DB2-505F-4DAF-8B80-52E1B4B3F53A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0B62857-B085-4E89-87EB-39E9AF5890C7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0B62857-B085-4E89-87EB-39E9AF5890C7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0B62857-B085-4E89-87EB-39E9AF5890C7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0B62857-B085-4E89-87EB-39E9AF5890C7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31481C0B-1790-4FAB-9A26-C910F08D40E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31481C0B-1790-4FAB-9A26-C910F08D40E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31481C0B-1790-4FAB-9A26-C910F08D40E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31481C0B-1790-4FAB-9A26-C910F08D40E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{394E1A5C-B124-4835-BC43-F17C2A479BE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{394E1A5C-B124-4835-BC43-F17C2A479BE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{394E1A5C-B124-4835-BC43-F17C2A479BE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{394E1A5C-B124-4835-BC43-F17C2A479BE4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{673CE4CB-8C66-4E82-82B8-270066D8D31A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{673CE4CB-8C66-4E82-82B8-270066D8D31A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{673CE4CB-8C66-4E82-82B8-270066D8D31A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{673CE4CB-8C66-4E82-82B8-270066D8D31A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E0B62857-B085-4E89-87EB-39E9AF5890C7} = {43771E25-2658-474E-87B8-56BD839A354D}
+		{394E1A5C-B124-4835-BC43-F17C2A479BE4} = {43771E25-2658-474E-87B8-56BD839A354D}
+		{31481C0B-1790-4FAB-9A26-C910F08D40E3} = {43771E25-2658-474E-87B8-56BD839A354D}
+	EndGlobalSection
+EndGlobal
