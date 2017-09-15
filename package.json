@@ -1,7 +1,7 @@
 {
-  "name": "mortgage-playground",
+  "name": "mortgage-calculator",
   "version": "1.0.0",
-  "description": "Mortgage Playground website",
+  "description": "Mortgage Calculator website",
   "scripts": {
     "restore": "cd ./src/cs/Maa.MortgageCalculator.Endpoints && dotnet restore",
     "dotnet-build": "cd ./src/cs/Maa.MortgageCalculator.Endpoints && dotnet build",
@@ -23,14 +23,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mastrauckas/mortgage-playground.git"
+    "url": "https://github.com/mastrauckas/mortgage-calculator.git"
   },
   "author": "Michael Astrauckas",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/mastrauckas/mortgage-playground.git/issues"
+    "url": "https://github.com/mastrauckas/mortgage-calculator.git/issues"
   },
-  "homepage": "https://github.com/mastrauckas/MortgagePlayground#readme",
+  "homepage": "https://github.com/mastrauckas/MortgageCalculator#readme",
   "devDependencies": {
     "babel-cli": "^6.23.0",
     "babel-core": "^6.13.2",
