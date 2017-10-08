@@ -13,8 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\cs\Maa.MortgageCalculator.Models\Maa.MortgageCalculator.Models.csproj" />
-    <ProjectReference Include="..\Maa.MortgageCalculator.Common.Tests\Maa.MortgageCalculator.Common.Tests.csproj" />
+    <ProjectReference Include="..\..\src\Maa.MortgageCalculator.Models\Maa.MortgageCalculator.Models.csproj" />
   </ItemGroup>
 
 </Project>

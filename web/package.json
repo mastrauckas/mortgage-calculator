@@ -13,6 +13,9 @@
     "dev-server:quiet": "yarn lint && cross-env NODE_ENV=development webpack-dev-server --inline",
     "dev-server": "yarn lint && cross-env NODE_ENV=development webpack-dev-server --inline --progress",
     "all-servers": "concurrently --kill-others --names \"DEV-SERVER,API-SERVER\" -c \"bgBlue,bgGreen\" \"yarn dev-server:quiet\" \"yarn api-server\"",
+    "test": "npm run test:cs:endpoints && npm run test:cs:models",
+    "test:cs:endpoints": "cd ../api/tests/Maa.MortgageCalculator.Endpoints.Tests &&  dotnet test",
+    "test:cs:models": "cd ../api/tests/Maa.MortgageCalculator.Models.Tests/ && dotnet test",
     "lint": "yarn lint:javascript",
     "lint:javascript": "eslint src",
     "clean": "rimraf ./build"
