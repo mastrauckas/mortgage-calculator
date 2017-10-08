@@ -21,7 +21,7 @@ export default class Footer extends Component {
             target='_blank'
             rel="noopener noreferrer"
             title='Github Repository'
-            href='https://github.com/mastrauckas/mortgage-playground'></a>
+            href='https://github.com/mastrauckas/mortgage-calculator'></a>
         </h5>
       </footer >
     );

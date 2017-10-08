@@ -34,6 +34,11 @@ export default class AmortizationSchedule extends Component {
     AmortizationScheduleStore.on('error', this.amortizationScheduleError.bind(this));
   }
 
+  componentWillUnmount() {
+    AmortizationScheduleStore.removeListener(this.amortizationScheduleChanged);
+    AmortizationScheduleStore.removeListener(this.amortizationScheduleError);
+  }
+
   clickDecadeTabs(value) {
     this.decades = this.AmortizationScheduleDecadeSets[value];
     this.decadeTab.value = 0;
