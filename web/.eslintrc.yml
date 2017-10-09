@@ -7,6 +7,8 @@ parser: babel-eslint
 extends:
   - eslint:recommended
   - plugin:react/recommended
+  - prettier
+  - prettier/react
 parserOptions:
   sourceType: module
   ecmaVersion: 7
@@ -14,11 +16,20 @@ parserOptions:
     jsx: true
 plugins:
   - react
+  - prettier
 rules:
+  prettier/prettier:
+  - error
+  - trailingComma: es5
+    singleQuote: true
+    printWidth: 120
   indent:
     - error
     - 2
     - SwitchCase: 1
+  curly:
+    - error
+    - all
   react/jsx-uses-react:
     - error
   react/jsx-uses-vars:
@@ -36,3 +47,7 @@ rules:
     - error
   no-console:
     - 0
+  max-len:
+    - error
+    - code: 120
+      ignoreUrls: true

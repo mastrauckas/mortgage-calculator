@@ -1,9 +1,9 @@
 import { EventEmitter } from 'events';
+
 import dispatcher from '../actions/dispatcher';
 
 class AmortizationScheduleStore extends EventEmitter {
-
-  mortgageInformation = {}
+  mortgageInformation = {};
 
   getAmortizationScheduleData() {
     return this.mortgageInformation;

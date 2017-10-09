@@ -1,8 +1,8 @@
-import React from 'react';
+import { TableRow, TableRowColumn } from 'material-ui/Table';
 import PropTypes from 'prop-types';
+import React from 'react';
 import { Component } from 'react';
 import Sugar from 'sugar';
-import { TableRow, TableRowColumn } from 'material-ui/Table';
 
 export default class AmortizationScheduleItem extends Component {
   constructor() {
@@ -16,12 +16,11 @@ export default class AmortizationScheduleItem extends Component {
     payment: PropTypes.PropTypes.number.isRequired,
     interestAmount: PropTypes.PropTypes.number.isRequired,
     principalAmount: PropTypes.PropTypes.number.isRequired,
-    totalPrincipalAmount: PropTypes.PropTypes.number.isRequired
-  }
+    totalPrincipalAmount: PropTypes.PropTypes.number.isRequired,
+  };
 
   render() {
     return (
-
       <TableRow key={this.props.installmentNumber}>
         <TableRowColumn style={{ textAlign: 'center' }}>{this.props.installmentNumber}</TableRowColumn>
         <TableRowColumn style={{ textAlign: 'center' }}>{this.props.paymentDate.format('%m/%d/%Y')}</TableRowColumn>

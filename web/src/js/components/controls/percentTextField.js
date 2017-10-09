@@ -1,28 +1,28 @@
-import React from 'react';
-import { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { Component } from 'react';
+
 import NumberFormatter from '../../common/numberFormatter';
 
 export default class PercentTextField extends Component {
-
   constructor(props) {
     super();
     this.state = {
-      value: props.value ? NumberFormatter.addSymbolAtEnd(props.value.toString(), '%') : ''
+      value: props.value ? NumberFormatter.addSymbolAtEnd(props.value.toString(), '%') : '',
     };
   }
 
   static propTypes = {
     onNewValueChange: PropTypes.func,
-    value: PropTypes.string
-  }
+    value: PropTypes.string,
+  };
 
   change(input, newValue) {
     const value = NumberFormatter.removeSymbols(newValue, '%');
     if (NumberFormatter.isNumber(value) || value.length === 0) {
       this.setState({
-        value: newValue
+        value: newValue,
       });
       if (this.props.onNewValueChange) {
         this.props.onNewValueChange(parseFloat(value));
@@ -39,11 +39,11 @@ export default class PercentTextField extends Component {
     const value = NumberFormatter.removeSymbols(this.state.value, '%');
     if (!NumberFormatter.isNumber(value) || value.length === 0) {
       this.setState({
-        value: ''
+        value: '',
       });
     } else {
       this.setState({
-        value: NumberFormatter.addSymbolAtEnd(value, '%')
+        value: NumberFormatter.addSymbolAtEnd(value, '%'),
       });
     }
   }
@@ -54,7 +54,6 @@ export default class PercentTextField extends Component {
       onNewValueChange, // eslint-disable-line no-unused-vars
       ...other
     } = this.props;
-
 
     return (
       <TextField
@@ -67,8 +66,8 @@ export default class PercentTextField extends Component {
         onChange={this.change.bind(this)}
         onFocus={this.focus.bind(this)}
         onBlur={this.blur.bind(this)}
-        {...other } >
-      </TextField >
+        {...other}
+      />
     );
   }
 }
