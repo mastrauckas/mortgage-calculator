@@ -3,19 +3,29 @@
   "version": "1.0.0",
   "description": "Mortgage Calculator website",
   "scripts": {
-    "restore": "cd ../api/src/Maa.MortgageCalculator.Endpoints && dotnet restore",
-    "build": "yarn build:dev",
+    "restore":
+      "cd ../api/src/Maa.MortgageCalculator.Endpoints && dotnet restore",
+    "build": "yarn build:dev:nowatch",
     "build:dev": "yarn build:dev:watch",
-    "build:dev:watch": "yarn clean && cross-env NODE_ENV=development webpack --progress --profile --color --watch",
-    "build:dev:nowatch": "yarn clean && cross-env NODE_ENV=development webpack --progress --profile --color",
-    "build:prod": "yarn clean c && cross-env NODE_ENV=production webpack --progress --profile --color",
-    "api-server": "cd ../api/src/Maa.MortgageCalculator.Endpoints && cross-env ASPNETCORE_ENVIRONMENT=Development dotnet run",
-    "dev-server:quiet": "yarn lint && cross-env NODE_ENV=development webpack-dev-server --inline",
-    "dev-server": "yarn lint && cross-env NODE_ENV=development webpack-dev-server --inline --progress",
-    "all-servers": "concurrently --kill-others --names \"DEV-SERVER,API-SERVER\" -c \"bgBlue,bgGreen\" \"yarn dev-server:quiet\" \"yarn api-server\"",
+    "build:dev:watch":
+      "yarn clean && cross-env NODE_ENV=development webpack --progress --profile --color --watch",
+    "build:dev:nowatch":
+      "yarn clean && cross-env NODE_ENV=development webpack --progress --profile --color",
+    "build:prod":
+      "yarn clean c && cross-env NODE_ENV=production webpack --progress --profile --color",
+    "api-server":
+      "cd ../api/src/Maa.MortgageCalculator.Endpoints && cross-env ASPNETCORE_ENVIRONMENT=Development dotnet run",
+    "dev-server:quiet":
+      "yarn lint && cross-env NODE_ENV=development webpack-dev-server --inline",
+    "dev-server":
+      "yarn lint && cross-env NODE_ENV=development webpack-dev-server --inline --progress",
+    "all-servers":
+      "concurrently --kill-others --names \"DEV-SERVER,API-SERVER\" -c \"bgBlue,bgGreen\" \"yarn dev-server:quiet\" \"yarn api-server\"",
     "test": "npm run test:cs:endpoints && npm run test:cs:models",
-    "test:cs:endpoints": "cd ../api/tests/Maa.MortgageCalculator.Endpoints.Tests &&  dotnet test",
-    "test:cs:models": "cd ../api/tests/Maa.MortgageCalculator.Models.Tests/ && dotnet test",
+    "test:cs:endpoints":
+      "cd ../api/tests/Maa.MortgageCalculator.Endpoints.Tests &&  dotnet test",
+    "test:cs:models":
+      "cd ../api/tests/Maa.MortgageCalculator.Models.Tests/ && dotnet test",
     "lint": "yarn lint:javascript",
     "lint:javascript": "eslint src",
     "clean": "rimraf ./build"
