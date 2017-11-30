@@ -1,6 +1,7 @@
 # My own section
 
 ./build
+out
 
 # Created by https://www.gitignore.io/api/node,macos,python,visualstudio,visualstudiocode
 

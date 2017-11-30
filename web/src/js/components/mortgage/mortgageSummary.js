@@ -1,9 +1,9 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Component } from 'react';
 import Paper from 'material-ui/Paper';
-import { Table, TableBody, TableRow, TableRowColumn, TableFooter } from 'material-ui/Table';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Table, TableBody, TableFooter, TableRow, TableRowColumn } from 'material-ui/Table';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Component } from 'react';
+import { Col, Grid, Row } from 'react-flexbox-grid';
 import Sugar from 'sugar';
 
 export default class MortgageSummary extends Component {
@@ -24,14 +24,13 @@ export default class MortgageSummary extends Component {
     mortgageTotalPayments: PropTypes.PropTypes.number,
     mortgageTotalYearsAndMonth: PropTypes.PropTypes.string,
     lastPaymentDate: PropTypes.PropTypes.instanceOf(Date),
-  }
+  };
 
   render() {
     return (
       <Paper zDepth={1}>
-
         <Grid fluid>
-          <Row center='sm'>
+          <Row center="sm">
             <Col>
               <h2>Mortgage Payment Information</h2>
             </Col>
@@ -55,7 +54,7 @@ export default class MortgageSummary extends Component {
         </Grid>
 
         <Grid fluid>
-          <Row center='sm'>
+          <Row center="sm">
             <Col>
               <h2>Mortgage Investment Information</h2>
             </Col>
@@ -105,7 +104,7 @@ export default class MortgageSummary extends Component {
         </Grid>
 
         <Grid fluid>
-          <Row center='sm'>
+          <Row center="sm">
             <Col>
               <h2>Mortgage End Information</h2>
             </Col>
@@ -127,7 +126,9 @@ export default class MortgageSummary extends Component {
                       <div style={{ fontSize: '1.5em' }}>Last Payment Date</div>
                     </TableRowColumn>
                     <TableRowColumn style={{ textAlign: 'right' }}>
-                      <div style={{ fontSize: '1.5em' }}>{(this.props.lastPaymentDate || 'n/a').format('%m/%d/%Y')}</div>
+                      <div style={{ fontSize: '1.5em' }}>
+                        {(this.props.lastPaymentDate || 'n/a').format('%m/%d/%Y')}
+                      </div>
                     </TableRowColumn>
                   </TableRow>
                   <TableRow>
@@ -145,7 +146,7 @@ export default class MortgageSummary extends Component {
         </Grid>
 
         <Grid fluid>
-          <Row center='sm'>
+          <Row center="sm">
             <Col>
               <h2>More Principal Than Interest</h2>
             </Col>

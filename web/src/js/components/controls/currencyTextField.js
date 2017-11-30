@@ -1,22 +1,22 @@
-import React from 'react';
-import { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { Component } from 'react';
+
 import NumberFormatter from '../../common/numberFormatter';
 
 export default class CurrencyTextField extends Component {
-
   constructor(props) {
     super();
     this.state = {
-      value: props.value ? NumberFormatter.formatCurrency(props.value.toString()) : ''
+      value: props.value ? NumberFormatter.formatCurrency(props.value.toString()) : '',
     };
   }
 
   static propTypes = {
     onNewValueChange: PropTypes.func,
-    value: PropTypes.string
-  }
+    value: PropTypes.string,
+  };
 
   removeCurrencySymbols(string) {
     return NumberFormatter.removeSymbols(string, '\\$', ',');
@@ -34,7 +34,7 @@ export default class CurrencyTextField extends Component {
       value = NumberFormatter.removeExtraDecimalNumbers(value, 2);
       if (currentAmount !== value) {
         this.setState({
-          value: NumberFormatter.formatCurrency(value)
+          value: NumberFormatter.formatCurrency(value),
         });
       }
       if (this.props.onNewValueChange) {
@@ -42,7 +42,7 @@ export default class CurrencyTextField extends Component {
       }
     } else if (value.length === 0) {
       this.setState({
-        value: '$'
+        value: '$',
       });
     }
   }
@@ -51,11 +51,11 @@ export default class CurrencyTextField extends Component {
     const value = this.removeCurrencySymbols(this.state.value);
     if (!NumberFormatter.isNumber(value) || value.length === 0) {
       this.setState({
-        value: ''
+        value: '',
       });
     } else if (NumberFormatter.howManyDecimalPlaces(value) !== 2) {
       this.setState({
-        value: NumberFormatter.formatCurrency(NumberFormatter.trailZeros(value, 2))
+        value: NumberFormatter.formatCurrency(NumberFormatter.trailZeros(value, 2)),
       });
     }
   }
@@ -74,13 +74,12 @@ export default class CurrencyTextField extends Component {
             this.input = e.input;
           }
         }}
-
         value={this.state.value}
         onFocus={this.focus.bind(this)}
         onChange={this.change.bind(this)}
         onBlur={this.blur.bind(this)}
-        {...other } >
-      </TextField >
+        {...other}
+      />
     );
   }
 }

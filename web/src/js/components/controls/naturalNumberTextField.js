@@ -1,27 +1,28 @@
-import React from 'react';
-import { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import PropTypes from 'prop-types';
+import React from 'react';
+import { Component } from 'react';
+
 import NumberFormatter from '../../common/numberFormatter';
 
 export default class NaturalNumberTextField extends Component {
   constructor(props) {
     super();
     this.state = {
-      value: props.value ? props.value.toString() : ''
+      value: props.value ? props.value.toString() : '',
     };
   }
 
   static propTypes = {
     onNewValueChange: PropTypes.func,
-    value: PropTypes.string
-  }
+    value: PropTypes.string,
+  };
 
   change(input, newValue) {
     const value = NumberFormatter.removeSymbols(newValue, '%');
     if (NumberFormatter.isNaturalNumber(value) || value.length === 0) {
       this.setState({
-        value: newValue
+        value: newValue,
       });
       if (this.props.onNewValueChange) {
         this.props.onNewValueChange(parseInt(value));
@@ -41,7 +42,6 @@ export default class NaturalNumberTextField extends Component {
       ...other
     } = this.props;
 
-
     return (
       <TextField
         ref={e => {
@@ -52,8 +52,8 @@ export default class NaturalNumberTextField extends Component {
         value={this.state.value}
         onChange={this.change.bind(this)}
         onFocus={this.focus.bind(this)}
-        {...other } >
-      </TextField >
+        {...other}
+      />
     );
   }
 }

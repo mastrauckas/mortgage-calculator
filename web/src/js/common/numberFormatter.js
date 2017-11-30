@@ -1,5 +1,4 @@
 export default class numberFormatter {
-
   static addSymbolAtEnd(value, symbol) {
     return `${value}${symbol}`;
   }
@@ -28,7 +27,11 @@ export default class numberFormatter {
 
   static formatCurrency(number) {
     const numbers = number.split('.');
-    return `$${numbers[0].reverse().match(/\d{1,3}/g).join(',').reverse()}${numbers.length > 1 ? '.'.concat(numbers[1]) : ''}`;
+    return `$${numbers[0]
+      .reverse()
+      .match(/\d{1,3}/g)
+      .join(',')
+      .reverse()}${numbers.length > 1 ? '.'.concat(numbers[1]) : ''}`;
   }
 
   static trailZeros(number, decimalPaces) {

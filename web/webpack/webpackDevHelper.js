@@ -1,9 +1,6 @@
 const { CommonsChunkPlugin, OccurrenceOrderPlugin, UglifyJsPlugin } = require('webpack').optimize;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const {
-  NamedModulesPlugin,
-  NoEmitOnErrorsPlugin,
-} = require('webpack');
+const { NamedModulesPlugin, NoEmitOnErrorsPlugin } = require('webpack');
 const path = require('path');
 const fs = require('fs');
 const WebpackHelper = require('./WebpackHelper');
@@ -13,7 +10,6 @@ const realNodeModules = fs.realpathSync(nodeModules);
 const genDirNodeModules = path.join(process.cwd(), 'src', '$$_gendir', 'node_modules');
 
 module.exports = class WebpackDevHelper extends WebpackHelper {
-
   constructor(environment) {
     super(environment);
   }
@@ -28,11 +24,9 @@ module.exports = class WebpackDevHelper extends WebpackHelper {
           let rightIndex = this.entryPoints.indexOf(right.names[0]);
           if (leftIndex > rightIndex) {
             return 1;
-          }
-          else if (leftIndex < rightIndex) {
+          } else if (leftIndex < rightIndex) {
             return -1;
-          }
-          else {
+          } else {
             return 0;
           }
         },
@@ -47,59 +41,60 @@ module.exports = class WebpackDevHelper extends WebpackHelper {
 
         minify: {
           removeComments: this.isProduction,
-          collapseWhitespace: this.isProduction
-        }
-      }),
-
-      new CommonsChunkPlugin({
-        'name': [
-          'manifest'
-        ],
-        'minChunks': null
-      }),
-
-      new CommonsChunkPlugin({
-        'name': [
-          'vendor'
-        ],
-        'minChunks': (module) => {
-          return module.resource
-                      && (module.resource.startsWith(nodeModules)
-                          || module.resource.startsWith(genDirNodeModules)
-                          || module.resource.startsWith(realNodeModules));
+          collapseWhitespace: this.isProduction,
         },
-        'chunks': [
-          'app'
-        ]
-      })
+      }),
 
+      new CommonsChunkPlugin({
+        name: ['manifest'],
+        minChunks: null,
+      }),
+
+      new CommonsChunkPlugin({
+        name: ['vendor'],
+        minChunks: module => {
+          return (
+            module.resource &&
+            (module.resource.startsWith(nodeModules) ||
+              module.resource.startsWith(genDirNodeModules) ||
+              module.resource.startsWith(realNodeModules))
+          );
+        },
+        chunks: ['app'],
+      }),
+
+      new CommonsChunkPlugin({
+        name: ['app'],
+        minChunks: 2,
+        async: 'common',
+      }),
     ];
 
     if (this.isProduction) {
-
       plugins.push(new OccurrenceOrderPlugin());
       plugins.push(new NamedModulesPlugin());
-      plugins.push(new UglifyJsPlugin({
-        sourceMap: true,
-        minimize: true,
-        beautify: false,
-        mangle: { screw_ie8: true, keep_fnames: true },
-        dead_code: true,
-        unused: true,
-        deadCode: true,
-        comments: false,
-        compress: {
-          screw_ie8: true,
-          keep_fnames: true,
-          drop_debugger: false,
-          dead_code: false,
-          unused: false,
-          warnings: false
-        }
-      }));
+      plugins.push(
+        new UglifyJsPlugin({
+          sourceMap: true,
+          minimize: true,
+          beautify: false,
+          mangle: { screw_ie8: true, keep_fnames: true },
+          dead_code: true,
+          unused: true,
+          deadCode: true,
+          comments: false,
+          compress: {
+            screw_ie8: true,
+            keep_fnames: true,
+            drop_debugger: false,
+            dead_code: false,
+            unused: false,
+            warnings: false,
+          },
+        })
+      );
     }
 
     return plugins;
   }
-
 };

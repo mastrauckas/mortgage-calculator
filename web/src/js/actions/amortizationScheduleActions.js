@@ -1,9 +1,9 @@
-import dispatcher from './dispatcher';
 import axios from 'axios';
 import Sugar from 'sugar';
 
-class AmortizationScheduleActions {
+import dispatcher from './dispatcher';
 
+class AmortizationScheduleActions {
   constructor() {
     Sugar.extend();
   }
@@ -11,31 +11,32 @@ class AmortizationScheduleActions {
   setMortgagePrincipalAmountAction(principalAmount) {
     dispatcher.dispatch({
       type: 'SET_PRINCIPAL_AMOUNT_ACTION',
-      principalAmount
+      principalAmount,
     });
   }
 
   setInstallmentsActions(installments) {
     dispatcher.dispatch({
       type: 'SET_INSTALLMENTS_ACTION',
-      installments
+      installments,
     });
   }
 
   setPaymentActions(payment) {
     dispatcher.dispatch({
       type: 'SET_PAYMENT_ACTION',
-      payment
+      payment,
     });
   }
 
   getAmortizationScheduleActionWithPaymentAmount(schedule) {
     dispatcher.dispatch({
-      type: 'FETCH_GET_AMORTIZATION_SCHEDULE_WITH_PAYMENT_AMOUNT_ACTION'
+      type: 'FETCH_GET_AMORTIZATION_SCHEDULE_WITH_PAYMENT_AMOUNT_ACTION',
     });
 
     const url = this.createUrlFromScheduleWithPaymentAmount(schedule);
-    axios.get(url)
+    axios
+      .get(url)
       .then(response => {
         const amortizationSchedule = response.data.map(installment => {
           return {
@@ -52,8 +53,8 @@ class AmortizationScheduleActions {
           type: 'COMPLETE_GET_AMORTIZATION_SCHEDULE_WITH_PAYMENT_AMOUNT_ACTION',
           mortgageInformation: {
             schedule,
-            amortizationSchedule
-          }
+            amortizationSchedule,
+          },
         });
       })
       .catch(error => {
@@ -61,19 +62,20 @@ class AmortizationScheduleActions {
           type: 'ERROR_GET_AMORTIZATION_SCHEDULE_WITH_PAYMENT_AMOUNT_ACTION',
           errorInformation: {
             status: error.response.status,
-            payload: error.response.data
-          }
+            payload: error.response.data,
+          },
         });
       });
   }
 
   getAmortizationScheduleActionWithTermLength(schedule) {
     dispatcher.dispatch({
-      type: 'FETCH_GET_AMORTIZATION_SCHEDULE_WITH_TERM_LENGTH_ACTION'
+      type: 'FETCH_GET_AMORTIZATION_SCHEDULE_WITH_TERM_LENGTH_ACTION',
     });
 
     const url = this.createUrlFromScheduleWithTermLength(schedule);
-    axios.get(url)
+    axios
+      .get(url)
       .then(response => {
         const amortizationSchedule = response.data.map(installment => {
           return {
@@ -90,8 +92,8 @@ class AmortizationScheduleActions {
           type: 'COMPLETE_GET_AMORTIZATION_SCHEDULE_WITH_TERM_LENGTH_ACTION',
           mortgageInformation: {
             schedule,
-            amortizationSchedule
-          }
+            amortizationSchedule,
+          },
         });
       })
       .catch(error => {
@@ -99,8 +101,8 @@ class AmortizationScheduleActions {
           type: 'ERROR_GET_AMORTIZATION_SCHEDULE_WITH_TERM_LENGTH_ACTION',
           errorInformation: {
             status: error.response.status,
-            payload: error.response.data
-          }
+            payload: error.response.data,
+          },
         });
       });
   }
@@ -125,7 +127,6 @@ startDate=${schedule.startDate.format('%m/%d/%Y')}\
     return url;
   }
 }
-
 
 const amortizationScheduleActions = new AmortizationScheduleActions();
 export default amortizationScheduleActions;

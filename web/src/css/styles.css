@@ -1,13 +1,3 @@
 body {
   margin: 0px;
 }
-
-.github_icon {
-  background-image: url(../images/GitHub-Mark-Light-16px.png);
-  background-repeat: no-repeat;
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-  margin-left: 5px;
-  vertical-align: text-top;
-}

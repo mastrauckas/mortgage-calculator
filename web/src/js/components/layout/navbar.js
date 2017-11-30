@@ -1,7 +1,7 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Component } from 'react';
 import AppBar from 'material-ui/AppBar';
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Component } from 'react';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
 export default class Navbar extends Component {
@@ -11,20 +11,16 @@ export default class Navbar extends Component {
   }
 
   static propTypes = {
-    title: PropTypes.PropTypes.string.isRequired
-  }
+    title: PropTypes.PropTypes.string.isRequired,
+  };
 
   titleStyle = {
     margin: '0px auto',
     display: 'block',
-    flex: 'none'
-  }
+    flex: 'none',
+  };
 
   render() {
-    return (
-      <AppBar title={this.props.title}
-        showMenuIconButton={false}
-        titleStyle={this.titleStyle} />
-    );
+    return <AppBar title={this.props.title} showMenuIconButton={false} titleStyle={this.titleStyle} />;
   }
 }
