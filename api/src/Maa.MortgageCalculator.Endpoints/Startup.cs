@@ -24,6 +24,7 @@ namespace Maa.MortgageCalculator.Endpoints
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -32,6 +33,12 @@ namespace Maa.MortgageCalculator.Endpoints
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseCors(builder => builder.AllowAnyOrigin());
+            }
+            else
+            {
+                // app.UseCors(builder => builder.WithOrigins("http://example.com"));
+                app.UseCors(builder => builder.AllowAnyOrigin());
             }
 
             app.UseMvc();
