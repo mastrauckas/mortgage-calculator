@@ -4,8 +4,15 @@ import Sugar from 'sugar';
 import dispatcher from './dispatcher';
 
 class AmortizationScheduleActions {
+  protocol = window.location.protocol;
+  host = window.location.host;
+
   constructor() {
     Sugar.extend();
+  }
+
+  get url() {
+    return `${this.protocol}//api.${this.host}/api/v1.0`;
   }
 
   setMortgagePrincipalAmountAction(principalAmount) {
@@ -108,7 +115,7 @@ class AmortizationScheduleActions {
   }
 
   createUrlFromScheduleWithTermLength(schedule) {
-    const url = `http://localhost:5000/api/v1.0/AmortizationSchedule/AmortizationScheduleWithInstallments?\
+    const url = `${this.url}/AmortizationSchedule/AmortizationScheduleWithInstallments?\
 startDate=${schedule.startDate.format('%m/%d/%Y')}\
 &rate=${schedule.interestRate}\
 &installments=${schedule.installments}\
@@ -118,7 +125,7 @@ startDate=${schedule.startDate.format('%m/%d/%Y')}\
   }
 
   createUrlFromScheduleWithPaymentAmount(schedule) {
-    const url = `http://localhost:5000/api/v1.0/AmortizationSchedule/AmortizationScheduleWithPaymentAmount?\
+    const url = `${this.url}/AmortizationSchedule/AmortizationScheduleWithPaymentAmount?\
 startDate=${schedule.startDate.format('%m/%d/%Y')}\
 &rate=${schedule.interestRate}\
 &payment=${schedule.payment}\
