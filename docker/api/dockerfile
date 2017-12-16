@@ -1,6 +1,6 @@
 FROM microsoft/dotnet:latest
 LABEL maintainer="Michael Astrauckas"
 WORKDIR /app
-COPY out .
+COPY build .
 EXPOSE 5000
 ENTRYPOINT ["dotnet", "Maa.MortgageCalculator.Endpoints.dll", "--urls=http://0.0.0.0:5000"]

@@ -1,0 +1,6 @@
+FROM nginx:latest
+LABEL maintainer="Michael Astrauckas"
+RUN rm -frv etc/nginx/conf.d/*
+COPY api.conf /etc/nginx/conf.d/
+COPY web.conf /etc/nginx/conf.d/
+EXPOSE 80 443

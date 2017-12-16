@@ -1,0 +1,6 @@
+FROM nginx:latest
+LABEL maintainer="Michael Astrauckas"
+RUN rm -frv usr/share/nginx/html; rm -frv etc/nginx/conf.d/*
+COPY ./build usr/share/nginx/mortgage-calculator/static-files
+COPY web.conf /etc/nginx/conf.d/
+EXPOSE 8080
