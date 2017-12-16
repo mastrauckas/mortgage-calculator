@@ -1,4 +1,4 @@
-FROM nginx:latest
+FROM nginx:1.13.7
 LABEL maintainer="Michael Astrauckas"
 RUN rm -frv etc/nginx/conf.d/*
 COPY api.conf /etc/nginx/conf.d/
