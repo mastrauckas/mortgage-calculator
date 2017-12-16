@@ -8,4 +8,6 @@ cd ../../../web
 yarn build:docker
 
 cd ../docker
+
+docker-compose down
 docker-compose build
