@@ -1,6 +1,12 @@
 FROM nginx:1.13.7
 LABEL maintainer="Michael Astrauckas"
-RUN rm -frv usr/share/nginx/html; rm -frv etc/nginx/conf.d/*
+RUN rm -frv usr/share/nginx/html; \
+    rm -frv /etc/nginx/conf.d/*; \
+    rm -frv /etc/nginx/nginx.conf; \
+    mkdir -p /data/nginx/logs; \
+    mkdir -p /data/nginx/cache; \
+    mkdir -p /data/nginx/cache/temp
 COPY ./build usr/share/nginx/mortgage-calculator/static-files
 COPY web.conf /etc/nginx/conf.d/
+COPY nginx.conf /etc/nginx/
 EXPOSE 8080
