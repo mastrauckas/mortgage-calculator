@@ -1,0 +1,11 @@
+FROM nginx:1.13.7
+LABEL maintainer="Michael Astrauckas"
+RUN rm -frv /etc/nginx/conf.d/*; \
+    rm -frv /etc/nginx/nginx.conf; \
+    mkdir -p /data/nginx/logs; \
+    mkdir -p /data/nginx/cache; \
+    mkdir -p /data/nginx/cache/temp
+COPY api.conf /etc/nginx/conf.d/
+COPY web.conf /etc/nginx/conf.d/
+COPY nginx.conf /etc/nginx/
+EXPOSE 80 443
