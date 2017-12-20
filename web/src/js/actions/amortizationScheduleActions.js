@@ -5,7 +5,7 @@ import dispatcher from './dispatcher';
 
 class AmortizationScheduleActions {
   protocol = window.location.protocol;
-  host = window.location.host;
+  host = window.location.host.replace('www.', '');
 
   constructor() {
     Sugar.extend();
