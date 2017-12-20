@@ -6,30 +6,30 @@ services:
     container_name: web-server
     image: web-server:v0.1.0
     depends_on:
-      - mortgage-calculator-api
+      - mywebmc-api
     restart: 'always'
     ports:
       - '80:80'
     networks:
-      - webmc-private
+      - mywebmc
 
-  mortgage-calculator-api:
+  mywebmc-api:
     build: ./api/
-    container_name: mortgage-calculator-api
-    image: mortgage-calculator-api:v0.1.0
+    container_name: mywebmc-api
+    image: mywebmc-api:v0.1.0
     restart: 'always'
     networks:
-      - webmc-private
+      - mywebmc
 
-  mortgage-calculator-static-web-server:
+  mywebmc-static-web-server:
     build: ./web/
-    container_name: mortgage-calculator-static-web-server
-    image: mortgage-calculator-static-web-server:v0.1.0
+    container_name: mywebmc-static-web-server
+    image: mywebmc-static-web-server:v0.1.0
     restart: 'always'
     networks:
-      - webmc-private
+      - mywebmc
 
 networks:
-  webmc-private:
+  mywebmc:
     external:
-      name: webmc-private
+      name: mywebmc

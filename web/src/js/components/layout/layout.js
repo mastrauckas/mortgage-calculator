@@ -28,7 +28,7 @@ export default class Layout extends Component {
     return (
       <MuiThemeProvider muiTheme={theme}>
         <div>
-          <Navbar title="Mortgage Calculator" />
+          <Navbar title="My Mortgage Calculator" />
           <Content />
           <Footer />
         </div>
