@@ -1,8 +1,6 @@
 import React from 'react';
 import { Component } from 'react';
 
-//import { Grid, Row, Col } from 'react-flexbox-grid';
-
 export default class Footer extends Component {
   render() {
     const style = {
@@ -15,7 +13,7 @@ export default class Footer extends Component {
     };
 
     return (
-      <footer style={style} target="_black" title="Github Repository">
+      <footer style={style}>
         <h5 style={{ color: 'rgba(255, 255, 255, 0.8)', paddingLeft: '24px' }}>
           <span>Developed by Michael Astrauckas</span>
         </h5>
