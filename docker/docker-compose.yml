@@ -17,7 +17,7 @@ services:
   mywebmc-api:
     build: ./api/
     container_name: mywebmc-api
-    image: mywebmc-api:v0.1.0
+    image: mywebmc-api:v0.1.1
     restart: 'always'
     networks:
       - mywebmc
