@@ -35,11 +35,6 @@ namespace Maa.MortgageCalculator.Endpoints
                 app.UseDeveloperExceptionPage();
                 app.UseCors(builder => builder.AllowAnyOrigin());
             }
-            else
-            {
-                // app.UseCors(builder => builder.WithOrigins("http://example.com"));
-                app.UseCors(builder => builder.AllowAnyOrigin());
-            }
 
             app.UseMvc();
         }

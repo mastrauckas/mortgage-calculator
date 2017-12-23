@@ -1,0 +1,21 @@
+version: "3.4"
+
+services:
+  mywebmc-static-web-server:
+    build: ./web/
+    container_name: mywebmc-static-web-server
+    image: mywebmc-static-web-server:development
+    restart: 'always'
+    ports:
+      - '80:4200'
+    networks:
+      - mywebmc
+    volumes:
+      - /Users/mastrauckas/projects/mortgage-calculator/web:/src
+    environment:
+      - hostApi=localhost:5000
+
+networks:
+  mywebmc:
+    external:
+      name: mywebmc
