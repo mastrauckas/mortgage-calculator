@@ -17,7 +17,7 @@ namespace Maa.MortgageCalculator.Models
             totalPayments = GetHowManyPayments(mortageLoan.Rate, mortageLoan.Payment, principal);
 
             if (totalPayments > OneHundredYearsOfPayments || totalPayments == -1)
-                throw new InstallmentsTooLongException("Mortgage installments would be longer than a 100 years.");
+                throw new InstallmentsTooLongException("Mortgage installments would be longer than 100 years.");
 
             short installmentNumber = 1;
             while (principal != 0)
