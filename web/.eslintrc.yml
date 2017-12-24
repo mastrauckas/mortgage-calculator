@@ -17,6 +17,8 @@ parserOptions:
 plugins:
   - react
   - prettier
+globals:
+  __HOST_API__: true
 rules:
   prettier/prettier:
   - error

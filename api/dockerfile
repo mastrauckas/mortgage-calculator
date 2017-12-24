@@ -1,0 +1,6 @@
+FROM microsoft/dotnet:2.0-sdk
+LABEL maintainer="Michael Astrauckas"
+EXPOSE 5000
+ENV ASPNETCORE_ENVIRONMENT=Development
+WORKDIR /src/Maa.MortgageCalculator.Endpoints
+ENTRYPOINT ["dotnet", "run", "--urls=http://0.0.0.0:5000"]

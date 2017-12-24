@@ -1,0 +1,33 @@
+version: "3.4"
+
+services:
+  react-project:
+    build: ./web/
+    container_name: react-project
+    image: react-project:development
+    restart: 'always'
+    ports:
+      - '4200:4200'
+    networks:
+      - mywebmc
+    volumes:
+      - /Users/mastrauckas/projects/mortgage-calculator/web:/src
+    environment:
+      - hostApi=localhost:5000
+  
+  doctnetcore-api-project:
+    build: ./api/
+    container_name: doctnetcore-api-project
+    image: doctnetcore-api-project:development
+    restart: 'always'
+    ports:
+      - '5000:5000'
+    networks:
+      - mywebmc
+    volumes:
+      - /Users/mastrauckas/projects/mortgage-calculator/api/src:/src
+
+networks:
+  mywebmc:
+    external:
+      name: mywebmc

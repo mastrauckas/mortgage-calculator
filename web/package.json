@@ -10,13 +10,13 @@
     "build:dev:nowatch": "yarn clean && cross-env NODE_ENV=development webpack --progress --profile --color",
     "build:prod": "yarn clean c && cross-env NODE_ENV=production webpack --progress --profile --color",
     "build:docker":
-      "yarn clean-docker c && cross-env NODE_ENV=production webpack --progress --profile --color && yarn mv-docker",
+      "yarn clean-docker c && cross-env NODE_ENV=production hostApi=mywebmc.com webpack --progress --profile --color && yarn mv-docker",
     "api-server":
       "cd ../api/src/Maa.MortgageCalculator.Endpoints && cross-env ASPNETCORE_ENVIRONMENT=Development dotnet run",
     "dev-server:quiet": "yarn lint && cross-env NODE_ENV=development webpack-dev-server --inline",
     "dev-server": "yarn lint && cross-env NODE_ENV=development webpack-dev-server --inline --progress",
-    "all-servers":
-      "concurrently --kill-others --names \"DEV-SERVER,API-SERVER\" -c \"bgBlue,bgGreen\" \"yarn dev-server:quiet\" \"yarn api-server\"",
+    "all-servers": "cd .. && docker-compose up",
+    "all-servers-d": "cd .. && docker-compose up -d",
     "test": "npm run test:cs:endpoints && npm run test:cs:models",
     "test:cs:endpoints": "cd ../api/tests/Maa.MortgageCalculator.Endpoints.Tests &&  dotnet test",
     "test:cs:models": "cd ../api/tests/Maa.MortgageCalculator.Models.Tests/ && dotnet test",
@@ -44,7 +44,6 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.23.0",
     "babel-preset-stage-2": "^6.24.1",
-    "concurrently": "^3.5.1",
     "cpx": "^1.5.0",
     "cross-env": "^5.1.1",
     "css-loader": "^0.28.4",

@@ -1,14 +1,17 @@
 {
-"folders": [
-	{
-		"path": "docker"
-	},
-	{
-		"path": "web"
-	},
-	{
-		"path": "api"
-	}
-],
-  "settings": {}
+	"folders": [
+		{
+			"path": "docker"
+		},
+		{
+			"path": "web"
+		},
+		{
+			"path": "api"
+		},
+		{
+			"path": "."
+		}
+	],
+	"settings": {}
 }

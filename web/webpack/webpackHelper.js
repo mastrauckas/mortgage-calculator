@@ -100,6 +100,7 @@ module.exports = class WebpackHelper {
       port: 4200,
       historyApiFallback: true,
       stats: this.stats,
+      host: '0.0.0.0',
     };
   }
 

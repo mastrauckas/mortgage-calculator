@@ -1,6 +1,6 @@
 const { CommonsChunkPlugin, OccurrenceOrderPlugin, UglifyJsPlugin } = require('webpack').optimize;
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { NamedModulesPlugin, NoEmitOnErrorsPlugin } = require('webpack');
+const { NamedModulesPlugin, NoEmitOnErrorsPlugin, DefinePlugin } = require('webpack');
 const path = require('path');
 const fs = require('fs');
 const WebpackHelper = require('./WebpackHelper');
@@ -12,6 +12,10 @@ const genDirNodeModules = path.join(process.cwd(), 'src', '$$_gendir', 'node_mod
 module.exports = class WebpackDevHelper extends WebpackHelper {
   constructor(environment) {
     super(environment);
+  }
+
+  get hostApi() {
+    return process.env.hostApi;
   }
 
   get plugins() {
@@ -43,6 +47,10 @@ module.exports = class WebpackDevHelper extends WebpackHelper {
           removeComments: this.isProduction,
           collapseWhitespace: this.isProduction,
         },
+      }),
+
+      new DefinePlugin({
+        __HOST_API__: JSON.stringify(this.hostApi),
       }),
 
       new CommonsChunkPlugin({
