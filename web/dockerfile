@@ -1,4 +1,4 @@
-FROM kkarczmarczyk/node-yarn
+FROM mastrauckas/docker-node-yarn:1.3.2
 LABEL maintainer="Michael Astrauckas"
 WORKDIR /src
 ENTRYPOINT ["yarn", "dev-server"]
