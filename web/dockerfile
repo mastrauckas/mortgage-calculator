@@ -1,5 +1,4 @@
 FROM kkarczmarczyk/node-yarn
 LABEL maintainer="Michael Astrauckas"
 WORKDIR /src
-RUN rm -frv ./web/node_modules; yarn
 ENTRYPOINT ["yarn", "dev-server"]
