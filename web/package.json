@@ -6,11 +6,13 @@
     "restore": "cd ../api/src/Maa.MortgageCalculator.Endpoints && dotnet restore",
     "build": "yarn build:dev:nowatch",
     "build:dev": "yarn build:dev:watch",
-    "build:dev:watch": "yarn clean && cross-env NODE_ENV=development webpack --progress --profile --color --watch",
-    "build:dev:nowatch": "yarn clean && cross-env NODE_ENV=development webpack --progress --profile --color",
-    "build:prod": "yarn clean c && cross-env NODE_ENV=production webpack --progress --profile --color",
+    "build:dev:watch":
+      "yarn clean && cross-env NODE_ENV=development webpack --progress --profile --color --watch && yarn cp-seo",
+    "build:dev:nowatch":
+      "yarn clean && cross-env NODE_ENV=development webpack --progress --profile --color && yarn cp-seo",
+    "build:prod": "yarn clean c && cross-env NODE_ENV=production webpack --progress --profile --color && yarn cp-seo",
     "build:docker":
-      "yarn clean-docker c && cross-env NODE_ENV=production hostApi=mywebmc.com webpack --progress --profile --color && yarn mv-docker",
+      "yarn clean-docker c && cross-env NODE_ENV=production hostApi=mywebmc.com webpack --progress --profile --color && yarn cp-seo && yarn cp-docker",
     "api-server":
       "cd ../api/src/Maa.MortgageCalculator.Endpoints && cross-env ASPNETCORE_ENVIRONMENT=Development dotnet run",
     "dev-server:quiet": "yarn lint && cross-env NODE_ENV=development webpack-dev-server --inline",
@@ -24,7 +26,8 @@
     "lint:javascript": "eslint src",
     "clean": "rimraf ./build",
     "clean-docker": "rimraf ../docker/web/build",
-    "mv-docker": "cpx './build/**/' ../docker/web/build -C"
+    "cp-docker": "cpx './build/**/' ../docker/web/build -C",
+    "cp-seo": "cpx './src/seo/**/' ./build"
   },
   "repository": {
     "type": "git",
