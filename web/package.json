@@ -6,15 +6,11 @@
     "restore": "cd ../api/src/Maa.MortgageCalculator.Endpoints && dotnet restore",
     "build": "yarn build:dev:nowatch",
     "build:dev": "yarn build:dev:watch",
-    "build:dev:watch":
-      "yarn clean && cross-env NODE_ENV=development webpack --progress --profile --color --watch && yarn cp-seo",
-    "build:dev:nowatch":
-      "yarn clean && cross-env NODE_ENV=development webpack --progress --profile --color && yarn cp-seo",
+    "build:dev:watch": "yarn clean && cross-env NODE_ENV=development webpack --progress --profile --color --watch && yarn cp-seo",
+    "build:dev:nowatch": "yarn clean && cross-env NODE_ENV=development webpack --progress --profile --color && yarn cp-seo",
     "build:prod": "yarn clean c && cross-env NODE_ENV=production webpack --progress --profile --color && yarn cp-seo",
-    "build:docker":
-      "yarn clean-docker c && cross-env NODE_ENV=production hostApi=mywebmc.com webpack --progress --profile --color && yarn cp-seo && yarn cp-docker",
-    "api-server":
-      "cd ../api/src/Maa.MortgageCalculator.Endpoints && cross-env ASPNETCORE_ENVIRONMENT=Development dotnet run",
+    "build:docker": "yarn clean-docker c && cross-env NODE_ENV=production hostApi=mywebmc.com webpack --progress --profile --color && yarn cp-seo && yarn cp-docker",
+    "api-server": "cd ../api/src/Maa.MortgageCalculator.Endpoints && cross-env ASPNETCORE_ENVIRONMENT=Development dotnet run",
     "dev-server:quiet": "yarn lint && cross-env NODE_ENV=development webpack-dev-server --inline",
     "dev-server": "yarn lint && cross-env NODE_ENV=development webpack-dev-server --inline --progress",
     "all-servers": "cd .. && docker-compose up",
@@ -58,7 +54,7 @@
     "file-loader": "^1.1.6",
     "html-loader": "^0.5.0",
     "html-webpack-plugin": "^2.28.0",
-    "prettier": "^1.8.2",
+    "prettier": "^2.0.5",
     "style-loader": "^0.19.1",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.5"

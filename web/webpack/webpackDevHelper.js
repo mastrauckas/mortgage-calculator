@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { NamedModulesPlugin, NoEmitOnErrorsPlugin, DefinePlugin } = require('webpack');
 const path = require('path');
 const fs = require('fs');
-const WebpackHelper = require('./WebpackHelper');
+const WebpackHelper = require('./webpackHelper');
 
 const nodeModules = path.join(process.cwd(), 'node_modules');
 const realNodeModules = fs.realpathSync(nodeModules);
@@ -60,7 +60,7 @@ module.exports = class WebpackDevHelper extends WebpackHelper {
 
       new CommonsChunkPlugin({
         name: ['vendor'],
-        minChunks: module => {
+        minChunks: (module) => {
           return (
             module.resource &&
             (module.resource.startsWith(nodeModules) ||
